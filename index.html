@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techno Recovery Center | ตรวจเช็กก่อนใช้ ปลอดภัยหลังน้ำท่วม - TECHNO KRU</title>
+  <!-- Favicon จากไฟล์ภาพ kru_color.jpg บน GitHub -->
+  <link rel="icon" type="image/jpeg" href="kru_color.jpg">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Sarabun & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'Sarabun', 'sans-serif'],
+            body: ['Sarabun', 'sans-serif']
+          },
+          colors: {
+            kru: {
+              DEFAULT: '#046A38', // เขียวราชภัฏกาญจนบุรี
+              dark: '#03522b',
+              light: '#e8f5e9',
+              gold: '#D97706',
+              goldlight: '#fef3c7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      font-family: 'Prompt', sans-serif;
+    }
+    .kru-glass {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-kru selection:text-white">
+
+  <!-- แถบด้านบนแสดงการติดต่อด่วน -->
+  <div class="bg-gradient-to-r from-kru to-kru-dark text-white text-xs py-2 px-4 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-amber-400 text-slate-900 animate-pulse">บริการฟรี</span>
+        <span>ศูนย์ประสานงานช่วยเหลือผู้ประสบอุทกภัย คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏกาญจนบุรี</span>
+      </div>
+      <div class="flex items-center gap-4 text-[12px]">
+        <a href="tel:034534078" class="flex items-center gap-1 hover:text-amber-200 transition">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5"></i> 034-534078
+        </a>
+        <span class="text-slate-300">|</span>
+        <span class="flex items-center gap-1 text-emerald-200 font-medium">
+          <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Line: Technokru
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- แถบ Navigation Bar -->
+  <header class="sticky top-0 z-40 kru-glass border-b border-slate-200/80 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo KRU -->
+      <a href="#" class="flex items-center gap-3 group">
+        <img src="kru_color.jpg" alt="KRU Emblem" class="h-14 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/180px-Kanchanaburi_Rajabhat_University_Emblem.png'">
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-lg font-bold tracking-tight text-slate-900 group-hover:text-kru transition">Techno Recovery Center</span>
+            <span class="text-[10px] bg-emerald-100 text-kru border border-emerald-300 font-semibold px-1.5 py-0.5 rounded">TECHNO KRU</span>
+          </div>
+          <p class="text-xs text-slate-500 font-body">ตรวจเช็กก่อนใช้ ปลอดภัยหลังน้ำท่วม</p>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-1 font-medium text-sm text-slate-700">
+        <button onclick="switchTab('register')" id="nav-register" class="nav-btn px-4 py-2 rounded-xl text-kru font-semibold bg-emerald-50/80 transition">ลงทะเบียนรับบริการ</button>
+        <button onclick="switchTab('track')" id="nav-track" class="nav-btn px-4 py-2 rounded-xl hover:text-kru hover:bg-slate-100 transition">ติดตามสถานะ</button>
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-xl hover:text-kru hover:bg-slate-100 transition">สรุปผลโครงการ</button>
+        <button onclick="switchTab('staff')" id="nav-staff" class="nav-btn px-4 py-2 rounded-xl hover:text-kru hover:bg-slate-100 transition flex items-center gap-1.5">
+          <i data-lucide="shield-check" class="w-4 h-4 text-slate-400"></i> สำหรับเจ้าหน้าที่
+        </button>
+      </nav>
+
+      <div class="hidden sm:flex items-center gap-3">
+        <button onclick="switchTab('register')" class="bg-kru hover:bg-kru-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md shadow-emerald-900/10 hover:shadow-lg transition flex items-center gap-2">
+          <i data-lucide="clipboard-check" class="w-4 h-4"></i> แจ้งตรวจเช็กด่วน
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- 1. ส่วนลงทะเบียน -->
+    <section id="section-register" class="tab-content block">
+      <div class="text-center max-w-3xl mx-auto mb-10 pt-4">
+        <div class="inline-flex items-center gap-2 bg-emerald-100 text-kru text-xs font-semibold px-3 py-1 rounded-full mb-3 border border-emerald-200">
+          <i data-lucide="heart-handshake" class="w-4 h-4 text-kru"></i> บริการวิชาการช่วยเหลือชุมชนชาวกาญจนบุรี
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          ตรวจเช็กเครื่องใช้ไฟฟ้าและรถยนต์ <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-kru to-emerald-600">ปลอดภัย มั่นใจหลังน้ำลด</span>
+        </h1>
+        <p class="text-slate-600 mt-3 text-base sm:text-lg font-body">
+          โดยคณาจารย์และทีมช่าง คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏกาญจนบุรี
+        </p>
+      </div>
+
+      <!-- ขั้นตอนที่ 1: เข้าสู่ระบบ LINE -->
+      <div id="line-auth-gate" class="max-w-xl mx-auto mb-8 bg-white border border-emerald-200 rounded-3xl p-6 sm:p-8 shadow-sm text-center">
+        <div class="w-16 h-16 bg-[#06C755]/10 text-[#06C755] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#06C755]/20">
+          <i data-lucide="message-circle" class="w-9 h-9"></i>
+        </div>
+        <h2 class="text-xl font-bold text-slate-900">ขั้นตอนที่ 1 : เข้าสู่ระบบด้วย LINE</h2>
+        <p class="text-sm text-slate-500 font-body mt-2 mb-6">
+          เพื่อความสะดวกรวดเร็วในการแจ้งเตือนสถานะการซ่อมตรวจเช็ก การส่งมอบอุปกรณ์ และรับข่าวสารบริการวิชาการตรงถึงห้องแชตของคุณ[cite: 1]
+        </p>
+        <button onclick="loginWithLine()" class="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-semibold py-3.5 px-6 rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2.5 text-base">
+          <i data-lucide="log-in" class="w-5 h-5"></i> เข้าสู่ระบบด้วย LINE (LINE Login)
+        </button>
+        <p class="text-[12px] text-slate-400 mt-4 font-body">
+          * ระบบจะขอเข้าถึงข้อมูลโปรไฟล์ (ชื่อและรหัสผู้ใช้) เพื่อใช้อ้างอิงและส่งแจ้งเตือนใบงานเท่านั้น[cite: 1]
+        </p>
+      </div>
+
+      <!-- ขั้นตอนที่ 2: แบบฟอร์มลงทะเบียน -->
+      <div id="registration-form-card" class="hidden max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-10 mb-12">
+        
+        <div class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 mb-8">
+          <div class="flex items-center gap-3">
+            <img id="line-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-emerald-500 object-cover shadow-sm">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs bg-[#06C755] text-white font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="check" class="w-3 h-3"></i> เชื่อมต่อ LINE สำเร็จ
+                </span>
+                <span id="line-name-display" class="font-bold text-slate-800 text-sm">ผู้ใช้งาน LINE</span>
+              </div>
+              <p class="text-xs text-slate-500 font-body mt-0.5">LINE User ID: <span id="line-uid-display" class="font-mono text-emerald-800">U1234...kru</span></p>
+            </div>
+          </div>
+          <button onclick="logoutLine()" class="text-xs text-rose-600 hover:text-rose-700 font-medium underline">เปลี่ยนบัญชี</button>
+        </div>
+
+        <form id="serviceForm" onsubmit="handleFormSubmit(event)" class="space-y-8">
+          <!-- ข้อมูลผู้ติดต่อ -->
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
+              <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย[cite: 1]
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *[cite: 1]</label>
+                <input type="text" id="cust-name" required placeholder="นายสมชาย สดใส" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ *[cite: 1]</label>
+                <input type="tel" id="cust-phone" required placeholder="08x-xxx-xxxx" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *[cite: 1]</label>
+                <input type="text" id="cust-area" required placeholder="เช่น ชุมชนริมน้ำ ต.หนองบัว อ.เมือง จ.กาญจนบุรี" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+              </div>
+            </div>
+          </div>
+
+          <!-- หมวด 1: ยานยนต์ -->
+          <div class="pt-2">
+            <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
+              <i data-lucide="car" class="w-5 h-5 text-kru"></i> 1. หมวดยานยนต์และเครื่องยนต์[cite: 1]
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div>
+                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์[cite: 1]</div>
+                  <div class="text-xs text-slate-400">ถ่ายน้ำมันเครื่อง/ตรวจหัวเทียน</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('moto', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-moto" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('moto', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div>
+                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์ไฟฟ้า[cite: 1]</div>
+                  <div class="text-xs text-slate-400">เช็กกล่องควบคุมและแบตเตอรี่</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('moto-ev', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-moto-ev" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('moto-ev', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div>
+                  <div class="font-semibold text-sm text-slate-800">รถยนต์[cite: 1]</div>
+                  <div class="text-xs text-slate-400">ตรวจระบบไฟ/ฟิวส์/กรองอากาศ</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('car', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-car" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('car', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div>
+                  <div class="font-semibold text-sm text-slate-800">เครื่องยนต์การเกษตร[cite: 1]</div>
+                  <div class="text-xs text-slate-400">ตรวจคาร์บูเรเตอร์/ระบบสตาร์ต</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('agri', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-agri" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('agri', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">ยานยนต์ / เครื่องยนต์ อื่นๆ[cite: 1]</div>
+                    <div class="text-xs text-slate-400">เช่น เครื่องตัดหญ้า, เครื่องปั่นไฟ</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('auto-other', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-auto-other" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('auto-other', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="box-auto-other" class="hidden mt-3 pt-3 border-t border-slate-200">
+                  <input type="text" id="desc-auto-other" placeholder="ระบุประเภทอุปกรณ์ เช่น เครื่องตัดหญ้าสะพายหลัง 4 จังหวะ" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-kru">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- หมวด 2: เครื่องใช้ไฟฟ้า -->
+          <div class="pt-2">
+            <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
+              <i data-lucide="tv" class="w-5 h-5 text-kru"></i> 2. หมวดเครื่องใช้ไฟฟ้าในบ้าน[cite: 1]
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <span class="font-semibold text-sm text-slate-800">พัดลม[cite: 1]</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('fan', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-fan" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('fan', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <span class="font-semibold text-sm text-slate-800">หม้อหุงข้าว[cite: 1]</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('rice', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-rice" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('rice', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <span class="font-semibold text-sm text-slate-800">ไมโครเวฟ[cite: 1]</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('micro', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-micro" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('micro', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <span class="font-semibold text-sm text-slate-800">ตู้เย็น[cite: 1]</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('fridge', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-fridge" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('fridge', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <span class="font-semibold text-sm text-slate-800">เครื่องซักผ้า[cite: 1]</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('washer', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-washer" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('washer', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <span class="font-semibold text-sm text-slate-800">โทรทัศน์[cite: 1]</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('tv', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-tv" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('tv', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">เครื่องใช้ไฟฟ้าอื่นๆ[cite: 1]</div>
+                    <div class="text-xs text-slate-400">เช่น กาน้ำร้อน, เตารีด, เครื่องปั่น[cite: 1]</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('elec-other', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-elec-other" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('elec-other', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="box-elec-other" class="hidden mt-3 pt-3 border-t border-slate-200">
+                  <input type="text" id="desc-elec-other" placeholder="ระบุประเภทอุปกรณ์ เช่น เตารีดไอน้ำ, เครื่องปั่นน้ำผลไม้" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-kru">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- หมวด 3: ระบบไฟบ้าน -->
+          <div class="pt-2">
+            <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
+              <i data-lucide="zap" class="w-5 h-5 text-kru"></i> 3. ระบบไฟฟ้าและอุปกรณ์ประจำบ้าน[cite: 1]
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div>
+                  <div class="font-semibold text-sm text-slate-800">ปั๊มน้ำ[cite: 1]</div>
+                  <div class="text-xs text-slate-400">ตรวจฉนวนมอเตอร์และคาปาซิเตอร์</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('pump', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-pump" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('pump', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div>
+                  <div class="font-semibold text-sm text-slate-800">ตู้คอนซูมเมอร์ / ตู้ไฟ[cite: 1]</div>
+                  <div class="text-xs text-slate-400">ตรวจเช็กวงจรและสวิตช์ตัดไฟ</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="updateCount('breaker', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                  <span id="cnt-breaker" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                  <button type="button" onclick="updateCount('breaker', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                </div>
+              </div>
+              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">ระบบไฟบ้าน อื่นๆ (เต้ารับ / สวิตช์)[cite: 1]</div>
+                    <div class="text-xs text-slate-400">ระบุจำนวนจุดที่ต้องการให้ช่างประเมิน</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('sys-other', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-sys-other" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('sys-other', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="box-sys-other" class="hidden mt-3 pt-3 border-t border-slate-200">
+                  <input type="text" id="desc-sys-other" placeholder="ระบุประเภทอุปกรณ์ เช่น ปลั๊กไฟชั้นล่าง 3 จุด" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-kru">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Items Summary -->
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-between">
+            <span class="font-semibold text-sm text-kru">จำนวนอุปกรณ์ที่นำมารับบริการทั้งหมด:</span>
+            <span class="text-2xl font-extrabold text-kru" id="total-items-badge">0 ชิ้น</span>
+          </div>
+
+          <!-- Symptoms Checkboxes -->
+          <div>
+            <h2 class="text-sm font-semibold text-slate-800 mb-2">อาการเบื้องต้น (เลือกได้มากกว่า 1 ข้อ)[cite: 1]</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-body text-slate-700">
+              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
+                <input type="checkbox" name="symptom" value="ถูกน้ำท่วม / แช่น้ำ" class="rounded text-kru focus:ring-kru">
+                <span>ถูกน้ำท่วม / แช่น้ำ[cite: 1]</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
+                <input type="checkbox" name="symptom" value="ยังไม่ได้ทดลองเปิดใช้งาน" checked class="rounded text-kru focus:ring-kru">
+                <span class="text-emerald-700 font-medium">ยังไม่ได้ทดลองเปิดใช้งาน (ปลอดภัย)[cite: 1]</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
+                <input type="checkbox" name="symptom" value="เปิดไม่ติด" class="rounded text-kru focus:ring-kru">
+                <span>เปิดไม่ติด[cite: 1]</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
+                <input type="checkbox" name="symptom" value="ทำงานผิดปกติ" class="rounded text-kru focus:ring-kru">
+                <span>ทำงานผิดปกติ[cite: 1]</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div class="p-5 bg-amber-50/70 border border-amber-200 rounded-2xl text-xs text-amber-900 font-body leading-relaxed">
+            <h3 class="font-bold text-sm text-amber-950 flex items-center gap-1.5 mb-1.5">
+              <i data-lucide="info" class="w-4 h-4 text-amber-600"></i> เงื่อนไขและข้อตกลงการให้บริการฟรี[cite: 1]
+            </h3>
+            <p>1. ทางศูนย์ฯ ให้บริการตรวจสอบและประเมินสภาพเบื้องต้นโดยไม่คิดค่าใช้จ่าย และช่วยซ่อมเฉพาะกรณีเล็กน้อยที่สามารถดำเนินการได้โดยไม่ต้องใช้อะไหล่หรือมีค่าใช้จ่ายเพิ่มเติม[cite: 1]</p>
+            <p>2. หากต้องเปลี่ยนอะไหล่ ใช้วัสดุเพิ่มเติม หรือส่งซ่อมภายนอก ผู้รับบริการเป็นผู้รับผิดชอบค่าใช้จ่ายเอง[cite: 1]</p>
+            <label class="flex items-center gap-2 mt-4 pt-3 border-t border-amber-200/60 font-semibold cursor-pointer text-slate-800">
+              <input type="checkbox" id="agree-terms" required class="rounded text-kru focus:ring-kru w-4 h-4">
+              <span>ข้าพเจ้าได้รับทราบเงื่อนไขการให้บริการแล้ว[cite: 1]</span>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btn-submit-form" class="w-full bg-gradient-to-r from-kru to-kru-dark hover:from-kru-dark hover:to-kru text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-emerald-950/15 hover:shadow-xl transition flex items-center justify-center gap-2 text-base active:scale-[0.99]">
+            <i data-lucide="send" class="w-5 h-5"></i> ยืนยันการลงทะเบียนรับบริการ
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 2. ส่วนติดตามสถานะงาน -->
+    <section id="section-track" class="tab-content hidden">
+      <div class="max-w-2xl mx-auto mb-10 text-center">
+        <h2 class="text-3xl font-extrabold text-slate-900">ติดตามสถานะงานตรวจเช็ก</h2>
+        <p class="text-slate-500 font-body text-sm mt-2">ระบุเลขที่รับบริการ (เช่น TRC69-00001) หรือเบอร์โทรศัพท์ที่ใช้ลงทะเบียน[cite: 1]</p>
+        
+        <div class="mt-6 flex gap-2">
+          <div class="relative flex-grow">
+            <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="track-search-input" placeholder="กรอกเลขที่ใบงาน TRC69-XXXXX หรือเบอร์โทร" class="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru shadow-sm">
+          </div>
+          <button onclick="performTrackingSearch()" class="bg-kru hover:bg-kru-dark text-white font-semibold px-6 py-3.5 rounded-2xl shadow-md transition flex items-center gap-2">
+            <span>ค้นหา</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="tracking-result-box" class="max-w-3xl mx-auto space-y-6"></div>
+    </section>
+
+    <!-- 3. ส่วนแดชบอร์ดสรุปผล -->
+    <section id="section-dashboard" class="tab-content hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 class="text-2xl font-extrabold text-slate-900">ศูนย์ข้อมูลผลการดำเนินงานช่วยเหลือประชาชน</h2>
+          <p class="text-slate-500 text-sm font-body">รายงานสรุปสถิติแบบเรียลไทม์ ภารกิจฟื้นฟูหลังน้ำท่วม คณะเทคโนโลยีอุตสาหกรรม</p>
+        </div>
+        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-kru border border-emerald-200 text-xs px-3 py-1.5 rounded-xl font-medium self-start sm:self-auto">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> อัปเดตล่าสุด: วันนี้
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500">จำนวนผู้ประสบภัยที่รับบริการ</div>
+          <div class="text-3xl font-extrabold text-slate-900 mt-2" id="kpi-customers">185 ราย[cite: 1]</div>
+          <div class="text-[11px] text-emerald-600 mt-1 font-body">ครอบคลุม 13 ชุมชน/ตำบล</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500">อุปกรณ์ที่รับตรวจทั้งหมด</div>
+          <div class="text-3xl font-extrabold text-kru mt-2" id="kpi-items">428 ชิ้น[cite: 1]</div>
+          <div class="text-[11px] text-slate-400 mt-1 font-body">เฉลี่ย 2.3 ชิ้น / ครอบครัว</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500">ผ่านการตรวจ & ซ่อมเสร็จ</div>
+          <div class="text-3xl font-extrabold text-emerald-600 mt-2" id="kpi-inspected">386 ชิ้น</div>
+          <div class="text-[11px] text-emerald-600 mt-1 font-body">คิดเป็น 90.2% ของทั้งหมด</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500">ส่งมอบคืนปลอดภัยแล้ว</div>
+          <div class="text-3xl font-extrabold text-blue-600 mt-2" id="kpi-returned">287 ชิ้น[cite: 1]</div>
+          <div class="text-[11px] text-blue-500 mt-1 font-body">นำกลับไปใช้งานได้ปกติ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ส่วนสำหรับเจ้าหน้าที่ -->
+    <section id="section-staff" class="tab-content hidden">
+      <div id="staff-auth-gate" class="max-w-md mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="text-center mb-6">
+          <div class="w-14 h-14 bg-kru/10 text-kru rounded-2xl flex items-center justify-center mx-auto mb-3">
+            <i data-lucide="lock" class="w-7 h-7"></i>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">เข้าสู่ระบบสำหรับเจ้าหน้าที่</h2>
+          <p class="text-xs text-slate-500 font-body mt-1">คณะเทคโนโลยีอุตสาหกรรม มรภ.กาญจนบุรี</p>
+        </div>
+        <form onsubmit="handleStaffLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">รหัสเจ้าหน้าที่</label>
+            <input type="text" id="staff-user" required value="technician01" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">รหัสผ่าน</label>
+            <input type="password" id="staff-pass" required value="1234" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru">
+          </div>
+          <button type="submit" class="w-full bg-kru hover:bg-kru-dark text-white font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
+            <i data-lucide="key" class="w-4 h-4"></i> ยืนยันเข้าสู่ระบบ
+          </button>
+        </form>
+        <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-500 font-body">
+          <span class="font-semibold text-slate-700">บัญชีทดสอบ:</span> User: <code class="text-kru font-bold">technician01</code> / Pass: <code class="text-kru font-bold">1234</code>
+        </div>
+      </div>
+
+      <div id="staff-workspace" class="hidden space-y-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-kru flex items-center justify-center font-bold">
+              ชท
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-900" id="staff-name-badge">ผศ.ดร.สมเกียรติ (หัวหน้าทีมช่าง)</div>
+              <div class="text-xs text-emerald-700 font-body flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> ปฏิบัติการ: ศูนย์ฟื้นฟูฯ คณะเทคโนโลยีอุตสาหกรรม
+              </div>
+            </div>
+          </div>
+          <button onclick="handleStaffLogout()" class="text-xs text-rose-600 hover:text-rose-700 font-semibold px-3 py-1.5 border border-rose-200 rounded-lg hover:bg-rose-50 transition">
+            ออกจากระบบ
+          </button>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+            <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
+              <i data-lucide="layers" class="w-5 h-5 text-kru"></i> รายการใบงานที่อยู่ระหว่างดำเนินการ
+            </h3>
+            <span class="text-xs text-slate-500 font-body">แสดงข้อมูลเชื่อมโยงระบบ</span>
+          </div>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-body">
+              <thead class="bg-slate-50 text-slate-700 uppercase font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3">เลขที่ใบงาน[cite: 1]</th>
+                  <th class="px-4 py-3">ผู้รับบริการ[cite: 1]</th>
+                  <th class="px-4 py-3">พื้นที่[cite: 1]</th>
+                  <th class="px-4 py-3">จำนวนชิ้น[cite: 1]</th>
+                  <th class="px-4 py-3">สถานะรวม[cite: 1]</th>
+                  <th class="px-4 py-3 text-right">การจัดการ</th>
+                </tr>
+              </thead>
+              <tbody id="staff-job-rows" class="divide-y divide-slate-200 text-slate-700"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Slip & Stickers สำหรับสั่งพิมพ์ -->
+  <div id="modal-slip" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+      <button onclick="closeModal('modal-slip')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 no-print">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div id="printArea" class="space-y-5">
+        <div class="text-center pb-4 border-b border-slate-200">
+          <img src="kru_color.jpg" alt="Logo" class="h-16 mx-auto mb-2 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/180px-Kanchanaburi_Rajabhat_University_Emblem.png'">
+          <h2 class="text-lg font-bold text-slate-900">ศูนย์ประสานงานช่วยเหลือผู้ประสบอุทกภัย</h2>
+          <p class="text-xs font-semibold text-kru">คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏกาญจนบุรี (TECHNO KRU)</p>
+          <p class="text-[11px] text-slate-500 font-body">70 หมู่ 4 ถ.แสงชูโต ต.หนองบัว อ.เมือง จ.กาญจนบุรี 71190 • โทร. 034-534078 Line: Technokru</p>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+          <div>
+            <div class="text-xs text-slate-500">เลขที่รับบริการ (Job No.)[cite: 1]</div>
+            <div id="slip-job-no" class="text-2xl font-extrabold text-kru font-mono">TRC69-00001</div>
+            <div id="slip-cust-name" class="text-sm font-semibold text-slate-800 mt-1">คุณสมชาย สดใส[cite: 1]</div>
+            <div id="slip-cust-phone" class="text-xs text-slate-500 font-body">โทร: 081-987-6543 | ต.หนองบัว</div>
+          </div>
+          <div id="slip-qrcode" class="p-1 bg-white border border-slate-200 rounded-xl shadow-sm"></div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold text-slate-700 uppercase mb-2">รายการอุปกรณ์ที่นำมารับบริการ</h4>
+          <div id="slip-items-list" class="space-y-2 font-body text-xs"></div>
+        </div>
+
+        <div class="pt-4 border-t border-dashed border-slate-300">
+          <h4 class="text-xs font-bold text-slate-700 uppercase mb-2 flex items-center justify-between">
+            <span>ป้ายสติกเกอร์สำหรับติดตัวเครื่อง (Item Tags)[cite: 1]</span>
+            <span class="text-[10px] text-slate-400 no-print">* เลขตรงกับฐานข้อมูลและใบรับของ[cite: 1]</span>
+          </h4>
+          <div id="slip-sticker-tags" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-body"></div>
+        </div>
+
+        <div class="text-[10px] text-slate-400 font-body text-center pt-2">
+          * โปรดเก็บหลักฐานนี้ หรือแสดงข้อความใน LINE แก่เจ้าหน้าที่เพื่อติดต่อขอรับคืนอุปกรณ์[cite: 1]
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-3 no-print">
+        <button onclick="window.print()" class="flex-1 bg-kru hover:bg-kru-dark text-white font-semibold py-3 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
+          <i data-lucide="printer" class="w-4 h-4"></i> พิมพ์ใบรับและสติกเกอร์[cite: 1]
+        </button>
+        <button onclick="closeModal('modal-slip')" class="px-5 py-3 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded-xl font-medium text-sm transition">
+          ปิดหน้าต่าง
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ส่วนท้ายเว็บไซต์ (Footer) -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 text-xs py-8 mt-12 font-body">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <div class="flex items-center gap-3 justify-center md:justify-start">
+        <img src="kru_color.jpg" alt="Logo" class="h-10 w-auto object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/180px-Kanchanaburi_Rajabhat_University_Emblem.png'">
+        <div>
+          <div class="font-bold text-slate-800 text-sm">ศูนย์ประสานงานช่วยเหลือผู้ประสบอุทกภัย "Techno Recovery Center"</div>
+          <div>คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏกาญจนบุรี (TECHNO KRU)</div>
+        </div>
+      </div>
+      <div>
+        <p>70 หมู่ 4 ถนนแสงชูโต ตำบลหนองบัว อำเภอเมือง จังหวัดกาญจนบุรี 71190</p>
+        <p class="mt-0.5">โทรศัพท์ 034-534078 • Line: Technokru</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Logic & Backend Integration -->
+  <script>
+    // URL Web App จาก Google Apps Script ของคุณ
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwGW0EamACrdmfkgTThS8EhitiyCQtcO0bJg4ZgSZ7U3TE3QOmD6VMe7hnex4nDVz77/exec";
+
+    let lineProfile = null;
+    let counts = {
+      'moto': 0, 'moto-ev': 0, 'car': 0, 'agri': 0, 'auto-other': 0,
+      'fan': 0, 'rice': 0, 'micro': 0, 'fridge': 0, 'washer': 0, 'tv': 0, 'elec-other': 0,
+      'pump': 0, 'breaker': 0, 'sys-other': 0
+    };
+
+    const itemLabels = {
+      'moto': 'รถจักรยานยนต์',
+      'moto-ev': 'รถจักรยานยนต์ไฟฟ้า',
+      'car': 'รถยนต์',
+      'agri': 'เครื่องยนต์การเกษตร',
+      'auto-other': 'ยานยนต์อื่นๆ',
+      'fan': 'พัดลม',
+      'rice': 'หม้อหุงข้าว',
+      'micro': 'ไมโครเวฟ',
+      'fridge': 'ตู้เย็น',
+      'washer': 'เครื่องซักผ้า',
+      'tv': 'โทรทัศน์',
+      'elec-other': 'เครื่องใช้ไฟฟ้าอื่นๆ',
+      'pump': 'ปั๊มน้ำ',
+      'breaker': 'ตู้คอนซูมเมอร์ / ตู้ไฟ',
+      'sys-other': 'ระบบไฟบ้านอื่นๆ'
+    };
+
+    function getDb() {
+      const existing = localStorage.getItem('TRC_DATABASE');
+      if (existing) return JSON.parse(existing);
+      
+      const seedData = [
+        {
+          jobNo: 'TRC69-00001',
+          custName: 'นายสมชาย สดใส',
+          phone: '0819876543',
+          area: 'ต.หนองบัว อ.เมือง จ.กาญจนบุรี',
+          lineUserId: 'U1234567890abcdef',
+          createdAt: '2026-09-30 09:30',
+          status: 'กำลังดำเนินการ',
+          items: [
+            { itemNo: 'TRC69-00001-01', name: 'พัดลมตั้งโต๊ะ', status: 'ซ่อมแซมเล็กน้อย', result: 'ผ่าน Megger Test ล้างโคลน หยอดน้ำมันหล่อลื่น', tech: 'อาจารย์ธีรภัทร' },
+            { itemNo: 'TRC69-00001-02', name: 'หม้อหุงข้าว', status: 'กำลังตรวจเช็ก', result: 'กำลังอบไล่ความชื้นในตู้อบลมร้อน', tech: 'อาจารย์ธีรภัทร' },
+            { itemNo: 'TRC69-00001-03', name: 'รถจักรยานยนต์', status: 'รอตรวจเช็ก', result: 'จอดพักรอถ่ายน้ำมันเครื่อง', tech: 'ทีมช่างยานยนต์' }
+          ]
+        }
+      ];
+      localStorage.setItem('TRC_DATABASE', JSON.stringify(seedData));
+      return seedData;
+    }
+
+    function saveDb(data) {
+      localStorage.setItem('TRC_DATABASE', JSON.stringify(data));
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-50/80', 'text-kru', 'font-semibold');
+        btn.classList.add('hover:bg-slate-100');
+      });
+
+      const target = document.getElementById(`section-${tabId}`);
+      const targetNav = document.getElementById(`nav-${tabId}`);
+      if (target) target.classList.remove('hidden');
+      if (targetNav) {
+        targetNav.classList.add('bg-emerald-50/80', 'text-kru', 'font-semibold');
+        targetNav.classList.remove('hover:bg-slate-100');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabId === 'staff' && sessionStorage.getItem('TRC_STAFF_AUTH') === 'true') {
+        renderStaffJobs();
+      }
+    }
+
+    function loginWithLine() {
+      lineProfile = {
+        userId: 'U' + Math.random().toString(36).substring(2, 12) + 'kru',
+        displayName: 'คุณผู้ประสบภัย (LINE)',
+        pictureUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80'
+      };
+
+      document.getElementById('line-auth-gate').classList.add('hidden');
+      document.getElementById('registration-form-card').classList.remove('hidden');
+      document.getElementById('line-name-display').innerText = lineProfile.displayName;
+      document.getElementById('line-uid-display').innerText = lineProfile.userId;
+      document.getElementById('line-avatar').src = lineProfile.pictureUrl;
+      document.getElementById('cust-name').value = lineProfile.displayName;
+
+      lucide.createIcons();
+    }
+
+    function logoutLine() {
+      lineProfile = null;
+      document.getElementById('line-auth-gate').classList.remove('hidden');
+      document.getElementById('registration-form-card').classList.add('hidden');
+      document.getElementById('serviceForm').reset();
+      resetCounters();
+    }
+
+    function updateCount(key, delta) {
+      counts[key] = Math.max(0, (counts[key] || 0) + delta);
+      document.getElementById(`cnt-${key}`).innerText = counts[key];
+
+      if (key === 'auto-other') {
+        const box = document.getElementById('box-auto-other');
+        if (counts[key] > 0) box.classList.remove('hidden'); else box.classList.add('hidden');
+      }
+      if (key === 'elec-other') {
+        const box = document.getElementById('box-elec-other');
+        if (counts[key] > 0) box.classList.remove('hidden'); else box.classList.add('hidden');
+      }
+      if (key === 'sys-other') {
+        const box = document.getElementById('box-sys-other');
+        if (counts[key] > 0) box.classList.remove('hidden'); else box.classList.add('hidden');
+      }
+
+      const total = Object.values(counts).reduce((a, b) => a + b, 0);
+      document.getElementById('total-items-badge').innerText = `${total} ชิ้น`;
+    }
+
+    function resetCounters() {
+      Object.keys(counts).forEach(k => {
+        counts[k] = 0;
+        const el = document.getElementById(`cnt-${k}`);
+        if (el) el.innerText = '0';
+      });
+      document.getElementById('total-items-badge').innerText = '0 ชิ้น';
+      document.getElementById('box-auto-other').classList.add('hidden');
+      document.getElementById('box-elec-other').classList.add('hidden');
+      document.getElementById('box-sys-other').classList.add('hidden');
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const total = Object.values(counts).reduce((a, b) => a + b, 0);
+      if (total === 0) {
+        alert('กรุณาเลือกจำนวนอุปกรณ์ที่ต้องการรับบริการอย่างน้อย 1 ชิ้น');
+        return;
+      }
+
+      const submitBtn = document.getElementById('btn-submit-form');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> กำลังบันทึกข้อมูลเข้า Google Sheets...';
+      lucide.createIcons();
+
+      const db = getDb();
+      const newJobIndex = db.length + 1;
+      const jobNo = 'TRC69-' + ('0000' + newJobIndex).slice(-5);
+
+      const itemsList = [];
+      let itemSeq = 1;
+
+      for (const [key, qty] of Object.entries(counts)) {
+        if (qty > 0) {
+          for (let i = 0; i < qty; i++) {
+            let itemName = itemLabels[key];
+            if (key === 'auto-other') {
+              const desc = document.getElementById('desc-auto-other').value.trim();
+              if (desc) itemName = `${desc} (ยานยนต์อื่นๆ)`;
+            } else if (key === 'elec-other') {
+              const desc = document.getElementById('desc-elec-other').value.trim();
+              if (desc) itemName = `${desc} (เครื่องใช้ไฟฟ้าอื่นๆ)`;
+            } else if (key === 'sys-other') {
+              const desc = document.getElementById('desc-sys-other').value.trim();
+              if (desc) itemName = `${desc} (ระบบไฟบ้านอื่นๆ)`;
+            }
+
+            const itemNo = `${jobNo}-${('0' + itemSeq).slice(-2)}`;
+            itemsList.push({
+              itemNo: itemNo,
+              category: key.includes('auto') || key === 'moto' || key === 'car' || key === 'agri' ? 'ยานยนต์' : 'เครื่องใช้ไฟฟ้า',
+              name: itemName,
+              status: 'ลงทะเบียนแล้ว',
+              result: 'รอส่งมอบเครื่องเข้าศูนย์ฯ',
+              tech: '-'
+            });
+            itemSeq++;
+          }
+        }
+      }
+
+      const selectedSymptoms = Array.from(document.querySelectorAll('input[name="symptom"]:checked')).map(cb => cb.value);
+
+      const newRecord = {
+        action: "register",
+        jobNo: jobNo,
+        fullName: document.getElementById('cust-name').value,
+        custName: document.getElementById('cust-name').value,
+        phone: document.getElementById('cust-phone').value,
+        area: document.getElementById('cust-area').value,
+        lineUserId: lineProfile ? lineProfile.userId : '',
+        symptoms: selectedSymptoms,
+        createdAt: new Date().toISOString().replace('T', ' ').substring(0, 16),
+        status: 'ลงทะเบียนแล้ว',
+        items: itemsList
+      };
+
+      // บันทึกลง LocalStorage ทันที
+      db.unshift(newRecord);
+      saveDb(db);
+
+      // ยิงข้อมูลไปบันทึกลง Google Sheets ผ่าน Web App URL
+      try {
+        fetch(GAS_API_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newRecord)
+        });
+      } catch (err) {
+        console.warn("GAS Web App save error:", err);
+      }
+
+      // แสดงบัตรรับงาน
+      showSlipModal(newRecord);
+
+      // รีเซ็ตปุ่มและฟอร์ม
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i> ยืนยันการลงทะเบียนรับบริการ';
+      document.getElementById('serviceForm').reset();
+      resetCounters();
+      lucide.createIcons();
+    }
+
+    function showSlipModal(record) {
+      document.getElementById('slip-job-no').innerText = record.jobNo;
+      document.getElementById('slip-cust-name').innerText = record.custName || record.fullName;
+      document.getElementById('slip-cust-phone').innerText = `โทร: ${record.phone} | ${record.area}`;
+
+      const itemsBox = document.getElementById('slip-items-list');
+      itemsBox.innerHTML = '';
+      record.items.forEach(item => {
+        itemsBox.innerHTML += `
+          <div class="flex items-center justify-between p-2 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="font-mono font-bold text-kru">${item.itemNo}</span>
+            <span class="font-medium text-slate-800">${item.name}</span>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">${item.status}</span>
+          </div>
+        `;
+      });
+
+      const stickerBox = document.getElementById('slip-sticker-tags');
+      stickerBox.innerHTML = '';
+      record.items.forEach(item => {
+        stickerBox.innerHTML += `
+          <div class="p-2.5 border-2 border-slate-300 rounded-xl bg-white space-y-1">
+            <div class="flex justify-between items-start">
+              <span class="font-mono font-extrabold text-sm text-kru">${item.itemNo}</span>
+              <span class="text-[9px] bg-slate-100 font-bold px-1.5 py-0.5 rounded">TECHNO KRU</span>
+            </div>
+            <div class="font-bold text-slate-800 truncate">${item.name}</div>
+            <div class="text-[10px] text-slate-500">${record.custName || record.fullName} | ${record.phone}</div>
+          </div>
+        `;
+      });
+
+      const qrEl = document.getElementById('slip-qrcode');
+      qrEl.innerHTML = '';
+      new QRCode(qrEl, {
+        text: `https://techno-kru.github.io/techno-recovery/?job=${record.jobNo}`,
+        width: 80,
+        height: 80,
+        colorDark: "#046A38",
+        colorLight: "#ffffff"
+      });
+
+      document.getElementById('modal-slip').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    async function performTrackingSearch() {
+      const q = document.getElementById('track-search-input').value.trim();
+      const container = document.getElementById('tracking-result-box');
+      const db = getDb();
+      let found = db.find(j => (j.jobNo && j.jobNo.toLowerCase() === q.toLowerCase()) || (j.phone && j.phone === q));
+
+      if (!found) {
+        container.innerHTML = `
+          <div class="p-8 bg-white border border-slate-200 rounded-3xl text-center text-slate-400 font-body">
+            <i data-lucide="help-circle" class="w-12 h-12 mx-auto mb-2 text-slate-300"></i>
+            <p class="font-bold text-slate-700 text-base">ไม่พบข้อมูลการรับบริการ</p>
+            <p class="text-xs mt-1">โปรดตรวจสอบเลขที่ใบงาน (เช่น TRC69-00001) หรือเบอร์โทรศัพท์อีกครั้ง[cite: 1]</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      let itemsHtml = '';
+      found.items.forEach(it => {
+        let badgeColor = 'bg-slate-100 text-slate-700';
+        if (it.status.includes('เสร็จ') || it.status.includes('คืน')) badgeColor = 'bg-emerald-100 text-emerald-800';
+        else if (it.status.includes('ตรวจ')) badgeColor = 'bg-blue-100 text-blue-800';
+
+        itemsHtml += `
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-mono font-bold text-kru text-sm">${it.itemNo}</span>
+                <span class="font-bold text-slate-900 text-sm">${it.name}</span>
+              </div>
+              <div class="text-xs text-slate-500 font-body mt-1">การดำเนินการ: ${it.result || 'รอการวินิจฉัย'}</div>
+              <div class="text-[11px] text-slate-400 font-body">ผู้รับผิดชอบ: ${it.tech || '-'}</div>
+            </div>
+            <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor} self-start sm:self-auto">${it.status}</span>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div>
+              <span class="text-xs text-slate-400 font-mono">รหัสติดตามพัสดุรับซ่อม[cite: 1]</span>
+              <h3 class="text-2xl font-extrabold text-kru font-mono">${found.jobNo}</h3>
+              <p class="text-sm font-semibold text-slate-800 mt-1">${found.custName || found.fullName} (${found.area})</p>
+            </div>
+            <button onclick='showSlipModal(${JSON.stringify(found)})' class="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-xs font-semibold flex items-center gap-2">
+              <i data-lucide="printer" class="w-4 h-4"></i> ใบรับบริการ/สติกเกอร์[cite: 1]
+            </button>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 text-center text-xs font-body pt-2">
+            <div class="space-y-1">
+              <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">1</div>
+              <div class="font-semibold text-emerald-800">ลงทะเบียนแล้ว[cite: 1]</div>
+            </div>
+            <div class="space-y-1">
+              <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">2</div>
+              <div class="font-semibold text-emerald-800">รับของแล้ว[cite: 1]</div>
+            </div>
+            <div class="space-y-1">
+              <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">3</div>
+              <div class="font-semibold text-emerald-800">ตรวจ/ซ่อมเสร็จ[cite: 1]</div>
+            </div>
+            <div class="space-y-1">
+              <div class="w-8 h-8 rounded-full ${found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">4</div>
+              <div class="font-medium text-slate-600">ส่งมอบเรียบร้อย[cite: 1]</div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100">
+            <h4 class="text-xs font-bold text-slate-700 uppercase mb-3">สถานะอุปกรณ์รายชิ้น[cite: 1]</h4>
+            <div class="space-y-2.5">${itemsHtml}</div>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    function handleStaffLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('staff-user').value;
+      const p = document.getElementById('staff-pass').value;
+
+      if (u === 'technician01' && p === '1234') {
+        sessionStorage.setItem('TRC_STAFF_AUTH', 'true');
+        document.getElementById('staff-auth-gate').classList.add('hidden');
+        document.getElementById('staff-workspace').classList.remove('hidden');
+        renderStaffJobs();
+      } else {
+        alert('รหัสผ่านไม่ถูกต้อง');
+      }
+    }
+
+    function handleStaffLogout() {
+      sessionStorage.removeItem('TRC_STAFF_AUTH');
+      document.getElementById('staff-auth-gate').classList.remove('hidden');
+      document.getElementById('staff-workspace').classList.add('hidden');
+    }
+
+    function renderStaffJobs() {
+      const db = getDb();
+      const tbody = document.getElementById('staff-job-rows');
+      tbody.innerHTML = '';
+
+      db.forEach(j => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="px-4 py-3 font-mono font-bold text-kru">${j.jobNo}</td>
+            <td class="px-4 py-3 font-semibold text-slate-800">${j.custName || j.fullName}</td>
+            <td class="px-4 py-3 text-slate-500 truncate max-w-xs">${j.area}</td>
+            <td class="px-4 py-3 text-center font-bold">${j.items.length} ชิ้น</td>
+            <td class="px-4 py-3">
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-kru border border-emerald-200">
+                ${j.status}
+              </span>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <button onclick='showSlipModal(${JSON.stringify(j)})' class="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-semibold transition">
+                ดูงาน / สติกเกอร์
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+      lucide.createIcons();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      getDb();
+      
+      // ตรวจสอบพารามิเตอร์ URL สำหรับเปิดหน้าค้นหาอัตโนมัติ (เช่น สแกนจาก QR Code)
+      const urlParams = new URLSearchParams(window.location.search);
+      const jobParam = urlParams.get('job');
+      if (jobParam) {
+        switchTab('track');
+        document.getElementById('track-search-input').value = jobParam;
+        performTrackingSearch();
+      }
+    });
+  </script>
+</body>
+</html>
