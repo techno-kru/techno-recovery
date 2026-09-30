@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Techno Recovery Center | ตรวจเช็กก่อนใช้ ปลอดภัยหลังน้ำท่วม - TECHNO KRU</title>
   
-  <!-- Favicon kru_color.png -->
   <link rel="icon" type="image/png" href="kru_color.png">
   
   <!-- Tailwind CSS CDN -->
@@ -54,18 +53,22 @@
     }
     @media print {
       body * {
-        visibility: hidden;
+        visibility: hidden !important;
       }
-      #printArea, #printArea * {
-        visibility: visible;
+      #modal-slip, #modal-slip * {
+        visibility: visible !important;
       }
-      #printArea {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
+      #modal-slip {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
         background: white !important;
-        color: black !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        z-index: 99999 !important;
+        display: block !important;
       }
       .no-print {
         display: none !important;
@@ -154,13 +157,13 @@
         </div>
         <h2 class="text-xl font-bold text-slate-900">ขั้นตอนที่ 1 : เข้าสู่ระบบด้วย LINE</h2>
         <p class="text-sm text-slate-500 font-body mt-2 mb-6">
-          เพื่อความสะดวกรวดเร็วในการแจ้งเตือนสถานะการซ่อมตรวจเช็ก การส่งมอบอุปกรณ์ และรับข่าวสารบริการวิชาการตรงถึงห้องแชตของคุณ[cite: 1]
+          เพื่อความสะดวกรวดเร็วในการแจ้งเตือนสถานะการซ่อมตรวจเช็ก การส่งมอบอุปกรณ์ และรับข่าวสารบริการวิชาการตรงถึงห้องแชตของคุณ
         </p>
         <button onclick="loginWithLine()" class="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-semibold py-3.5 px-6 rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2.5 text-base">
           <i data-lucide="log-in" class="w-5 h-5"></i> เข้าสู่ระบบด้วย LINE (LINE Login)
         </button>
         <p class="text-[12px] text-slate-400 mt-4 font-body">
-          * ระบบจะขอเข้าถึงข้อมูลโปรไฟล์ (ชื่อและรหัสผู้ใช้) เพื่อใช้อ้างอิงและส่งแจ้งเตือนใบงานเท่านั้น[cite: 1]
+          * ระบบจะขอเข้าถึงข้อมูลโปรไฟล์ (ชื่อและรหัสผู้ใช้) เพื่อใช้อ้างอิงและส่งแจ้งเตือนใบงานเท่านั้น
         </p>
       </div>
 
@@ -187,19 +190,19 @@
           <!-- ข้อมูลผู้ติดต่อ -->
           <div>
             <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
-              <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย
+              <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย[cite: 1]
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *[cite: 1]</label>
                 <input type="text" id="cust-name" required placeholder="นายสมชาย สดใส" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ *</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ *[cite: 1]</label>
                 <input type="tel" id="cust-phone" required placeholder="08x-xxx-xxxx" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div class="sm:col-span-2">
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *[cite: 1]</label>
                 <input type="text" id="cust-area" required placeholder="เช่น ชุมชนริมน้ำ ต.หนองบัว อ.เมือง จ.กาญจนบุรี" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
             </div>
