@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Techno Recovery Center | ตรวจเช็กก่อนใช้ ปลอดภัยหลังน้ำท่วม - TECHNO KRU</title>
-  <!-- Favicon จากไฟล์ภาพ kru_color.jpg บน GitHub -->
+  
+  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="kru_color.jpg">
   
   <!-- Tailwind CSS CDN -->
@@ -28,7 +29,7 @@
           },
           colors: {
             kru: {
-              DEFAULT: '#046A38', // เขียวราชภัฏกาญจนบุรี
+              DEFAULT: '#046A38',
               dark: '#03522b',
               light: '#e8f5e9',
               gold: '#D97706',
@@ -74,7 +75,7 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-kru selection:text-white">
 
-  <!-- แถบด้านบนแสดงการติดต่อด่วน -->
+  <!-- Ribbon แจ้งเตือนด้านบนสุด -->
   <div class="bg-gradient-to-r from-kru to-kru-dark text-white text-xs py-2 px-4 shadow-sm">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
       <div class="flex items-center gap-2">
@@ -93,12 +94,14 @@
     </div>
   </div>
 
-  <!-- แถบ Navigation Bar -->
+  <!-- Header & Navigation Bar -->
   <header class="sticky top-0 z-40 kru-glass border-b border-slate-200/80 transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <!-- Logo KRU -->
       <a href="#" class="flex items-center gap-3 group">
-        <img src="kru_color.jpg" alt="KRU Emblem" class="h-14 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/180px-Kanchanaburi_Rajabhat_University_Emblem.png'">
+        <img src="kru_color.jpg" 
+             alt="KRU Emblem" 
+             class="h-14 w-auto object-contain transition-transform group-hover:scale-105" 
+             onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/220px-Kanchanaburi_Rajabhat_University_Emblem.png';">
         <div>
           <div class="flex items-center gap-1.5">
             <span class="text-lg font-bold tracking-tight text-slate-900 group-hover:text-kru transition">Techno Recovery Center</span>
@@ -129,7 +132,7 @@
   <!-- Content Container -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    <!-- 1. ส่วนลงทะเบียน -->
+    <!-- 1. ส่วนลงทะเบียนรับบริการ -->
     <section id="section-register" class="tab-content block">
       <div class="text-center max-w-3xl mx-auto mb-10 pt-4">
         <div class="inline-flex items-center gap-2 bg-emerald-100 text-kru text-xs font-semibold px-3 py-1 rounded-full mb-3 border border-emerald-200">
@@ -144,7 +147,7 @@
         </p>
       </div>
 
-      <!-- ขั้นตอนที่ 1: เข้าสู่ระบบ LINE -->
+      <!-- ขั้นตอนที่ 1: ยืนยันตัวตน LINE -->
       <div id="line-auth-gate" class="max-w-xl mx-auto mb-8 bg-white border border-emerald-200 rounded-3xl p-6 sm:p-8 shadow-sm text-center">
         <div class="w-16 h-16 bg-[#06C755]/10 text-[#06C755] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#06C755]/20">
           <i data-lucide="message-circle" class="w-9 h-9"></i>
@@ -161,7 +164,7 @@
         </p>
       </div>
 
-      <!-- ขั้นตอนที่ 2: แบบฟอร์มลงทะเบียน -->
+      <!-- ขั้นตอนที่ 2: ฟอร์มลงทะเบียน -->
       <div id="registration-form-card" class="hidden max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-10 mb-12">
         
         <div class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 mb-8">
@@ -184,19 +187,19 @@
           <!-- ข้อมูลผู้ติดต่อ -->
           <div>
             <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
-              <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย[cite: 1]
+              <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *[cite: 1]</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *</label>
                 <input type="text" id="cust-name" required placeholder="นายสมชาย สดใส" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ *[cite: 1]</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ *</label>
                 <input type="tel" id="cust-phone" required placeholder="08x-xxx-xxxx" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div class="sm:col-span-2">
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *[cite: 1]</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *</label>
                 <input type="text" id="cust-area" required placeholder="เช่น ชุมชนริมน้ำ ต.หนองบัว อ.เมือง จ.กาญจนบุรี" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
             </div>
@@ -581,7 +584,10 @@
 
       <div id="printArea" class="space-y-5">
         <div class="text-center pb-4 border-b border-slate-200">
-          <img src="kru_color.jpg" alt="Logo" class="h-16 mx-auto mb-2 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/180px-Kanchanaburi_Rajabhat_University_Emblem.png'">
+          <img src="kru_color.jpg" 
+               alt="Logo" 
+               class="h-16 mx-auto mb-2 object-contain" 
+               onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/220px-Kanchanaburi_Rajabhat_University_Emblem.png';">
           <h2 class="text-lg font-bold text-slate-900">ศูนย์ประสานงานช่วยเหลือผู้ประสบอุทกภัย</h2>
           <p class="text-xs font-semibold text-kru">คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏกาญจนบุรี (TECHNO KRU)</p>
           <p class="text-[11px] text-slate-500 font-body">70 หมู่ 4 ถ.แสงชูโต ต.หนองบัว อ.เมือง จ.กาญจนบุรี 71190 • โทร. 034-534078 Line: Technokru</p>
@@ -626,11 +632,14 @@
     </div>
   </div>
 
-  <!-- ส่วนท้ายเว็บไซต์ (Footer) -->
+  <!-- Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 text-xs py-8 mt-12 font-body">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
       <div class="flex items-center gap-3 justify-center md:justify-start">
-        <img src="kru_color.jpg" alt="Logo" class="h-10 w-auto object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/180px-Kanchanaburi_Rajabhat_University_Emblem.png'">
+        <img src="kru_color.jpg" 
+             alt="Logo" 
+             class="h-10 w-auto object-contain" 
+             onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/220px-Kanchanaburi_Rajabhat_University_Emblem.png';">
         <div>
           <div class="font-bold text-slate-800 text-sm">ศูนย์ประสานงานช่วยเหลือผู้ประสบอุทกภัย "Techno Recovery Center"</div>
           <div>คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏกาญจนบุรี (TECHNO KRU)</div>
@@ -643,9 +652,8 @@
     </div>
   </footer>
 
-  <!-- Script Logic & Backend Integration -->
+  <!-- Script Engine -->
   <script>
-    // URL Web App จาก Google Apps Script ของคุณ
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwGW0EamACrdmfkgTThS8EhitiyCQtcO0bJg4ZgSZ7U3TE3QOmD6VMe7hnex4nDVz77/exec";
 
     let lineProfile = null;
@@ -845,11 +853,9 @@
         items: itemsList
       };
 
-      // บันทึกลง LocalStorage ทันที
       db.unshift(newRecord);
       saveDb(db);
 
-      // ยิงข้อมูลไปบันทึกลง Google Sheets ผ่าน Web App URL
       try {
         fetch(GAS_API_URL, {
           method: "POST",
@@ -861,10 +867,8 @@
         console.warn("GAS Web App save error:", err);
       }
 
-      // แสดงบัตรรับงาน
       showSlipModal(newRecord);
 
-      // รีเซ็ตปุ่มและฟอร์ม
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i> ยืนยันการลงทะเบียนรับบริการ';
       document.getElementById('serviceForm').reset();
@@ -1055,7 +1059,6 @@
       lucide.createIcons();
       getDb();
       
-      // ตรวจสอบพารามิเตอร์ URL สำหรับเปิดหน้าค้นหาอัตโนมัติ (เช่น สแกนจาก QR Code)
       const urlParams = new URLSearchParams(window.location.search);
       const jobParam = urlParams.get('job');
       if (jobParam) {
