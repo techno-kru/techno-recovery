@@ -190,19 +190,25 @@
           <!-- ข้อมูลผู้ติดต่อ -->
           <div>
             <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
-              <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย[cite: 1]
+              <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *[cite: 1]</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *</label>
                 <input type="text" id="cust-name" required placeholder="นายสมชาย สดใส" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ *[cite: 1]</label>
-                <input type="tel" id="cust-phone" required placeholder="08x-xxx-xxxx" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ (10 หลัก) *</label>
+                <input type="tel" 
+                       id="cust-phone" 
+                       required 
+                       maxlength="11" 
+                       placeholder="088-0000000" 
+                       oninput="formatPhoneNumber(this)"
+                       class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div class="sm:col-span-2">
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *[cite: 1]</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *</label>
                 <input type="text" id="cust-area" required placeholder="เช่น ชุมชนริมน้ำ ต.หนองบัว อ.เมือง จ.กาญจนบุรี" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
             </div>
@@ -211,12 +217,12 @@
           <!-- หมวด 1: ยานยนต์ -->
           <div class="pt-2">
             <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
-              <i data-lucide="car" class="w-5 h-5 text-kru"></i> 1. หมวดยานยนต์และเครื่องยนต์[cite: 1]
+              <i data-lucide="car" class="w-5 h-5 text-kru"></i> 1. หมวดยานยนต์และเครื่องยนต์
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div>
-                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์[cite: 1]</div>
+                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์</div>
                   <div class="text-xs text-slate-400">ถ่ายน้ำมันเครื่อง/ตรวจหัวเทียน</div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -227,7 +233,7 @@
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div>
-                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์ไฟฟ้า[cite: 1]</div>
+                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์ไฟฟ้า</div>
                   <div class="text-xs text-slate-400">เช็กกล่องควบคุมและแบตเตอรี่</div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -238,7 +244,7 @@
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div>
-                  <div class="font-semibold text-sm text-slate-800">รถยนต์[cite: 1]</div>
+                  <div class="font-semibold text-sm text-slate-800">รถยนต์</div>
                   <div class="text-xs text-slate-400">ตรวจระบบไฟ/ฟิวส์/กรองอากาศ</div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -249,7 +255,7 @@
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div>
-                  <div class="font-semibold text-sm text-slate-800">เครื่องยนต์การเกษตร[cite: 1]</div>
+                  <div class="font-semibold text-sm text-slate-800">เครื่องยนต์การเกษตร</div>
                   <div class="text-xs text-slate-400">ตรวจคาร์บูเรเตอร์/ระบบสตาร์ต</div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -261,7 +267,7 @@
               <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div class="flex items-center justify-between">
                   <div>
-                    <div class="font-semibold text-sm text-slate-800">ยานยนต์ / เครื่องยนต์ อื่นๆ[cite: 1]</div>
+                    <div class="font-semibold text-sm text-slate-800">ยานยนต์ / เครื่องยนต์ อื่นๆ</div>
                     <div class="text-xs text-slate-400">เช่น เครื่องตัดหญ้า, เครื่องปั่นไฟ</div>
                   </div>
                   <div class="flex items-center gap-2">
@@ -280,11 +286,11 @@
           <!-- หมวด 2: เครื่องใช้ไฟฟ้า -->
           <div class="pt-2">
             <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
-              <i data-lucide="tv" class="w-5 h-5 text-kru"></i> 2. หมวดเครื่องใช้ไฟฟ้าในบ้าน[cite: 1]
+              <i data-lucide="tv" class="w-5 h-5 text-kru"></i> 2. หมวดเครื่องใช้ไฟฟ้าในบ้าน
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">พัดลม[cite: 1]</span>
+                <span class="font-semibold text-sm text-slate-800">พัดลม</span>
                 <div class="flex items-center gap-2">
                   <button type="button" onclick="updateCount('fan', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
                   <span id="cnt-fan" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
@@ -292,7 +298,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">หม้อหุงข้าว[cite: 1]</span>
+                <span class="font-semibold text-sm text-slate-800">หม้อหุงข้าว</span>
                 <div class="flex items-center gap-2">
                   <button type="button" onclick="updateCount('rice', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
                   <span id="cnt-rice" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
@@ -300,7 +306,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">ไมโครเวฟ[cite: 1]</span>
+                <span class="font-semibold text-sm text-slate-800">ไมโครเวฟ</span>
                 <div class="flex items-center gap-2">
                   <button type="button" onclick="updateCount('micro', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
                   <span id="cnt-micro" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
@@ -308,7 +314,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">ตู้เย็น[cite: 1]</span>
+                <span class="font-semibold text-sm text-slate-800">ตู้เย็น</span>
                 <div class="flex items-center gap-2">
                   <button type="button" onclick="updateCount('fridge', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
                   <span id="cnt-fridge" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
@@ -316,7 +322,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">เครื่องซักผ้า[cite: 1]</span>
+                <span class="font-semibold text-sm text-slate-800">เครื่องซักผ้า</span>
                 <div class="flex items-center gap-2">
                   <button type="button" onclick="updateCount('washer', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
                   <span id="cnt-washer" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
@@ -324,7 +330,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">โทรทัศน์[cite: 1]</span>
+                <span class="font-semibold text-sm text-slate-800">โทรทัศน์</span>
                 <div class="flex items-center gap-2">
                   <button type="button" onclick="updateCount('tv', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
                   <span id="cnt-tv" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
@@ -334,8 +340,8 @@
               <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div class="flex items-center justify-between">
                   <div>
-                    <div class="font-semibold text-sm text-slate-800">เครื่องใช้ไฟฟ้าอื่นๆ[cite: 1]</div>
-                    <div class="text-xs text-slate-400">เช่น กาน้ำร้อน, เตารีด, เครื่องปั่น[cite: 1]</div>
+                    <div class="font-semibold text-sm text-slate-800">เครื่องใช้ไฟฟ้าอื่นๆ</div>
+                    <div class="text-xs text-slate-400">เช่น กาน้ำร้อน, เตารีด, เครื่องปั่น</div>
                   </div>
                   <div class="flex items-center gap-2">
                     <button type="button" onclick="updateCount('elec-other', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
@@ -353,12 +359,12 @@
           <!-- หมวด 3: ระบบไฟบ้าน -->
           <div class="pt-2">
             <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
-              <i data-lucide="zap" class="w-5 h-5 text-kru"></i> 3. ระบบไฟฟ้าและอุปกรณ์ประจำบ้าน[cite: 1]
+              <i data-lucide="zap" class="w-5 h-5 text-kru"></i> 3. ระบบไฟฟ้าและอุปกรณ์ประจำบ้าน
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div>
-                  <div class="font-semibold text-sm text-slate-800">ปั๊มน้ำ[cite: 1]</div>
+                  <div class="font-semibold text-sm text-slate-800">ปั๊มน้ำ</div>
                   <div class="text-xs text-slate-400">ตรวจฉนวนมอเตอร์และคาปาซิเตอร์</div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -369,7 +375,7 @@
               </div>
               <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div>
-                  <div class="font-semibold text-sm text-slate-800">ตู้คอนซูมเมอร์ / ตู้ไฟ[cite: 1]</div>
+                  <div class="font-semibold text-sm text-slate-800">ตู้คอนซูมเมอร์ / ตู้ไฟ</div>
                   <div class="text-xs text-slate-400">ตรวจเช็กวงจรและสวิตช์ตัดไฟ</div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -381,7 +387,7 @@
               <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div class="flex items-center justify-between">
                   <div>
-                    <div class="font-semibold text-sm text-slate-800">ระบบไฟบ้าน อื่นๆ (เต้ารับ / สวิตช์)[cite: 1]</div>
+                    <div class="font-semibold text-sm text-slate-800">ระบบไฟบ้าน อื่นๆ (เต้ารับ / สวิตช์)</div>
                     <div class="text-xs text-slate-400">ระบุจำนวนจุดที่ต้องการให้ช่างประเมิน</div>
                   </div>
                   <div class="flex items-center gap-2">
@@ -405,23 +411,23 @@
 
           <!-- Symptoms Checkboxes -->
           <div>
-            <h2 class="text-sm font-semibold text-slate-800 mb-2">อาการเบื้องต้น (เลือกได้มากกว่า 1 ข้อ)[cite: 1]</h2>
+            <h2 class="text-sm font-semibold text-slate-800 mb-2">อาการเบื้องต้น (เลือกได้มากกว่า 1 ข้อ)</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-body text-slate-700">
               <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
                 <input type="checkbox" name="symptom" value="ถูกน้ำท่วม / แช่น้ำ" class="rounded text-kru focus:ring-kru">
-                <span>ถูกน้ำท่วม / แช่น้ำ[cite: 1]</span>
+                <span>ถูกน้ำท่วม / แช่น้ำ</span>
               </label>
               <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
                 <input type="checkbox" name="symptom" value="ยังไม่ได้ทดลองเปิดใช้งาน" checked class="rounded text-kru focus:ring-kru">
-                <span class="text-emerald-700 font-medium">ยังไม่ได้ทดลองเปิดใช้งาน (ปลอดภัย)[cite: 1]</span>
+                <span class="text-emerald-700 font-medium">ยังไม่ได้ทดลองเปิดใช้งาน (ปลอดภัย)</span>
               </label>
               <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
                 <input type="checkbox" name="symptom" value="เปิดไม่ติด" class="rounded text-kru focus:ring-kru">
-                <span>เปิดไม่ติด[cite: 1]</span>
+                <span>เปิดไม่ติด</span>
               </label>
               <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
                 <input type="checkbox" name="symptom" value="ทำงานผิดปกติ" class="rounded text-kru focus:ring-kru">
-                <span>ทำงานผิดปกติ[cite: 1]</span>
+                <span>ทำงานผิดปกติ</span>
               </label>
             </div>
           </div>
@@ -429,13 +435,13 @@
           <!-- Terms -->
           <div class="p-5 bg-amber-50/70 border border-amber-200 rounded-2xl text-xs text-amber-900 font-body leading-relaxed">
             <h3 class="font-bold text-sm text-amber-950 flex items-center gap-1.5 mb-1.5">
-              <i data-lucide="info" class="w-4 h-4 text-amber-600"></i> เงื่อนไขและข้อตกลงการให้บริการฟรี[cite: 1]
+              <i data-lucide="info" class="w-4 h-4 text-amber-600"></i> เงื่อนไขและข้อตกลงการให้บริการฟรี
             </h3>
-            <p>1. ทางศูนย์ฯ ให้บริการตรวจสอบและประเมินสภาพเบื้องต้นโดยไม่คิดค่าใช้จ่าย และช่วยซ่อมเฉพาะกรณีเล็กน้อยที่สามารถดำเนินการได้โดยไม่ต้องใช้อะไหล่หรือมีค่าใช้จ่ายเพิ่มเติม[cite: 1]</p>
-            <p>2. หากต้องเปลี่ยนอะไหล่ ใช้วัสดุเพิ่มเติม หรือส่งซ่อมภายนอก ผู้รับบริการเป็นผู้รับผิดชอบค่าใช้จ่ายเอง[cite: 1]</p>
+            <p>1. ทางศูนย์ฯ ให้บริการตรวจสอบและประเมินสภาพเบื้องต้นโดยไม่คิดค่าใช้จ่าย และช่วยซ่อมเฉพาะกรณีเล็กน้อยที่สามารถดำเนินการได้โดยไม่ต้องใช้อะไหล่หรือมีค่าใช้จ่ายเพิ่มเติม</p>
+            <p>2. หากต้องเปลี่ยนอะไหล่ ใช้วัสดุเพิ่มเติม หรือส่งซ่อมภายนอก ผู้รับบริการเป็นผู้รับผิดชอบค่าใช้จ่ายเอง</p>
             <label class="flex items-center gap-2 mt-4 pt-3 border-t border-amber-200/60 font-semibold cursor-pointer text-slate-800">
               <input type="checkbox" id="agree-terms" required class="rounded text-kru focus:ring-kru w-4 h-4">
-              <span>ข้าพเจ้าได้รับทราบเงื่อนไขการให้บริการแล้ว[cite: 1]</span>
+              <span>ข้าพเจ้าได้รับทราบเงื่อนไขการให้บริการแล้ว</span>
             </label>
           </div>
 
@@ -451,7 +457,7 @@
     <section id="section-track" class="tab-content hidden">
       <div class="max-w-2xl mx-auto mb-10 text-center">
         <h2 class="text-3xl font-extrabold text-slate-900">ติดตามสถานะงานตรวจเช็ก</h2>
-        <p class="text-slate-500 font-body text-sm mt-2">ระบุเลขที่รับบริการ (เช่น TRC69-00001) หรือเบอร์โทรศัพท์ที่ใช้ลงทะเบียน[cite: 1]</p>
+        <p class="text-slate-500 font-body text-sm mt-2">ระบุเลขที่รับบริการ (เช่น TRC69-00001) หรือเบอร์โทรศัพท์ที่ใช้ลงทะเบียน</p>
         
         <div class="mt-6 flex gap-2">
           <div class="relative flex-grow">
@@ -482,12 +488,12 @@
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">จำนวนผู้ประสบภัยที่รับบริการ</div>
-          <div class="text-3xl font-extrabold text-slate-900 mt-2" id="kpi-customers">185 ราย[cite: 1]</div>
+          <div class="text-3xl font-extrabold text-slate-900 mt-2" id="kpi-customers">185 ราย</div>
           <div class="text-[11px] text-emerald-600 mt-1 font-body">ครอบคลุม 13 ชุมชน/ตำบล</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">อุปกรณ์ที่รับตรวจทั้งหมด</div>
-          <div class="text-3xl font-extrabold text-kru mt-2" id="kpi-items">428 ชิ้น[cite: 1]</div>
+          <div class="text-3xl font-extrabold text-kru mt-2" id="kpi-items">428 ชิ้น</div>
           <div class="text-[11px] text-slate-400 mt-1 font-body">เฉลี่ย 2.3 ชิ้น / ครอบครัว</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
@@ -497,7 +503,7 @@
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">ส่งมอบคืนปลอดภัยแล้ว</div>
-          <div class="text-3xl font-extrabold text-blue-600 mt-2" id="kpi-returned">287 ชิ้น[cite: 1]</div>
+          <div class="text-3xl font-extrabold text-blue-600 mt-2" id="kpi-returned">287 ชิ้น</div>
           <div class="text-[11px] text-blue-500 mt-1 font-body">นำกลับไปใช้งานได้ปกติ</div>
         </div>
       </div>
@@ -561,11 +567,11 @@
             <table class="w-full text-left text-xs font-body">
               <thead class="bg-slate-50 text-slate-700 uppercase font-semibold border-b border-slate-200">
                 <tr>
-                  <th class="px-4 py-3">เลขที่ใบงาน[cite: 1]</th>
-                  <th class="px-4 py-3">ผู้รับบริการ[cite: 1]</th>
-                  <th class="px-4 py-3">พื้นที่[cite: 1]</th>
-                  <th class="px-4 py-3">จำนวนชิ้น[cite: 1]</th>
-                  <th class="px-4 py-3">สถานะรวม[cite: 1]</th>
+                  <th class="px-4 py-3">เลขที่ใบงาน</th>
+                  <th class="px-4 py-3">ผู้รับบริการ</th>
+                  <th class="px-4 py-3">พื้นที่</th>
+                  <th class="px-4 py-3">จำนวนชิ้น</th>
+                  <th class="px-4 py-3">สถานะรวม</th>
                   <th class="px-4 py-3 text-right">การจัดการ</th>
                 </tr>
               </thead>
@@ -598,9 +604,9 @@
 
         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
           <div>
-            <div class="text-xs text-slate-500">เลขที่รับบริการ (Job No.)[cite: 1]</div>
+            <div class="text-xs text-slate-500">เลขที่รับบริการ (Job No.)</div>
             <div id="slip-job-no" class="text-2xl font-extrabold text-kru font-mono">TRC69-00001</div>
-            <div id="slip-cust-name" class="text-sm font-semibold text-slate-800 mt-1">คุณสมชาย สดใส[cite: 1]</div>
+            <div id="slip-cust-name" class="text-sm font-semibold text-slate-800 mt-1">คุณสมชาย สดใส</div>
             <div id="slip-cust-phone" class="text-xs text-slate-500 font-body">โทร: 081-987-6543 | ต.หนองบัว</div>
           </div>
           <div id="slip-qrcode" class="p-1 bg-white border border-slate-200 rounded-xl shadow-sm"></div>
@@ -613,20 +619,20 @@
 
         <div class="pt-4 border-t border-dashed border-slate-300">
           <h4 class="text-xs font-bold text-slate-700 uppercase mb-2 flex items-center justify-between">
-            <span>ป้ายสติกเกอร์สำหรับติดตัวเครื่อง (Item Tags)[cite: 1]</span>
-            <span class="text-[10px] text-slate-400 no-print">* เลขตรงกับฐานข้อมูลและใบรับของ[cite: 1]</span>
+            <span>ป้ายสติกเกอร์สำหรับติดตัวเครื่อง (Item Tags)</span>
+            <span class="text-[10px] text-slate-400 no-print">* เลขตรงกับฐานข้อมูลและใบรับของ</span>
           </h4>
           <div id="slip-sticker-tags" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-body"></div>
         </div>
 
         <div class="text-[10px] text-slate-400 font-body text-center pt-2">
-          * โปรดเก็บหลักฐานนี้ หรือแสดงข้อความใน LINE แก่เจ้าหน้าที่เพื่อติดต่อขอรับคืนอุปกรณ์[cite: 1]
+          * โปรดเก็บหลักฐานนี้ หรือแสดงข้อความใน LINE แก่เจ้าหน้าที่เพื่อติดต่อขอรับคืนอุปกรณ์
         </div>
       </div>
 
       <div class="mt-6 flex gap-3 no-print">
         <button onclick="window.print()" class="flex-1 bg-kru hover:bg-kru-dark text-white font-semibold py-3 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
-          <i data-lucide="printer" class="w-4 h-4"></i> พิมพ์ใบรับและสติกเกอร์[cite: 1]
+          <i data-lucide="printer" class="w-4 h-4"></i> พิมพ์ใบรับและสติกเกอร์
         </button>
         <button onclick="closeModal('modal-slip')" class="px-5 py-3 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded-xl font-medium text-sm transition">
           ปิดหน้าต่าง
@@ -684,6 +690,19 @@
       'sys-other': 'ระบบไฟบ้านอื่นๆ'
     };
 
+    // ฟังก์ชันจัดรูปแบบเบอร์โทร 088-0000000 อัตโนมัติ
+    function formatPhoneNumber(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length > 10) {
+        value = value.substring(0, 10);
+      }
+      if (value.length > 3) {
+        input.value = value.substring(0, 3) + '-' + value.substring(3);
+      } else {
+        input.value = value;
+      }
+    }
+
     function getDb() {
       const existing = localStorage.getItem('TRC_DATABASE');
       if (existing) return JSON.parse(existing);
@@ -692,7 +711,7 @@
         {
           jobNo: 'TRC69-00001',
           custName: 'นายสมชาย สดใส',
-          phone: '0819876543',
+          phone: '081-9876543',
           area: 'ต.หนองบัว อ.เมือง จ.กาญจนบุรี',
           lineUserId: 'U1234567890abcdef',
           createdAt: '2026-09-30 09:30',
@@ -793,6 +812,15 @@
 
     async function handleFormSubmit(e) {
       e.preventDefault();
+      
+      const phoneInput = document.getElementById('cust-phone').value.trim();
+      const rawDigits = phoneInput.replace(/\D/g, '');
+      if (rawDigits.length !== 10) {
+        alert('กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก (เช่น 088-0000000)');
+        document.getElementById('cust-phone').focus();
+        return;
+      }
+
       const total = Object.values(counts).reduce((a, b) => a + b, 0);
       if (total === 0) {
         alert('กรุณาเลือกจำนวนอุปกรณ์ที่ต้องการรับบริการอย่างน้อย 1 ชิ้น');
@@ -847,7 +875,7 @@
         jobNo: jobNo,
         fullName: document.getElementById('cust-name').value,
         custName: document.getElementById('cust-name').value,
-        phone: document.getElementById('cust-phone').value,
+        phone: phoneInput,
         area: document.getElementById('cust-area').value,
         lineUserId: lineProfile ? lineProfile.userId : '',
         symptoms: selectedSymptoms,
@@ -933,14 +961,14 @@
       const q = document.getElementById('track-search-input').value.trim();
       const container = document.getElementById('tracking-result-box');
       const db = getDb();
-      let found = db.find(j => (j.jobNo && j.jobNo.toLowerCase() === q.toLowerCase()) || (j.phone && j.phone === q));
+      let found = db.find(j => (j.jobNo && j.jobNo.toLowerCase() === q.toLowerCase()) || (j.phone && j.phone.replace(/\D/g, '') === q.replace(/\D/g, '')));
 
       if (!found) {
         container.innerHTML = `
           <div class="p-8 bg-white border border-slate-200 rounded-3xl text-center text-slate-400 font-body">
             <i data-lucide="help-circle" class="w-12 h-12 mx-auto mb-2 text-slate-300"></i>
             <p class="font-bold text-slate-700 text-base">ไม่พบข้อมูลการรับบริการ</p>
-            <p class="text-xs mt-1">โปรดตรวจสอบเลขที่ใบงาน (เช่น TRC69-00001) หรือเบอร์โทรศัพท์อีกครั้ง[cite: 1]</p>
+            <p class="text-xs mt-1">โปรดตรวจสอบเลขที่ใบงาน (เช่น TRC69-00001) หรือเบอร์โทรศัพท์อีกครั้ง</p>
           </div>
         `;
         lucide.createIcons();
@@ -972,36 +1000,36 @@
         <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div>
-              <span class="text-xs text-slate-400 font-mono">รหัสติดตามพัสดุรับซ่อม[cite: 1]</span>
+              <span class="text-xs text-slate-400 font-mono">รหัสติดตามพัสดุรับซ่อม</span>
               <h3 class="text-2xl font-extrabold text-kru font-mono">${found.jobNo}</h3>
               <p class="text-sm font-semibold text-slate-800 mt-1">${found.custName || found.fullName} (${found.area})</p>
             </div>
             <button onclick='showSlipModal(${JSON.stringify(found)})' class="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-xs font-semibold flex items-center gap-2">
-              <i data-lucide="printer" class="w-4 h-4"></i> ใบรับบริการ/สติกเกอร์[cite: 1]
+              <i data-lucide="printer" class="w-4 h-4"></i> ใบรับบริการ/สติกเกอร์
             </button>
           </div>
 
           <div class="grid grid-cols-4 gap-2 text-center text-xs font-body pt-2">
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">1</div>
-              <div class="font-semibold text-emerald-800">ลงทะเบียนแล้ว[cite: 1]</div>
+              <div class="font-semibold text-emerald-800">ลงทะเบียนแล้ว</div>
             </div>
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">2</div>
-              <div class="font-semibold text-emerald-800">รับของแล้ว[cite: 1]</div>
+              <div class="font-semibold text-emerald-800">รับของแล้ว</div>
             </div>
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">3</div>
-              <div class="font-semibold text-emerald-800">ตรวจ/ซ่อมเสร็จ[cite: 1]</div>
+              <div class="font-semibold text-emerald-800">ตรวจ/ซ่อมเสร็จ</div>
             </div>
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full ${found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">4</div>
-              <div class="font-medium text-slate-600">ส่งมอบเรียบร้อย[cite: 1]</div>
+              <div class="font-medium text-slate-600">ส่งมอบเรียบร้อย</div>
             </div>
           </div>
 
           <div class="pt-4 border-t border-slate-100">
-            <h4 class="text-xs font-bold text-slate-700 uppercase mb-3">สถานะอุปกรณ์รายชิ้น[cite: 1]</h4>
+            <h4 class="text-xs font-bold text-slate-700 uppercase mb-3">สถานะอุปกรณ์รายชิ้น</h4>
             <div class="space-y-2.5">${itemsHtml}</div>
           </div>
         </div>
