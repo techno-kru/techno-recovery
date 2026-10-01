@@ -13,7 +13,6 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Sarabun & Prompt -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
@@ -81,7 +80,7 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-kru selection:text-white">
 
-  <!-- แถบด้านบนแจ้งข้อมูลด่วน -->
+  <!-- Header แถบข้อมูลด่วน -->
   <div class="bg-gradient-to-r from-kru to-kru-dark text-white text-xs py-2 px-4 shadow-sm">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
       <div class="flex items-center gap-2">
@@ -135,7 +134,7 @@
     </div>
   </header>
 
-  <!-- Content Container -->
+  <!-- Main Container -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     <!-- 1. ส่วนลงทะเบียนรับบริการ -->
@@ -153,7 +152,7 @@
         </p>
       </div>
 
-      <!-- ขั้นตอนที่ 1: เข้าสู่ระบบ LINE หรือเลือกเข้าฟอร์มโดยตรง -->
+      <!-- เข้าสู่ระบบ LINE หรือเข้าตรง -->
       <div id="line-auth-gate" class="max-w-xl mx-auto mb-8 bg-white border border-emerald-200 rounded-3xl p-6 sm:p-8 shadow-sm text-center">
         <div class="w-16 h-16 bg-[#06C755]/10 text-[#06C755] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#06C755]/20">
           <i data-lucide="message-circle" class="w-9 h-9"></i>
@@ -174,10 +173,8 @@
         </div>
       </div>
 
-      <!-- ขั้นตอนที่ 2: ฟอร์มลงทะเบียน -->
+      <!-- ฟอร์มลงทะเบียน -->
       <div id="registration-form-card" class="hidden max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-10 mb-12">
-        
-        <!-- กล่องข้อมูลผู้ใช้ LINE (ซ่อน User ID) -->
         <div id="line-profile-box" class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 mb-8">
           <div class="flex items-center gap-3">
             <img id="line-avatar" src="kru_color.png" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-emerald-500 object-cover shadow-sm">
@@ -195,7 +192,6 @@
         </div>
 
         <form id="serviceForm" onsubmit="handleFormSubmit(event)" class="space-y-8">
-          <!-- ข้อมูลผู้ติดต่อ -->
           <div>
             <h2 class="text-lg font-bold text-slate-900 border-l-4 border-kru pl-3 mb-4 flex items-center gap-2">
               <i data-lucide="user" class="w-5 h-5 text-kru"></i> ข้อมูลผู้ติดต่อ / ผู้ประสบภัย
@@ -207,13 +203,7 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ (10 หลัก) *</label>
-                <input type="tel" 
-                       id="cust-phone" 
-                       required 
-                       maxlength="11" 
-                       placeholder="088-0000000" 
-                       oninput="formatPhoneNumber(this)"
-                       class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+                <input type="tel" id="cust-phone" required maxlength="11" placeholder="088-0000000" oninput="formatPhoneNumber(this)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div class="sm:col-span-2">
                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *</label>
@@ -241,7 +231,7 @@
                   </div>
                 </div>
                 <div id="sym-moto" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-moto-text" placeholder="ระบุอาการ/ปัญหา เช่น แช่น้ำมิดคัน สตาร์ตไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-moto-text" placeholder="ระบุอาการ เช่น แช่น้ำมิดคัน สตาร์ตไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -258,7 +248,7 @@
                   </div>
                 </div>
                 <div id="sym-moto-ev" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-moto-ev-text" placeholder="ระบุอาการ เช่น น้ำเข้าแบตเตอรี่ หน้าปัดไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-moto-ev-text" placeholder="ระบุอาการ เช่น น้ำเข้าแบตเตอรี่" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -275,7 +265,7 @@
                   </div>
                 </div>
                 <div id="sym-car" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-car-text" placeholder="ระบุอาการ เช่น น้ำท่วมระดับครึ่งล้อ ลากมาส่ง" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-car-text" placeholder="ระบุอาการ เช่น น้ำท่วมระดับล้อ" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -292,7 +282,7 @@
                   </div>
                 </div>
                 <div id="sym-agri" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-agri-text" placeholder="ระบุอาการ เช่น เครื่องยนต์จมโคลน ดึงสตาร์ตไม่ไป" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-agri-text" placeholder="ระบุอาการ เช่น จมโคลน สตาร์ตไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -309,8 +299,8 @@
                   </div>
                 </div>
                 <div id="box-auto-other" class="hidden pt-2 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input type="text" id="desc-auto-other" placeholder="ระบุชนิดอุปกรณ์ (เช่น เครื่องตัดหญ้า)" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
-                  <input type="text" id="sym-auto-other-text" placeholder="ระบุอาการ (เช่น แช่น้ำ 2 วัน ยังไม่สตาร์ต)" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="desc-auto-other" placeholder="ระบุอุปกรณ์ (เช่น เครื่องตัดหญ้า)" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-auto-other-text" placeholder="ระบุอาการ" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
             </div>
@@ -332,7 +322,7 @@
                   </div>
                 </div>
                 <div id="sym-fan" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-fan-text" placeholder="ระบุอาการ เช่น น้ำท่วมมิดมอเตอร์ เปิดแล้วมีควัน" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-fan-text" placeholder="ระบุอาการ เช่น มอเตอร์ติดขัด แช่น้ำ" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -360,7 +350,7 @@
                   </div>
                 </div>
                 <div id="sym-micro" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-micro-text" placeholder="ระบุอาการ เช่น โคลนเข้าในเครื่อง ไม่กล้าเปิดใช้" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-micro-text" placeholder="ระบุอาการ เช่น น้ำเข้าวงจร" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -374,7 +364,7 @@
                   </div>
                 </div>
                 <div id="sym-fridge" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-fridge-text" placeholder="ระบุอาการ เช่น น้ำท่วมคอมเพรสเซอร์ด้านหลัง" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-fridge-text" placeholder="ระบุอาการ เช่น ท่วมระดับคอมเพรสเซอร์" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -388,7 +378,7 @@
                   </div>
                 </div>
                 <div id="sym-washer" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-washer-text" placeholder="ระบุอาการ เช่น แช่น้ำท่วมแผงวงจร เสียบไฟไม่เข้า" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-washer-text" placeholder="ระบุอาการ เช่น มอเตอร์จมน้ำ" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -402,7 +392,7 @@
                   </div>
                 </div>
                 <div id="sym-tv" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-tv-text" placeholder="ระบุอาการ เช่น จมน้ำครึ่งจอ เปิดไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-tv-text" placeholder="ระบุอาการ เช่น เปิดไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -419,8 +409,8 @@
                   </div>
                 </div>
                 <div id="box-elec-other" class="hidden pt-2 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input type="text" id="desc-elec-other" placeholder="ระบุชนิดอุปกรณ์ (เช่น กาน้ำร้อน)" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
-                  <input type="text" id="sym-elec-other-text" placeholder="ระบุอาการ (เช่น แช่น้ำ ฐานไฟชื้น)" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="desc-elec-other" placeholder="ระบุชนิดอุปกรณ์" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-elec-other-text" placeholder="ระบุอาการ" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
             </div>
@@ -445,7 +435,7 @@
                   </div>
                 </div>
                 <div id="sym-pump" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-pump-text" placeholder="ระบุอาการ เช่น มอเตอร์จมน้ำ มีเสียงครางแต่ไม่หมุน" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-pump-text" placeholder="ระบุอาการ เช่น มอเตอร์จมน้ำ มีเสียงคราง" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -462,7 +452,7 @@
                   </div>
                 </div>
                 <div id="sym-breaker" class="hidden pt-2 border-t border-slate-200">
-                  <input type="text" id="sym-breaker-text" placeholder="ระบุอาการ เช่น สับเบรกเกอร์แล้วตัดทันที" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-breaker-text" placeholder="ระบุอาการ เช่น สับเบรกเกอร์แล้วตัด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
 
@@ -479,34 +469,33 @@
                   </div>
                 </div>
                 <div id="box-sys-other" class="hidden pt-2 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input type="text" id="desc-sys-other" placeholder="ระบุจุด (เช่น ปลั๊กผนังชั้นล่าง 4 จุด)" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
-                  <input type="text" id="sym-sys-other-text" placeholder="ระบุอาการ (เช่น มีคราบโคลนเกาะในเต้ารับ)" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="desc-sys-other" placeholder="ระบุจุด" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-sys-other-text" placeholder="ระบุอาการ" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Total Items Summary -->
+          <!-- สรุปจำนวนชิ้น -->
           <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-between">
             <span class="font-semibold text-sm text-kru">จำนวนอุปกรณ์ที่นำมารับบริการทั้งหมด:</span>
             <span class="text-2xl font-extrabold text-kru" id="total-items-badge">0 ชิ้น</span>
           </div>
 
-          <!-- Terms -->
+          <!-- ข้อตกลง -->
           <div class="p-5 bg-amber-50/70 border border-amber-200 rounded-2xl text-xs text-amber-900 font-body leading-relaxed">
             <h3 class="font-bold text-sm text-amber-950 flex items-center gap-1.5 mb-1.5">
               <i data-lucide="info" class="w-4 h-4 text-amber-600"></i> เงื่อนไขและข้อตกลงการให้บริการฟรี
             </h3>
-            <p>1. ทางศูนย์ฯ ให้บริการตรวจสอบและประเมินสภาพเบื้องต้นโดยไม่คิดค่าใช้จ่าย และช่วยซ่อมเฉพาะกรณีเล็กน้อยที่สามารถดำเนินการได้โดยไม่ต้องใช้อะไหล่หรือมีค่าใช้จ่ายเพิ่มเติม</p>
-            <p>2. หากต้องเปลี่ยนอะไหล่ ใช้วัสดุเพิ่มเติม หรือส่งซ่อมภายนอก ผู้รับบริการเป็นผู้รับผิดชอบค่าใช้จ่ายเอง</p>
+            <p>1. บริการตรวจเช็กและประเมินสภาพเบื้องต้นฟรี และช่วยซ่อมแซมเล็กน้อยกรณีไม่ต้องใช้อะไหล่</p>
+            <p>2. หากต้องเปลี่ยนอะไหล่หรือส่งซ่อมภายนอก ผู้รับบริการเป็นผู้รับผิดชอบค่าใช้จ่ายเอง</p>
             <label class="flex items-center gap-2 mt-4 pt-3 border-t border-amber-200/60 font-semibold cursor-pointer text-slate-800">
               <input type="checkbox" id="agree-terms" required class="rounded text-kru focus:ring-kru w-4 h-4">
               <span>ข้าพเจ้าได้รับทราบเงื่อนไขการให้บริการแล้ว</span>
             </label>
           </div>
 
-          <!-- Submit Button -->
-          <button type="submit" id="btn-submit-form" class="w-full bg-gradient-to-r from-kru to-kru-dark hover:from-kru-dark hover:to-kru text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-emerald-950/15 hover:shadow-xl transition flex items-center justify-center gap-2 text-base active:scale-[0.99]">
+          <button type="submit" id="btn-submit-form" class="w-full bg-gradient-to-r from-kru to-kru-dark hover:from-kru-dark hover:to-kru text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-base">
             <i data-lucide="send" class="w-5 h-5"></i> ยืนยันการลงทะเบียนรับบริการ
           </button>
         </form>
@@ -517,12 +506,12 @@
     <section id="section-track" class="tab-content hidden">
       <div class="max-w-2xl mx-auto mb-10 text-center">
         <h2 class="text-3xl font-extrabold text-slate-900">ติดตามสถานะงานตรวจเช็ก</h2>
-        <p class="text-slate-500 font-body text-sm mt-2">ระบุเบอร์โทรศัพท์ที่ใช้ลงทะเบียน หรือเลขที่ใบรับบริการ (เช่น TRC69-00001)</p>
+        <p class="text-slate-500 font-body text-sm mt-2">ระบุเบอร์โทรศัพท์ที่ใช้ลงทะเบียน หรือเลขที่ใบรับบริการ (เช่น TRC69-00004)</p>
         
         <div class="mt-6 flex gap-2">
           <div class="relative flex-grow">
             <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
-            <input type="text" id="track-search-input" placeholder="กรอกเบอร์โทร (เช่น 088-0000000) หรือเลขใบงาน" class="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru shadow-sm">
+            <input type="text" id="track-search-input" placeholder="กรอกเบอร์โทร หรือเลขใบงาน" class="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru shadow-sm">
           </div>
           <button onclick="performTrackingSearch()" class="bg-kru hover:bg-kru-dark text-white font-semibold px-6 py-3.5 rounded-2xl shadow-md transition flex items-center gap-2">
             <span>ค้นหา</span>
@@ -540,8 +529,8 @@
           <h2 class="text-2xl font-extrabold text-slate-900">ศูนย์ข้อมูลผลการดำเนินงานช่วยเหลือประชาชน</h2>
           <p class="text-slate-500 text-sm font-body">รายงานสรุปสถิติแบบเรียลไทม์ ภารกิจฟื้นฟูหลังน้ำท่วม คณะเทคโนโลยีอุตสาหกรรม</p>
         </div>
-        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-kru border border-emerald-200 text-xs px-3 py-1.5 rounded-xl font-medium self-start sm:self-auto">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> กำลังดึงข้อมูล...
+        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-kru border border-emerald-200 text-xs px-3 py-1.5 rounded-xl font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> อัปเดตล่าสุด
         </span>
       </div>
 
@@ -549,22 +538,18 @@
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">จำนวนผู้ประสบภัยที่รับบริการ</div>
           <div class="text-3xl font-extrabold text-slate-900 mt-2" id="kpi-customers">185 ราย</div>
-          <div class="text-[11px] text-emerald-600 mt-1 font-body">ครอบคลุมชุมชนใน จ.กาญจนบุรี</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">อุปกรณ์ที่รับตรวจทั้งหมด</div>
           <div class="text-3xl font-extrabold text-kru mt-2" id="kpi-items">428 ชิ้น</div>
-          <div class="text-[11px] text-slate-400 mt-1 font-body">ยานยนต์และเครื่องใช้ไฟฟ้า</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">ผ่านการตรวจ & ซ่อมเสร็จ</div>
           <div class="text-3xl font-extrabold text-emerald-600 mt-2" id="kpi-inspected">386 ชิ้น</div>
-          <div class="text-[11px] text-emerald-600 mt-1 font-body">ผ่านการตรวจสอบความปลอดภัย</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">ส่งมอบคืนปลอดภัยแล้ว</div>
           <div class="text-3xl font-extrabold text-blue-600 mt-2" id="kpi-returned">287 ชิ้น</div>
-          <div class="text-[11px] text-blue-500 mt-1 font-body">นำกลับไปใช้งานได้ปกติ</div>
         </div>
       </div>
     </section>
@@ -615,6 +600,9 @@
             <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
               <i data-lucide="layers" class="w-5 h-5 text-kru"></i> รายการใบงานที่อยู่ระหว่างดำเนินการ
             </h3>
+            <button onclick="fetchStaffJobsOnline()" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> รีเฟรชข้อมูล
+            </button>
           </div>
           
           <div class="overflow-x-auto">
@@ -637,6 +625,58 @@
     </section>
 
   </main>
+
+  <!-- Modal ปรับสถานะงานสำหรับเจ้าหน้าที่ (เพิ่มใหม่) -->
+  <div id="modal-update-status" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+      <button onclick="closeModal('modal-update-status')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="pb-4 border-b border-slate-200">
+        <span class="text-xs bg-emerald-100 text-kru px-2 py-0.5 rounded font-bold">บันทึกผลการตรวจเช็กและซ่อม</span>
+        <h3 class="text-xl font-bold text-slate-900 mt-1 flex items-center gap-2">
+          <span>ใบงาน: </span>
+          <span id="update-modal-jobno" class="font-mono text-kru">TRC69-XXXXX</span>
+        </h3>
+        <p id="update-modal-cust" class="text-xs text-slate-500 font-body">ผู้รับบริการ: -</p>
+      </div>
+
+      <form id="updateStatusForm" onsubmit="submitStatusUpdate(event)" class="space-y-5 mt-5">
+        <!-- สถานะภาพรวม -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">สถานะภาพรวมของใบงาน *</label>
+          <select id="update-overall-status" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-semibold text-kru focus:outline-none focus:ring-2 focus:ring-kru">
+            <option value="ลงทะเบียนแล้ว">ลงทะเบียนแล้ว</option>
+            <option value="รับของเข้าศูนย์ฯ แล้ว">รับของเข้าศูนย์ฯ แล้ว</option>
+            <option value="กำลังตรวจเช็ก/ซ่อมแซม">กำลังตรวจเช็ก/ซ่อมแซม</option>
+            <option value="พร้อมรับคืน">พร้อมรับคืน (ตรวจเช็กเสร็จสิ้น)</option>
+            <option value="ส่งมอบแล้ว">ส่งมอบคืนเรียบร้อยแล้ว</option>
+          </select>
+        </div>
+
+        <!-- รายการอุปกรณ์รายชิ้น -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-2">ผลตรวจเช็กรายอุปกรณ์</label>
+          <div id="update-items-container" class="space-y-3 max-h-72 overflow-y-auto pr-1"></div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่ออาจารย์ / ช่างผู้ตรวจเช็ก *</label>
+          <input type="text" id="update-staff-name" required value="ผศ.ดร.สมเกียรติ (หัวหน้าทีมช่าง)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kru">
+        </div>
+
+        <div class="pt-3 flex gap-3">
+          <button type="submit" id="btn-save-status" class="flex-1 bg-kru hover:bg-kru-dark text-white font-semibold py-3 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
+            <i data-lucide="save" class="w-4 h-4"></i> บันทึกการอัปเดตลงระบบ
+          </button>
+          <button type="button" onclick="closeModal('modal-update-status')" class="px-5 py-3 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded-xl font-medium text-sm transition">
+            ยกเลิก
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Modal Slip & Stickers สำหรับสั่งพิมพ์ -->
   <div id="modal-slip" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
@@ -673,7 +713,7 @@
 
         <div class="pt-4 border-t border-dashed border-slate-300">
           <h4 class="text-xs font-bold text-slate-700 uppercase mb-2 flex items-center justify-between">
-            <span>ป้ายสติกเกอร์สำหรับติดตัวเครื่อง (Item Tags)</span>
+            <span>ป้ายสติกเกอร์สำหรับติดตัวเครื่อง (ITEM TAGS)</span>
             <span class="text-[10px] text-slate-400 no-print">* เลขตรงกับฐานข้อมูลและใบรับของ</span>
           </h4>
           <div id="slip-sticker-tags" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-body"></div>
@@ -721,6 +761,7 @@
     const LIFF_ID = "2011810855-x2XKNgbh";
 
     let lineProfile = null;
+    let currentEditingJob = null;
     let counts = {
       'moto': 0, 'moto-ev': 0, 'car': 0, 'agri': 0, 'auto-other': 0,
       'fan': 0, 'rice': 0, 'micro': 0, 'fridge': 0, 'washer': 0, 'tv': 0, 'elec-other': 0,
@@ -728,31 +769,16 @@
     };
 
     const itemLabels = {
-      'moto': 'รถจักรยานยนต์',
-      'moto-ev': 'รถจักรยานยนต์ไฟฟ้า',
-      'car': 'รถยนต์',
-      'agri': 'เครื่องยนต์การเกษตร',
-      'auto-other': 'ยานยนต์อื่นๆ',
-      'fan': 'พัดลม',
-      'rice': 'หม้อหุงข้าว',
-      'micro': 'ไมโครเวฟ',
-      'fridge': 'ตู้เย็น',
-      'washer': 'เครื่องซักผ้า',
-      'tv': 'โทรทัศน์',
-      'elec-other': 'เครื่องใช้ไฟฟ้าอื่นๆ',
-      'pump': 'ปั๊มน้ำ',
-      'breaker': 'ตู้คอนซูมเมอร์ / ตู้ไฟ',
-      'sys-other': 'ระบบไฟบ้านอื่นๆ'
+      'moto': 'รถจักรยานยนต์', 'moto-ev': 'รถจักรยานยนต์ไฟฟ้า', 'car': 'รถยนต์', 'agri': 'เครื่องยนต์การเกษตร', 'auto-other': 'ยานยนต์อื่นๆ',
+      'fan': 'พัดลม', 'rice': 'หม้อหุงข้าว', 'micro': 'ไมโครเวฟ', 'fridge': 'ตู้เย็น', 'washer': 'เครื่องซักผ้า', 'tv': 'โทรทัศน์', 'elec-other': 'เครื่องใช้ไฟฟ้าอื่นๆ',
+      'pump': 'ปั๊มน้ำ', 'breaker': 'ตู้คอนซูมเมอร์ / ตู้ไฟ', 'sys-other': 'ระบบไฟบ้านอื่นๆ'
     };
 
     function formatPhoneNumber(input) {
       let value = input.value.replace(/\D/g, '');
       if (value.length > 10) value = value.substring(0, 10);
-      if (value.length > 3) {
-        input.value = value.substring(0, 3) + '-' + value.substring(3);
-      } else {
-        input.value = value;
-      }
+      if (value.length > 3) input.value = value.substring(0, 3) + '-' + value.substring(3);
+      else input.value = value;
     }
 
     async function initLiff() {
@@ -768,7 +794,7 @@
           displayUserProfile();
         }
       } catch (err) {
-        console.warn("LIFF initialization error:", err);
+        console.warn("LIFF error:", err);
       }
     }
 
@@ -792,18 +818,13 @@
 
     function loginWithLine() {
       if (window.liff) {
-        if (!liff.isLoggedIn()) {
-          liff.login();
-        } else {
-          initLiff();
-        }
+        if (!liff.isLoggedIn()) liff.login();
+        else initLiff();
       }
     }
 
     function logoutLine() {
-      if (window.liff && liff.isLoggedIn()) {
-        liff.logout();
-      }
+      if (window.liff && liff.isLoggedIn()) liff.logout();
       lineProfile = null;
       document.getElementById('line-auth-gate').classList.remove('hidden');
       document.getElementById('registration-form-card').classList.add('hidden');
@@ -838,7 +859,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (tabId === 'staff' && sessionStorage.getItem('TRC_STAFF_AUTH') === 'true') {
-        renderStaffJobs();
+        fetchStaffJobsOnline();
       }
     }
 
@@ -887,29 +908,22 @@
       e.preventDefault();
       
       const nameInput = document.getElementById('cust-name').value.trim();
-      if (!nameInput) {
-        alert('กรุณากรอกชื่อ - นามสกุลของผู้ติดต่อ');
-        document.getElementById('cust-name').focus();
-        return;
-      }
-
       const phoneInput = document.getElementById('cust-phone').value.trim();
       const rawDigits = phoneInput.replace(/\D/g, '');
       if (rawDigits.length !== 10) {
         alert('กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก (เช่น 088-0000000)');
-        document.getElementById('cust-phone').focus();
         return;
       }
 
       const total = Object.values(counts).reduce((a, b) => a + b, 0);
       if (total === 0) {
-        alert('กรุณาเลือกจำนวนอุปกรณ์ที่ต้องการรับบริการอย่างน้อย 1 ชิ้น');
+        alert('กรุณาเลือกจำนวนอุปกรณ์อย่างน้อย 1 ชิ้น');
         return;
       }
 
       const submitBtn = document.getElementById('btn-submit-form');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> กำลังบันทึกข้อมูลและส่งแจ้งเตือน...';
+      submitBtn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> กำลังบันทึกข้อมูล...';
       lucide.createIcons();
 
       const db = getDb();
@@ -923,27 +937,25 @@
         if (qty > 0) {
           let customSymptom = "";
           const symInput = document.getElementById(`sym-${key}-text`);
-          if (symInput && symInput.value.trim()) {
-            customSymptom = symInput.value.trim();
-          }
+          if (symInput && symInput.value.trim()) customSymptom = symInput.value.trim();
 
           for (let i = 0; i < qty; i++) {
             let itemName = itemLabels[key];
             if (key === 'auto-other') {
               const desc = document.getElementById('desc-auto-other').value.trim();
               if (desc) itemName = `${desc} (ยานยนต์อื่นๆ)`;
-              const otherSym = document.getElementById('sym-auto-other-text').value.trim();
-              if (otherSym) customSymptom = otherSym;
+              const oSym = document.getElementById('sym-auto-other-text').value.trim();
+              if (oSym) customSymptom = oSym;
             } else if (key === 'elec-other') {
               const desc = document.getElementById('desc-elec-other').value.trim();
               if (desc) itemName = `${desc} (เครื่องใช้ไฟฟ้าอื่นๆ)`;
-              const otherSym = document.getElementById('sym-elec-other-text').value.trim();
-              if (otherSym) customSymptom = otherSym;
+              const oSym = document.getElementById('sym-elec-other-text').value.trim();
+              if (oSym) customSymptom = oSym;
             } else if (key === 'sys-other') {
               const desc = document.getElementById('desc-sys-other').value.trim();
               if (desc) itemName = `${desc} (ระบบไฟบ้านอื่นๆ)`;
-              const otherSym = document.getElementById('sym-sys-other-text').value.trim();
-              if (otherSym) customSymptom = otherSym;
+              const oSym = document.getElementById('sym-sys-other-text').value.trim();
+              if (oSym) customSymptom = oSym;
             }
 
             const itemNo = `${jobNo}-${('0' + itemSeq).slice(-2)}`;
@@ -953,7 +965,7 @@
               name: itemName,
               status: 'ลงทะเบียนแล้ว',
               symptom: customSymptom || 'แช่น้ำ/ตรวจเช็กความปลอดภัย',
-              result: 'รอส่งมอบเครื่องเข้าศูนย์ฯ',
+              result: '',
               tech: '-'
             });
             itemSeq++;
@@ -980,7 +992,6 @@
       db.unshift(newRecord);
       saveDb(db);
 
-      // ส่งคำสั่งไปยัง Google Apps Script (ใช้ text/plain เพื่อข้าม CORS 100%)
       try {
         await fetch(GAS_API_URL, {
           method: "POST",
@@ -1008,7 +1019,7 @@
 
       const itemsBox = document.getElementById('slip-items-list');
       itemsBox.innerHTML = '';
-      record.items.forEach(item => {
+      (record.items || []).forEach(item => {
         itemsBox.innerHTML += `
           <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
             <div class="flex items-center justify-between">
@@ -1016,14 +1027,14 @@
               <span class="font-bold text-slate-800">${item.name}</span>
               <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">${item.status}</span>
             </div>
-            <div class="text-[11px] text-amber-800 bg-amber-50/80 px-2 py-1 rounded-lg">อาการ: ${item.symptom || 'ตรวจเช็กความปลอดภัย'}</div>
+            <div class="text-[11px] text-amber-800 bg-amber-50/80 px-2 py-1 rounded-lg">อาการ: ${item.symptom || '-'}</div>
           </div>
         `;
       });
 
       const stickerBox = document.getElementById('slip-sticker-tags');
       stickerBox.innerHTML = '';
-      record.items.forEach(item => {
+      (record.items || []).forEach(item => {
         stickerBox.innerHTML += `
           <div class="p-2.5 border-2 border-slate-300 rounded-xl bg-white space-y-1">
             <div class="flex justify-between items-start">
@@ -1051,15 +1062,115 @@
       lucide.createIcons();
     }
 
+    // เปิดหน้าต่างแก้ไขสถานะงานสำหรับช่าง
+    function openUpdateModal(job) {
+      currentEditingJob = job;
+      document.getElementById('update-modal-jobno').innerText = job.jobNo;
+      document.getElementById('update-modal-cust').innerText = `ผู้รับบริการ: ${job.custName || job.fullName} (${job.phone})`;
+      document.getElementById('update-overall-status').value = job.status || "ลงทะเบียนแล้ว";
+
+      const container = document.getElementById('update-items-container');
+      container.innerHTML = '';
+
+      (job.items || []).forEach((it, idx) => {
+        container.innerHTML += `
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-kru text-xs">${it.itemNo}</span>
+              <span class="font-bold text-slate-800 text-xs">${it.name}</span>
+            </div>
+            <div class="text-[11px] text-amber-800">อาการที่แจ้ง: ${it.symptom || '-'}</div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <div>
+                <label class="block text-[10px] text-slate-500 mb-0.5">สถานะชิ้นนี้</label>
+                <select id="u-status-${idx}" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
+                  <option value="รอตรวจเช็ก" ${it.status === 'รอตรวจเช็ก' ? 'selected' : ''}>รอตรวจเช็ก</option>
+                  <option value="กำลังตรวจเช็ก" ${it.status === 'กำลังตรวจเช็ก' ? 'selected' : ''}>กำลังตรวจเช็ก</option>
+                  <option value="ซ่อมแซมเล็กน้อย" ${it.status === 'ซ่อมแซมเล็กน้อย' ? 'selected' : ''}>ซ่อมแซมเล็กน้อย</option>
+                  <option value="พร้อมรับคืน" ${it.status === 'พร้อมรับคืน' ? 'selected' : ''}>พร้อมรับคืน</option>
+                  <option value="ส่งมอบแล้ว" ${it.status === 'ส่งมอบแล้ว' ? 'selected' : ''}>ส่งมอบแล้ว</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] text-slate-500 mb-0.5">ผลการตรวจ/การซ่อม</label>
+                <input type="text" id="u-res-${idx}" value="${it.result || ''}" placeholder="เช่น อบไล่ชื้น วัด Megger ผ่าน" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('modal-update-status').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    async function submitStatusUpdate(e) {
+      e.preventDefault();
+      if (!currentEditingJob) return;
+
+      const btn = document.getElementById('btn-save-status');
+      btn.disabled = true;
+      btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> กำลังบันทึก...';
+      lucide.createIcons();
+
+      const overallStatus = document.getElementById('update-overall-status').value;
+      const staffName = document.getElementById('update-staff-name').value;
+
+      const updatedItems = (currentEditingJob.items || []).map((it, idx) => {
+        return {
+          itemNo: it.itemNo,
+          status: document.getElementById(`u-status-${idx}`).value,
+          result: document.getElementById(`u-res-${idx}`).value,
+          tech: staffName
+        };
+      });
+
+      const payload = {
+        action: "updateStatus",
+        jobNo: currentEditingJob.jobNo,
+        overallStatus: overallStatus,
+        staffName: staffName,
+        custName: currentEditingJob.custName || currentEditingJob.fullName,
+        lineUserId: currentEditingJob.lineUserId || "",
+        items: updatedItems
+      };
+
+      try {
+        await fetch(GAS_API_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        // อัปเดตข้อมูลในหน้าเว็บช่าง
+        currentEditingJob.status = overallStatus;
+        currentEditingJob.items.forEach((it, idx) => {
+          it.status = updatedItems[idx].status;
+          it.result = updatedItems[idx].result;
+          it.tech = staffName;
+        });
+
+        alert(`อัปเดตใบงาน ${currentEditingJob.jobNo} เป็นสถานะ "${overallStatus}" เรียบร้อยแล้ว`);
+        closeModal('modal-update-status');
+        fetchStaffJobsOnline();
+      } catch (err) {
+        alert("เกิดข้อผิดพลาดในการบันทึก: " + err.toString());
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i data-lucide="save" class="w-4 h-4"></i> บันทึกการอัปเดตลงระบบ';
+        lucide.createIcons();
+      }
+    }
+
     function closeModal(id) {
       document.getElementById(id).classList.add('hidden');
     }
 
-    // ฟังก์ชันค้นหาติดตามสถานะ เชื่อมตรงกับ Google Sheets แบบ Real-time
     async function performTrackingSearch() {
       const q = document.getElementById('track-search-input').value.trim();
       const container = document.getElementById('tracking-result-box');
-      
       if (!q) {
         alert('กรุณากรอกเบอร์โทรศัพท์ หรือเลขที่ใบรับบริการ');
         return;
@@ -1068,7 +1179,7 @@
       container.innerHTML = `
         <div class="p-8 bg-white border border-slate-200 rounded-3xl text-center text-slate-500 font-body">
           <i data-lucide="loader" class="w-8 h-8 mx-auto mb-2 animate-spin text-kru"></i>
-          <p class="font-semibold text-sm">กำลังค้นหาข้อมูลในระบบฐานข้อมูล...</p>
+          <p class="font-semibold text-sm">กำลังค้นหาข้อมูลในระบบ...</p>
         </div>
       `;
       lucide.createIcons();
@@ -1076,7 +1187,6 @@
       let cleanQ = q.replace(/\D/g, '');
       let found = null;
 
-      // ค้นหาตรงจาก Google Sheets API
       try {
         const queryParam = q.toLowerCase().startsWith('trc') ? `job_no=${encodeURIComponent(q)}` : `phone=${encodeURIComponent(cleanQ)}`;
         const res = await fetch(`${GAS_API_URL}?action=getJob&${queryParam}`);
@@ -1085,10 +1195,9 @@
           found = resJson.data;
         }
       } catch (e) {
-        console.warn("GAS fetch tracking error:", e);
+        console.warn("Tracking fetch error:", e);
       }
 
-      // หากค้นหาออนไลน์ไม่เจอ ลองเช็กจากแคชในเครื่อง
       if (!found) {
         const db = getDb();
         found = db.find(j => (j.jobNo && j.jobNo.toLowerCase() === q.toLowerCase()) || (cleanQ && j.phone && j.phone.replace(/\D/g, '') === cleanQ));
@@ -1099,7 +1208,7 @@
           <div class="p-8 bg-white border border-slate-200 rounded-3xl text-center text-slate-400 font-body">
             <i data-lucide="help-circle" class="w-12 h-12 mx-auto mb-2 text-slate-300"></i>
             <p class="font-bold text-slate-700 text-base">ไม่พบข้อมูลการรับบริการ</p>
-            <p class="text-xs mt-1">โปรดตรวจสอบเลขที่ใบงาน (เช่น TRC69-00001) หรือเบอร์โทรศัพท์ 10 หลักอีกครั้ง</p>
+            <p class="text-xs mt-1">โปรดตรวจสอบเลขที่ใบงาน (เช่น TRC69-00004) หรือเบอร์โทรศัพท์อีกครั้ง</p>
           </div>
         `;
         lucide.createIcons();
@@ -1107,28 +1216,26 @@
       }
 
       let itemsHtml = '';
-      if (found.items && found.items.length > 0) {
-        found.items.forEach(it => {
-          let badgeColor = 'bg-slate-100 text-slate-700';
-          if (it.status.includes('เสร็จ') || it.status.includes('คืน')) badgeColor = 'bg-emerald-100 text-emerald-800';
-          else if (it.status.includes('ตรวจ')) badgeColor = 'bg-blue-100 text-blue-800';
+      (found.items || []).forEach(it => {
+        let badgeColor = 'bg-slate-100 text-slate-700';
+        if (it.status.includes('เสร็จ') || it.status.includes('พร้อม') || it.status.includes('คืน')) badgeColor = 'bg-emerald-100 text-emerald-800';
+        else if (it.status.includes('ตรวจ')) badgeColor = 'bg-blue-100 text-blue-800';
 
-          itemsHtml += `
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="font-mono font-bold text-kru text-sm">${it.itemNo}</span>
-                  <span class="font-bold text-slate-900 text-sm">${it.name}</span>
-                </div>
-                <div class="text-xs text-amber-800 font-body mt-0.5">อาการที่แจ้ง: ${it.symptom || 'ตรวจเช็กความปลอดภัย'}</div>
-                <div class="text-xs text-slate-500 font-body mt-0.5">ผลการตรวจเช็ก: ${it.result || 'รอการวินิจฉัย'}</div>
-                <div class="text-[11px] text-slate-400 font-body">ช่างผู้รับผิดชอบ: ${it.tech || '-'}</div>
+        itemsHtml += `
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-mono font-bold text-kru text-sm">${it.itemNo}</span>
+                <span class="font-bold text-slate-900 text-sm">${it.name}</span>
               </div>
-              <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor} self-start sm:self-auto">${it.status}</span>
+              <div class="text-xs text-amber-800 font-body mt-0.5">อาการ: ${it.symptom || '-'}</div>
+              <div class="text-xs text-slate-600 font-body mt-0.5">ผลการตรวจเช็ก: <span class="font-medium text-emerald-700">${it.result || 'รอการตรวจเช็ก'}</span></div>
+              <div class="text-[11px] text-slate-400 font-body">ช่างผู้ตรวจ: ${it.tech || '-'}</div>
             </div>
-          `;
-        });
-      }
+            <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor} self-start sm:self-auto">${it.status}</span>
+          </div>
+        `;
+      });
 
       container.innerHTML = `
         <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
@@ -1149,16 +1256,16 @@
               <div class="font-semibold text-emerald-800">ลงทะเบียนแล้ว</div>
             </div>
             <div class="space-y-1">
-              <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">2</div>
-              <div class="font-semibold text-emerald-800">รับของแล้ว</div>
+              <div class="w-8 h-8 rounded-full ${found.status !== 'ลงทะเบียนแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">2</div>
+              <div class="font-semibold ${found.status !== 'ลงทะเบียนแล้ว' ? 'text-emerald-800' : 'text-slate-400'}">รับของแล้ว</div>
             </div>
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full ${found.status.includes('เสร็จ') || found.status.includes('พร้อม') || found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">3</div>
-              <div class="font-medium text-slate-600">ตรวจ/ซ่อมเสร็จ</div>
+              <div class="font-medium ${found.status.includes('เสร็จ') || found.status.includes('พร้อม') ? 'text-emerald-800 font-semibold' : 'text-slate-500'}">ตรวจ/ซ่อมเสร็จ</div>
             </div>
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full ${found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">4</div>
-              <div class="font-medium text-slate-600">ส่งมอบเรียบร้อย</div>
+              <div class="font-medium ${found.status === 'ส่งมอบแล้ว' ? 'text-emerald-800 font-semibold' : 'text-slate-500'}">ส่งมอบเรียบร้อย</div>
             </div>
           </div>
 
@@ -1180,7 +1287,7 @@
         sessionStorage.setItem('TRC_STAFF_AUTH', 'true');
         document.getElementById('staff-auth-gate').classList.add('hidden');
         document.getElementById('staff-workspace').classList.remove('hidden');
-        renderStaffJobs();
+        fetchStaffJobsOnline();
       } else {
         alert('รหัสผ่านไม่ถูกต้อง');
       }
@@ -1192,12 +1299,30 @@
       document.getElementById('staff-workspace').classList.add('hidden');
     }
 
-    function renderStaffJobs() {
-      const db = getDb();
+    async function fetchStaffJobsOnline() {
       const tbody = document.getElementById('staff-job-rows');
-      tbody.innerHTML = '';
+      tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">กำลังโหลดรายการใบงานทั้งหมด...</td></tr>';
 
-      db.forEach(j => {
+      let jobs = [];
+      try {
+        const res = await fetch(`${GAS_API_URL}?action=getAllJobs`);
+        const json = await res.json();
+        if (json.status === 'success' && json.data) {
+          jobs = json.data;
+        }
+      } catch (err) {
+        console.warn("Fetch online jobs error, fallback to local:", err);
+        jobs = getDb();
+      }
+
+      tbody.innerHTML = '';
+      if (jobs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">ยังไม่มีรายการใบงานในระบบ</td></tr>';
+        return;
+      }
+
+      jobs.forEach(j => {
+        const jStr = JSON.stringify(j).replace(/'/g, "&apos;");
         tbody.innerHTML += `
           <tr class="hover:bg-slate-50 transition">
             <td class="px-4 py-3 font-mono font-bold text-kru">${j.jobNo}</td>
@@ -1209,9 +1334,12 @@
                 ${j.status}
               </span>
             </td>
-            <td class="px-4 py-3 text-right">
-              <button onclick='showSlipModal(${JSON.stringify(j)})' class="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-semibold transition">
-                ดูงาน / สติกเกอร์
+            <td class="px-4 py-3 text-right space-x-1">
+              <button onclick='openUpdateModal(${jStr})' class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition">
+                ⚙️ อัปเดตงาน
+              </button>
+              <button onclick='showSlipModal(${jStr})' class="px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-semibold transition">
+                พิมพ์ใบรับ/สติกเกอร์
               </button>
             </td>
           </tr>
