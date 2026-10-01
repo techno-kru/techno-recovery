@@ -153,27 +153,32 @@
         </p>
       </div>
 
-      <!-- ขั้นตอนที่ 1: เข้าสู่ระบบ LINE -->
+      <!-- ขั้นตอนที่ 1: เข้าสู่ระบบ LINE หรือเลือกเข้าฟอร์มโดยตรง -->
       <div id="line-auth-gate" class="max-w-xl mx-auto mb-8 bg-white border border-emerald-200 rounded-3xl p-6 sm:p-8 shadow-sm text-center">
         <div class="w-16 h-16 bg-[#06C755]/10 text-[#06C755] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[#06C755]/20">
           <i data-lucide="message-circle" class="w-9 h-9"></i>
         </div>
-        <h2 class="text-xl font-bold text-slate-900">ขั้นตอนที่ 1 : เข้าสู่ระบบด้วย LINE</h2>
+        <h2 class="text-xl font-bold text-slate-900">เข้าสู่ระบบเพื่อรับการแจ้งเตือน</h2>
         <p class="text-sm text-slate-500 font-body mt-2 mb-6">
-          เพื่อความสะดวกรวดเร็วในการแจ้งเตือนสถานะการซ่อมตรวจเช็ก การส่งมอบอุปกรณ์ และรับข่าวสารบริการวิชาการตรงถึงห้องแชตของคุณ
+          เข้าสู่ระบบด้วย LINE เพื่อรับข้อความแจ้งเตือนผลการตรวจเช็กและแจ้งนัดรับเครื่องคืนผ่าน LINE ส่วนตัวของคุณ
         </p>
         <button onclick="loginWithLine()" class="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-semibold py-3.5 px-6 rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2.5 text-base">
-          <i data-lucide="log-in" class="w-5 h-5"></i> เข้าสู่ระบบด้วย LINE (LINE Login)
+          <i data-lucide="log-in" class="w-5 h-5"></i> เข้าสู่ระบบด้วย LINE (แนะนำ)
         </button>
-        <p class="text-[12px] text-slate-400 mt-4 font-body">
-          * ระบบจะขอเข้าถึงข้อมูลโปรไฟล์ (ชื่อและรหัสผู้ใช้) เพื่อใช้อ้างอิงและส่งแจ้งเตือนใบงานเท่านั้น
-        </p>
+        
+        <div class="mt-4 pt-4 border-t border-slate-100">
+          <button type="button" onclick="bypassLineLogin()" class="text-xs text-slate-500 hover:text-kru font-semibold flex items-center justify-center gap-1 mx-auto transition">
+            <span>เข้าสู่ฟอร์มลงทะเบียนโดยตรง (สำหรับผู้เข้าผ่านคอมพิวเตอร์)</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- ขั้นตอนที่ 2: ฟอร์มลงทะเบียน -->
       <div id="registration-form-card" class="hidden max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-10 mb-12">
         
-        <div class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 mb-8">
+        <!-- กล่องข้อมูลผู้ใช้ LINE (ซ่อน User ID) -->
+        <div id="line-profile-box" class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 mb-8">
           <div class="flex items-center gap-3">
             <img id="line-avatar" src="kru_color.png" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-emerald-500 object-cover shadow-sm">
             <div>
@@ -183,10 +188,10 @@
                 </span>
                 <span id="line-name-display" class="font-bold text-slate-800 text-sm">ผู้ใช้งาน LINE</span>
               </div>
-              <p class="text-xs text-slate-500 font-body mt-0.5">LINE User ID: <span id="line-uid-display" class="font-mono text-emerald-800">กำลังเชื่อมต่อ...</span></p>
+              <p class="text-xs text-slate-500 font-body mt-0.5">ระบบจะส่งข้อความแจ้งเตือนผลตรวจเช็กไปยังบัญชี LINE นี้</p>
             </div>
           </div>
-          <button onclick="logoutLine()" class="text-xs text-rose-600 hover:text-rose-700 font-medium underline">เปลี่ยนบัญชี</button>
+          <button type="button" onclick="logoutLine()" class="text-xs text-rose-600 hover:text-rose-700 font-medium underline">เปลี่ยนบัญชี</button>
         </div>
 
         <form id="serviceForm" onsubmit="handleFormSubmit(event)" class="space-y-8">
@@ -197,8 +202,8 @@
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล *</label>
-                <input type="text" id="cust-name" required placeholder="นายสมชาย สดใส" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล (สำหรับออกใบรับเครื่อง) *</label>
+                <input type="text" id="cust-name" required placeholder="เช่น นายสมชาย สดใส" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ (10 หลัก) *</label>
@@ -223,51 +228,75 @@
               <i data-lucide="car" class="w-5 h-5 text-kru"></i> 1. หมวดยานยนต์และเครื่องยนต์
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div>
-                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์</div>
-                  <div class="text-xs text-slate-400">ถ่ายน้ำมันเครื่อง/ตรวจหัวเทียน</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์</div>
+                    <div class="text-xs text-slate-400">ถ่ายน้ำมันเครื่อง/ตรวจหัวเทียน</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('moto', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-moto" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('moto', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
                 </div>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('moto', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-moto" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('moto', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
-                </div>
-              </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div>
-                  <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์ไฟฟ้า</div>
-                  <div class="text-xs text-slate-400">เช็กกล่องควบคุมและแบตเตอรี่</div>
-                </div>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('moto-ev', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-moto-ev" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('moto-ev', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                <div id="sym-moto" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-moto-text" placeholder="ระบุอาการ/ปัญหา เช่น แช่น้ำมิดคัน สตาร์ตไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div>
-                  <div class="font-semibold text-sm text-slate-800">รถยนต์</div>
-                  <div class="text-xs text-slate-400">ตรวจระบบไฟ/ฟิวส์/กรองอากาศ</div>
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">รถจักรยานยนต์ไฟฟ้า</div>
+                    <div class="text-xs text-slate-400">เช็กกล่องควบคุมและแบตเตอรี่</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('moto-ev', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-moto-ev" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('moto-ev', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
                 </div>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('car', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-car" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('car', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
-                </div>
-              </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div>
-                  <div class="font-semibold text-sm text-slate-800">เครื่องยนต์การเกษตร</div>
-                  <div class="text-xs text-slate-400">ตรวจคาร์บูเรเตอร์/ระบบสตาร์ต</div>
-                </div>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('agri', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-agri" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('agri', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                <div id="sym-moto-ev" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-moto-ev-text" placeholder="ระบุอาการ เช่น น้ำเข้าแบตเตอรี่ หน้าปัดไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">รถยนต์</div>
+                    <div class="text-xs text-slate-400">ตรวจระบบไฟ/ฟิวส์/กรองอากาศ</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('car', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-car" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('car', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-car" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-car-text" placeholder="ระบุอาการ เช่น น้ำท่วมระดับครึ่งล้อ ลากมาส่ง" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">เครื่องยนต์การเกษตร</div>
+                    <div class="text-xs text-slate-400">ตรวจคาร์บูเรเตอร์/ระบบสตาร์ต</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('agri', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-agri" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('agri', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-agri" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-agri-text" placeholder="ระบุอาการ เช่น เครื่องยนต์จมโคลน ดึงสตาร์ตไม่ไป" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                </div>
+              </div>
+
+              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="font-semibold text-sm text-slate-800">ยานยนต์ / เครื่องยนต์ อื่นๆ</div>
@@ -279,8 +308,9 @@
                     <button type="button" onclick="updateCount('auto-other', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
                   </div>
                 </div>
-                <div id="box-auto-other" class="hidden mt-3 pt-3 border-t border-slate-200">
-                  <input type="text" id="desc-auto-other" placeholder="ระบุประเภทอุปกรณ์ เช่น เครื่องตัดหญ้าสะพายหลัง 4 จังหวะ" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-kru">
+                <div id="box-auto-other" class="hidden pt-2 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input type="text" id="desc-auto-other" placeholder="ระบุชนิดอุปกรณ์ (เช่น เครื่องตัดหญ้า)" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-auto-other-text" placeholder="ระบุอาการ (เช่น แช่น้ำ 2 วัน ยังไม่สตาร์ต)" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
             </div>
@@ -292,59 +322,95 @@
               <i data-lucide="tv" class="w-5 h-5 text-kru"></i> 2. หมวดเครื่องใช้ไฟฟ้าในบ้าน
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">พัดลม</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('fan', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-fan" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('fan', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-sm text-slate-800">พัดลม</span>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('fan', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-fan" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('fan', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-fan" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-fan-text" placeholder="ระบุอาการ เช่น น้ำท่วมมิดมอเตอร์ เปิดแล้วมีควัน" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">หม้อหุงข้าว</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('rice', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-rice" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('rice', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-sm text-slate-800">หม้อหุงข้าว</span>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('rice', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-rice" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('rice', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-rice" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-rice-text" placeholder="ระบุอาการ เช่น แช่น้ำ ยังไม่ได้เสียบปลั๊ก" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">ไมโครเวฟ</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('micro', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-micro" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('micro', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-sm text-slate-800">ไมโครเวฟ</span>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('micro', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-micro" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('micro', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-micro" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-micro-text" placeholder="ระบุอาการ เช่น โคลนเข้าในเครื่อง ไม่กล้าเปิดใช้" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">ตู้เย็น</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('fridge', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-fridge" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('fridge', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-sm text-slate-800">ตู้เย็น</span>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('fridge', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-fridge" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('fridge', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-fridge" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-fridge-text" placeholder="ระบุอาการ เช่น น้ำท่วมคอมเพรสเซอร์ด้านหลัง" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">เครื่องซักผ้า</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('washer', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-washer" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('washer', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-sm text-slate-800">เครื่องซักผ้า</span>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('washer', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-washer" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('washer', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-washer" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-washer-text" placeholder="ระบุอาการ เช่น แช่น้ำท่วมแผงวงจร เสียบไฟไม่เข้า" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <span class="font-semibold text-sm text-slate-800">โทรทัศน์</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('tv', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-tv" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('tv', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-sm text-slate-800">โทรทัศน์</span>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('tv', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-tv" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('tv', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-tv" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-tv-text" placeholder="ระบุอาการ เช่น จมน้ำครึ่งจอ เปิดไม่ติด" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+
+              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="font-semibold text-sm text-slate-800">เครื่องใช้ไฟฟ้าอื่นๆ</div>
-                    <div class="text-xs text-slate-400">เช่น กาน้ำร้อน, เตารีด, เครื่องปั่น</div>
+                    <div class="text-xs text-slate-400">เช่น เตารีด, กาน้ำร้อน, เครื่องดูดฝุ่น</div>
                   </div>
                   <div class="flex items-center gap-2">
                     <button type="button" onclick="updateCount('elec-other', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
@@ -352,8 +418,9 @@
                     <button type="button" onclick="updateCount('elec-other', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
                   </div>
                 </div>
-                <div id="box-elec-other" class="hidden mt-3 pt-3 border-t border-slate-200">
-                  <input type="text" id="desc-elec-other" placeholder="ระบุประเภทอุปกรณ์ เช่น เตารีดไอน้ำ, เครื่องปั่นน้ำผลไม้" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-kru">
+                <div id="box-elec-other" class="hidden pt-2 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input type="text" id="desc-elec-other" placeholder="ระบุชนิดอุปกรณ์ (เช่น กาน้ำร้อน)" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-elec-other-text" placeholder="ระบุอาการ (เช่น แช่น้ำ ฐานไฟชื้น)" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
             </div>
@@ -365,33 +432,45 @@
               <i data-lucide="zap" class="w-5 h-5 text-kru"></i> 3. ระบบไฟฟ้าและอุปกรณ์ประจำบ้าน
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-body">
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div>
-                  <div class="font-semibold text-sm text-slate-800">ปั๊มน้ำ</div>
-                  <div class="text-xs text-slate-400">ตรวจฉนวนมอเตอร์และคาปาซิเตอร์</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">ปั๊มน้ำอัตโนมัติ</div>
+                    <div class="text-xs text-slate-400">ตรวจฉนวนมอเตอร์และสวิตช์แรงดัน</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('pump', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-pump" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('pump', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
                 </div>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('pump', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-pump" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('pump', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
-                </div>
-              </div>
-              <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
-                <div>
-                  <div class="font-semibold text-sm text-slate-800">ตู้คอนซูมเมอร์ / ตู้ไฟ</div>
-                  <div class="text-xs text-slate-400">ตรวจเช็กวงจรและสวิตช์ตัดไฟ</div>
-                </div>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="updateCount('breaker', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
-                  <span id="cnt-breaker" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
-                  <button type="button" onclick="updateCount('breaker', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                <div id="sym-pump" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-pump-text" placeholder="ระบุอาการ เช่น มอเตอร์จมน้ำ มีเสียงครางแต่ไม่หมุน" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
-              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
+
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-semibold text-sm text-slate-800">ตู้คอนซูมเมอร์ / ตู้ไฟ</div>
+                    <div class="text-xs text-slate-400">ตรวจเช็กวงจรและเบรกเกอร์กันดูด</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="updateCount('breaker', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
+                    <span id="cnt-breaker" class="w-8 text-center font-bold text-slate-800 text-sm">0</span>
+                    <button type="button" onclick="updateCount('breaker', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
+                  </div>
+                </div>
+                <div id="sym-breaker" class="hidden pt-2 border-t border-slate-200">
+                  <input type="text" id="sym-breaker-text" placeholder="ระบุอาการ เช่น สับเบรกเกอร์แล้วตัดทันที" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                </div>
+              </div>
+
+              <div class="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="font-semibold text-sm text-slate-800">ระบบไฟบ้าน อื่นๆ (เต้ารับ / สวิตช์)</div>
-                    <div class="text-xs text-slate-400">ระบุจำนวนจุดที่ต้องการให้ช่างประเมิน</div>
+                    <div class="text-xs text-slate-400">ระบุจุดที่ต้องการให้ประเมินความปลอดภัย</div>
                   </div>
                   <div class="flex items-center gap-2">
                     <button type="button" onclick="updateCount('sys-other', -1)" class="w-8 h-8 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold">-</button>
@@ -399,8 +478,9 @@
                     <button type="button" onclick="updateCount('sys-other', 1)" class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-300 flex items-center justify-center text-kru font-bold">+</button>
                   </div>
                 </div>
-                <div id="box-sys-other" class="hidden mt-3 pt-3 border-t border-slate-200">
-                  <input type="text" id="desc-sys-other" placeholder="ระบุประเภทอุปกรณ์ เช่น ปลั๊กไฟชั้นล่าง 3 จุด" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-kru">
+                <div id="box-sys-other" class="hidden pt-2 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input type="text" id="desc-sys-other" placeholder="ระบุจุด (เช่น ปลั๊กผนังชั้นล่าง 4 จุด)" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
+                  <input type="text" id="sym-sys-other-text" placeholder="ระบุอาการ (เช่น มีคราบโคลนเกาะในเต้ารับ)" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-kru">
                 </div>
               </div>
             </div>
@@ -410,29 +490,6 @@
           <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-between">
             <span class="font-semibold text-sm text-kru">จำนวนอุปกรณ์ที่นำมารับบริการทั้งหมด:</span>
             <span class="text-2xl font-extrabold text-kru" id="total-items-badge">0 ชิ้น</span>
-          </div>
-
-          <!-- Symptoms Checkboxes -->
-          <div>
-            <h2 class="text-sm font-semibold text-slate-800 mb-2">อาการเบื้องต้น (เลือกได้มากกว่า 1 ข้อ)</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-body text-slate-700">
-              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
-                <input type="checkbox" name="symptom" value="ถูกน้ำท่วม / แช่น้ำ" class="rounded text-kru focus:ring-kru">
-                <span>ถูกน้ำท่วม / แช่น้ำ</span>
-              </label>
-              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
-                <input type="checkbox" name="symptom" value="ยังไม่ได้ทดลองเปิดใช้งาน" checked class="rounded text-kru focus:ring-kru">
-                <span class="text-emerald-700 font-medium">ยังไม่ได้ทดลองเปิดใช้งาน (ปลอดภัย)</span>
-              </label>
-              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
-                <input type="checkbox" name="symptom" value="เปิดไม่ติด" class="rounded text-kru focus:ring-kru">
-                <span>เปิดไม่ติด</span>
-              </label>
-              <label class="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer">
-                <input type="checkbox" name="symptom" value="ทำงานผิดปกติ" class="rounded text-kru focus:ring-kru">
-                <span>ทำงานผิดปกติ</span>
-              </label>
-            </div>
           </div>
 
           <!-- Terms -->
@@ -460,12 +517,12 @@
     <section id="section-track" class="tab-content hidden">
       <div class="max-w-2xl mx-auto mb-10 text-center">
         <h2 class="text-3xl font-extrabold text-slate-900">ติดตามสถานะงานตรวจเช็ก</h2>
-        <p class="text-slate-500 font-body text-sm mt-2">ระบุเลขที่รับบริการ (เช่น TRC69-00001) หรือเบอร์โทรศัพท์ที่ใช้ลงทะเบียน</p>
+        <p class="text-slate-500 font-body text-sm mt-2">ระบุเบอร์โทรศัพท์ที่ใช้ลงทะเบียน หรือเลขที่ใบรับบริการ (เช่น TRC69-00001)</p>
         
         <div class="mt-6 flex gap-2">
           <div class="relative flex-grow">
             <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
-            <input type="text" id="track-search-input" placeholder="กรอกเลขที่ใบงาน TRC69-XXXXX หรือเบอร์โทร" class="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru shadow-sm">
+            <input type="text" id="track-search-input" placeholder="กรอกเบอร์โทร (เช่น 088-0000000) หรือเลขใบงาน" class="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru shadow-sm">
           </div>
           <button onclick="performTrackingSearch()" class="bg-kru hover:bg-kru-dark text-white font-semibold px-6 py-3.5 rounded-2xl shadow-md transition flex items-center gap-2">
             <span>ค้นหา</span>
@@ -484,7 +541,7 @@
           <p class="text-slate-500 text-sm font-body">รายงานสรุปสถิติแบบเรียลไทม์ ภารกิจฟื้นฟูหลังน้ำท่วม คณะเทคโนโลยีอุตสาหกรรม</p>
         </div>
         <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-kru border border-emerald-200 text-xs px-3 py-1.5 rounded-xl font-medium self-start sm:self-auto">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> อัปเดตล่าสุด: วันนี้
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> กำลังดึงข้อมูล...
         </span>
       </div>
 
@@ -492,17 +549,17 @@
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">จำนวนผู้ประสบภัยที่รับบริการ</div>
           <div class="text-3xl font-extrabold text-slate-900 mt-2" id="kpi-customers">185 ราย</div>
-          <div class="text-[11px] text-emerald-600 mt-1 font-body">ครอบคลุม 13 ชุมชน/ตำบล</div>
+          <div class="text-[11px] text-emerald-600 mt-1 font-body">ครอบคลุมชุมชนใน จ.กาญจนบุรี</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">อุปกรณ์ที่รับตรวจทั้งหมด</div>
           <div class="text-3xl font-extrabold text-kru mt-2" id="kpi-items">428 ชิ้น</div>
-          <div class="text-[11px] text-slate-400 mt-1 font-body">เฉลี่ย 2.3 ชิ้น / ครอบครัว</div>
+          <div class="text-[11px] text-slate-400 mt-1 font-body">ยานยนต์และเครื่องใช้ไฟฟ้า</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">ผ่านการตรวจ & ซ่อมเสร็จ</div>
           <div class="text-3xl font-extrabold text-emerald-600 mt-2" id="kpi-inspected">386 ชิ้น</div>
-          <div class="text-[11px] text-emerald-600 mt-1 font-body">คิดเป็น 90.2% ของทั้งหมด</div>
+          <div class="text-[11px] text-emerald-600 mt-1 font-body">ผ่านการตรวจสอบความปลอดภัย</div>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="text-xs font-semibold text-slate-500">ส่งมอบคืนปลอดภัยแล้ว</div>
@@ -535,17 +592,12 @@
             <i data-lucide="key" class="w-4 h-4"></i> ยืนยันเข้าสู่ระบบ
           </button>
         </form>
-        <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-500 font-body">
-          <span class="font-semibold text-slate-700">บัญชีทดสอบ:</span> User: <code class="text-kru font-bold">technician01</code> / Pass: <code class="text-kru font-bold">1234</code>
-        </div>
       </div>
 
       <div id="staff-workspace" class="hidden space-y-6">
         <div class="bg-white border border-slate-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-sm">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-100 text-kru flex items-center justify-center font-bold">
-              ชท
-            </div>
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-kru flex items-center justify-center font-bold">ชท</div>
             <div>
               <div class="text-sm font-bold text-slate-900" id="staff-name-badge">ผศ.ดร.สมเกียรติ (หัวหน้าทีมช่าง)</div>
               <div class="text-xs text-emerald-700 font-body flex items-center gap-1.5">
@@ -563,7 +615,6 @@
             <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
               <i data-lucide="layers" class="w-5 h-5 text-kru"></i> รายการใบงานที่อยู่ระหว่างดำเนินการ
             </h3>
-            <span class="text-xs text-slate-500 font-body">แสดงข้อมูลเชื่อมโยงระบบ</span>
           </div>
           
           <div class="overflow-x-auto">
@@ -573,8 +624,8 @@
                   <th class="px-4 py-3">เลขที่ใบงาน</th>
                   <th class="px-4 py-3">ผู้รับบริการ</th>
                   <th class="px-4 py-3">พื้นที่</th>
-                  <th class="px-4 py-3">จำนวนชิ้น</th>
-                  <th class="px-4 py-3">สถานะรวม</th>
+                  <th class="px-4 py-3 text-center">จำนวนชิ้น</th>
+                  <th class="px-4 py-3">สถานะ</th>
                   <th class="px-4 py-3 text-right">การจัดการ</th>
                 </tr>
               </thead>
@@ -616,7 +667,7 @@
         </div>
 
         <div>
-          <h4 class="text-xs font-bold text-slate-700 uppercase mb-2">รายการอุปกรณ์ที่นำมารับบริการ</h4>
+          <h4 class="text-xs font-bold text-slate-700 uppercase mb-2">รายการอุปกรณ์และอาการที่แจ้ง</h4>
           <div id="slip-items-list" class="space-y-2 font-body text-xs"></div>
         </div>
 
@@ -694,12 +745,9 @@
       'sys-other': 'ระบบไฟบ้านอื่นๆ'
     };
 
-    // ฟังก์ชันจัดรูปแบบเบอร์โทร 088-0000000 อัตโนมัติ
     function formatPhoneNumber(input) {
       let value = input.value.replace(/\D/g, '');
-      if (value.length > 10) {
-        value = value.substring(0, 10);
-      }
+      if (value.length > 10) value = value.substring(0, 10);
       if (value.length > 3) {
         input.value = value.substring(0, 3) + '-' + value.substring(3);
       } else {
@@ -707,7 +755,6 @@
       }
     }
 
-    // เริ่มต้นระบบ LINE LIFF จริง
     async function initLiff() {
       try {
         await liff.init({ liffId: LIFF_ID });
@@ -729,14 +776,17 @@
       if (!lineProfile) return;
       document.getElementById('line-auth-gate').classList.add('hidden');
       document.getElementById('registration-form-card').classList.remove('hidden');
+      document.getElementById('line-profile-box').classList.remove('hidden');
       document.getElementById('line-name-display').innerText = lineProfile.displayName;
-      document.getElementById('line-uid-display').innerText = lineProfile.userId;
       document.getElementById('line-avatar').src = lineProfile.pictureUrl;
-      
-      const custNameInput = document.getElementById('cust-name');
-      if (!custNameInput.value) {
-        custNameInput.value = lineProfile.displayName;
-      }
+      lucide.createIcons();
+    }
+
+    function bypassLineLogin() {
+      lineProfile = null;
+      document.getElementById('line-auth-gate').classList.add('hidden');
+      document.getElementById('registration-form-card').classList.remove('hidden');
+      document.getElementById('line-profile-box').classList.add('hidden');
       lucide.createIcons();
     }
 
@@ -764,25 +814,7 @@
     function getDb() {
       const existing = localStorage.getItem('TRC_DATABASE');
       if (existing) return JSON.parse(existing);
-      
-      const seedData = [
-        {
-          jobNo: 'TRC69-00001',
-          custName: 'นายสมชาย สดใส',
-          phone: '081-9876543',
-          area: 'ต.หนองบัว อ.เมือง จ.กาญจนบุรี',
-          lineUserId: 'U1234567890abcdef',
-          createdAt: '2026-09-30 09:30',
-          status: 'กำลังดำเนินการ',
-          items: [
-            { itemNo: 'TRC69-00001-01', name: 'พัดลมตั้งโต๊ะ', status: 'ซ่อมแซมเล็กน้อย', result: 'ผ่าน Megger Test ล้างโคลน หยอดน้ำมันหล่อลื่น', tech: 'อาจารย์ธีรภัทร' },
-            { itemNo: 'TRC69-00001-02', name: 'หม้อหุงข้าว', status: 'กำลังตรวจเช็ก', result: 'กำลังอบไล่ความชื้นในตู้อบลมร้อน', tech: 'อาจารย์ธีรภัทร' },
-            { itemNo: 'TRC69-00001-03', name: 'รถจักรยานยนต์', status: 'รอตรวจเช็ก', result: 'จอดพักรอถ่ายน้ำมันเครื่อง', tech: 'ทีมช่างยานยนต์' }
-          ]
-        }
-      ];
-      localStorage.setItem('TRC_DATABASE', JSON.stringify(seedData));
-      return seedData;
+      return [];
     }
 
     function saveDb(data) {
@@ -814,6 +846,12 @@
       counts[key] = Math.max(0, (counts[key] || 0) + delta);
       document.getElementById(`cnt-${key}`).innerText = counts[key];
 
+      const symBox = document.getElementById(`sym-${key}`);
+      if (symBox) {
+        if (counts[key] > 0) symBox.classList.remove('hidden');
+        else symBox.classList.add('hidden');
+      }
+
       if (key === 'auto-other') {
         const box = document.getElementById('box-auto-other');
         if (counts[key] > 0) box.classList.remove('hidden'); else box.classList.add('hidden');
@@ -836,6 +874,8 @@
         counts[k] = 0;
         const el = document.getElementById(`cnt-${k}`);
         if (el) el.innerText = '0';
+        const sym = document.getElementById(`sym-${k}`);
+        if (sym) sym.classList.add('hidden');
       });
       document.getElementById('total-items-badge').innerText = '0 ชิ้น';
       document.getElementById('box-auto-other').classList.add('hidden');
@@ -846,6 +886,13 @@
     async function handleFormSubmit(e) {
       e.preventDefault();
       
+      const nameInput = document.getElementById('cust-name').value.trim();
+      if (!nameInput) {
+        alert('กรุณากรอกชื่อ - นามสกุลของผู้ติดต่อ');
+        document.getElementById('cust-name').focus();
+        return;
+      }
+
       const phoneInput = document.getElementById('cust-phone').value.trim();
       const rawDigits = phoneInput.replace(/\D/g, '');
       if (rawDigits.length !== 10) {
@@ -874,17 +921,29 @@
 
       for (const [key, qty] of Object.entries(counts)) {
         if (qty > 0) {
+          let customSymptom = "";
+          const symInput = document.getElementById(`sym-${key}-text`);
+          if (symInput && symInput.value.trim()) {
+            customSymptom = symInput.value.trim();
+          }
+
           for (let i = 0; i < qty; i++) {
             let itemName = itemLabels[key];
             if (key === 'auto-other') {
               const desc = document.getElementById('desc-auto-other').value.trim();
               if (desc) itemName = `${desc} (ยานยนต์อื่นๆ)`;
+              const otherSym = document.getElementById('sym-auto-other-text').value.trim();
+              if (otherSym) customSymptom = otherSym;
             } else if (key === 'elec-other') {
               const desc = document.getElementById('desc-elec-other').value.trim();
               if (desc) itemName = `${desc} (เครื่องใช้ไฟฟ้าอื่นๆ)`;
+              const otherSym = document.getElementById('sym-elec-other-text').value.trim();
+              if (otherSym) customSymptom = otherSym;
             } else if (key === 'sys-other') {
               const desc = document.getElementById('desc-sys-other').value.trim();
               if (desc) itemName = `${desc} (ระบบไฟบ้านอื่นๆ)`;
+              const otherSym = document.getElementById('sym-sys-other-text').value.trim();
+              if (otherSym) customSymptom = otherSym;
             }
 
             const itemNo = `${jobNo}-${('0' + itemSeq).slice(-2)}`;
@@ -893,6 +952,7 @@
               category: key.includes('auto') || key === 'moto' || key === 'car' || key === 'agri' ? 'ยานยนต์' : 'เครื่องใช้ไฟฟ้า',
               name: itemName,
               status: 'ลงทะเบียนแล้ว',
+              symptom: customSymptom || 'แช่น้ำ/ตรวจเช็กความปลอดภัย',
               result: 'รอส่งมอบเครื่องเข้าศูนย์ฯ',
               tech: '-'
             });
@@ -901,17 +961,17 @@
         }
       }
 
-      const selectedSymptoms = Array.from(document.querySelectorAll('input[name="symptom"]:checked')).map(cb => cb.value);
+      const allSymptomsSummary = itemsList.map(it => `${it.name}: ${it.symptom}`).join(" | ");
 
       const newRecord = {
         action: "register",
         jobNo: jobNo,
-        fullName: document.getElementById('cust-name').value,
-        custName: document.getElementById('cust-name').value,
+        fullName: nameInput,
+        custName: nameInput,
         phone: phoneInput,
-        area: document.getElementById('cust-area').value,
+        area: document.getElementById('cust-area').value.trim(),
         lineUserId: lineProfile ? lineProfile.userId : '',
-        symptoms: selectedSymptoms,
+        symptoms: allSymptomsSummary,
         createdAt: new Date().toISOString().replace('T', ' ').substring(0, 16),
         status: 'ลงทะเบียนแล้ว',
         items: itemsList
@@ -920,11 +980,12 @@
       db.unshift(newRecord);
       saveDb(db);
 
+      // ส่งคำสั่งไปยัง Google Apps Script (ใช้ text/plain เพื่อข้าม CORS 100%)
       try {
-        fetch(GAS_API_URL, {
+        await fetch(GAS_API_URL, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(newRecord)
         });
       } catch (err) {
@@ -949,10 +1010,13 @@
       itemsBox.innerHTML = '';
       record.items.forEach(item => {
         itemsBox.innerHTML += `
-          <div class="flex items-center justify-between p-2 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="font-mono font-bold text-kru">${item.itemNo}</span>
-            <span class="font-medium text-slate-800">${item.name}</span>
-            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">${item.status}</span>
+          <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-kru">${item.itemNo}</span>
+              <span class="font-bold text-slate-800">${item.name}</span>
+              <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">${item.status}</span>
+            </div>
+            <div class="text-[11px] text-amber-800 bg-amber-50/80 px-2 py-1 rounded-lg">อาการ: ${item.symptom || 'ตรวจเช็กความปลอดภัย'}</div>
           </div>
         `;
       });
@@ -967,6 +1031,7 @@
               <span class="text-[9px] bg-slate-100 font-bold px-1.5 py-0.5 rounded">TECHNO KRU</span>
             </div>
             <div class="font-bold text-slate-800 truncate">${item.name}</div>
+            <div class="text-[10px] text-amber-700 truncate">อาการ: ${item.symptom || '-'}</div>
             <div class="text-[10px] text-slate-500">${record.custName || record.fullName} | ${record.phone}</div>
           </div>
         `;
@@ -990,18 +1055,51 @@
       document.getElementById(id).classList.add('hidden');
     }
 
+    // ฟังก์ชันค้นหาติดตามสถานะ เชื่อมตรงกับ Google Sheets แบบ Real-time
     async function performTrackingSearch() {
       const q = document.getElementById('track-search-input').value.trim();
       const container = document.getElementById('tracking-result-box');
-      const db = getDb();
-      let found = db.find(j => (j.jobNo && j.jobNo.toLowerCase() === q.toLowerCase()) || (j.phone && j.phone.replace(/\D/g, '') === q.replace(/\D/g, '')));
+      
+      if (!q) {
+        alert('กรุณากรอกเบอร์โทรศัพท์ หรือเลขที่ใบรับบริการ');
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="p-8 bg-white border border-slate-200 rounded-3xl text-center text-slate-500 font-body">
+          <i data-lucide="loader" class="w-8 h-8 mx-auto mb-2 animate-spin text-kru"></i>
+          <p class="font-semibold text-sm">กำลังค้นหาข้อมูลในระบบฐานข้อมูล...</p>
+        </div>
+      `;
+      lucide.createIcons();
+
+      let cleanQ = q.replace(/\D/g, '');
+      let found = null;
+
+      // ค้นหาตรงจาก Google Sheets API
+      try {
+        const queryParam = q.toLowerCase().startsWith('trc') ? `job_no=${encodeURIComponent(q)}` : `phone=${encodeURIComponent(cleanQ)}`;
+        const res = await fetch(`${GAS_API_URL}?action=getJob&${queryParam}`);
+        const resJson = await res.json();
+        if (resJson.status === 'success' && resJson.data) {
+          found = resJson.data;
+        }
+      } catch (e) {
+        console.warn("GAS fetch tracking error:", e);
+      }
+
+      // หากค้นหาออนไลน์ไม่เจอ ลองเช็กจากแคชในเครื่อง
+      if (!found) {
+        const db = getDb();
+        found = db.find(j => (j.jobNo && j.jobNo.toLowerCase() === q.toLowerCase()) || (cleanQ && j.phone && j.phone.replace(/\D/g, '') === cleanQ));
+      }
 
       if (!found) {
         container.innerHTML = `
           <div class="p-8 bg-white border border-slate-200 rounded-3xl text-center text-slate-400 font-body">
             <i data-lucide="help-circle" class="w-12 h-12 mx-auto mb-2 text-slate-300"></i>
             <p class="font-bold text-slate-700 text-base">ไม่พบข้อมูลการรับบริการ</p>
-            <p class="text-xs mt-1">โปรดตรวจสอบเลขที่ใบงาน (เช่น TRC69-00001) หรือเบอร์โทรศัพท์อีกครั้ง</p>
+            <p class="text-xs mt-1">โปรดตรวจสอบเลขที่ใบงาน (เช่น TRC69-00001) หรือเบอร์โทรศัพท์ 10 หลักอีกครั้ง</p>
           </div>
         `;
         lucide.createIcons();
@@ -1009,31 +1107,34 @@
       }
 
       let itemsHtml = '';
-      found.items.forEach(it => {
-        let badgeColor = 'bg-slate-100 text-slate-700';
-        if (it.status.includes('เสร็จ') || it.status.includes('คืน')) badgeColor = 'bg-emerald-100 text-emerald-800';
-        else if (it.status.includes('ตรวจ')) badgeColor = 'bg-blue-100 text-blue-800';
+      if (found.items && found.items.length > 0) {
+        found.items.forEach(it => {
+          let badgeColor = 'bg-slate-100 text-slate-700';
+          if (it.status.includes('เสร็จ') || it.status.includes('คืน')) badgeColor = 'bg-emerald-100 text-emerald-800';
+          else if (it.status.includes('ตรวจ')) badgeColor = 'bg-blue-100 text-blue-800';
 
-        itemsHtml += `
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="font-mono font-bold text-kru text-sm">${it.itemNo}</span>
-                <span class="font-bold text-slate-900 text-sm">${it.name}</span>
+          itemsHtml += `
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-kru text-sm">${it.itemNo}</span>
+                  <span class="font-bold text-slate-900 text-sm">${it.name}</span>
+                </div>
+                <div class="text-xs text-amber-800 font-body mt-0.5">อาการที่แจ้ง: ${it.symptom || 'ตรวจเช็กความปลอดภัย'}</div>
+                <div class="text-xs text-slate-500 font-body mt-0.5">ผลการตรวจเช็ก: ${it.result || 'รอการวินิจฉัย'}</div>
+                <div class="text-[11px] text-slate-400 font-body">ช่างผู้รับผิดชอบ: ${it.tech || '-'}</div>
               </div>
-              <div class="text-xs text-slate-500 font-body mt-1">การดำเนินการ: ${it.result || 'รอการวินิจฉัย'}</div>
-              <div class="text-[11px] text-slate-400 font-body">ผู้รับผิดชอบ: ${it.tech || '-'}</div>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor} self-start sm:self-auto">${it.status}</span>
             </div>
-            <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor} self-start sm:self-auto">${it.status}</span>
-          </div>
-        `;
-      });
+          `;
+        });
+      }
 
       container.innerHTML = `
         <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div>
-              <span class="text-xs text-slate-400 font-mono">รหัสติดตามพัสดุรับซ่อม</span>
+              <span class="text-xs text-slate-400 font-mono">รหัสติดตามพัสดุรับตรวจเช็ก</span>
               <h3 class="text-2xl font-extrabold text-kru font-mono">${found.jobNo}</h3>
               <p class="text-sm font-semibold text-slate-800 mt-1">${found.custName || found.fullName} (${found.area})</p>
             </div>
@@ -1052,8 +1153,8 @@
               <div class="font-semibold text-emerald-800">รับของแล้ว</div>
             </div>
             <div class="space-y-1">
-              <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto font-bold">3</div>
-              <div class="font-semibold text-emerald-800">ตรวจ/ซ่อมเสร็จ</div>
+              <div class="w-8 h-8 rounded-full ${found.status.includes('เสร็จ') || found.status.includes('พร้อม') || found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">3</div>
+              <div class="font-medium text-slate-600">ตรวจ/ซ่อมเสร็จ</div>
             </div>
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full ${found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">4</div>
@@ -1102,7 +1203,7 @@
             <td class="px-4 py-3 font-mono font-bold text-kru">${j.jobNo}</td>
             <td class="px-4 py-3 font-semibold text-slate-800">${j.custName || j.fullName}</td>
             <td class="px-4 py-3 text-slate-500 truncate max-w-xs">${j.area}</td>
-            <td class="px-4 py-3 text-center font-bold">${j.items.length} ชิ้น</td>
+            <td class="px-4 py-3 text-center font-bold">${j.items ? j.items.length : 0} ชิ้น</td>
             <td class="px-4 py-3">
               <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-kru border border-emerald-200">
                 ${j.status}
