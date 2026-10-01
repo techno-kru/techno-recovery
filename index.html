@@ -621,7 +621,7 @@
       </div>
     </section>
 
-    <!-- 4. ส่วนสำหรับเจ้าหน้าที่ -->
+    <!-- 4. ส่วนสำหรับเจ้าหน้าที่ (ช่องกรอกว่างเปล่า ไม่จำรหัสค้าง) -->
     <section id="section-staff" class="tab-content hidden">
       <div id="staff-auth-gate" class="max-w-md mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
         <div class="text-center mb-6">
@@ -631,14 +631,14 @@
           <h2 class="text-xl font-bold text-slate-900">เข้าสู่ระบบสำหรับเจ้าหน้าที่</h2>
           <p class="text-xs text-slate-500 font-body mt-1">คณะเทคโนโลยีอุตสาหกรรม มรภ.กาญจนบุรี</p>
         </div>
-        <form onsubmit="handleStaffLogin(event)" class="space-y-4">
+        <form onsubmit="handleStaffLogin(event)" class="space-y-4" autocomplete="off">
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">รหัสเจ้าหน้าที่</label>
-            <input type="text" id="staff-user" required value="technician01" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru">
+            <input type="text" id="staff-user" required placeholder="กรอกรหัสเจ้าหน้าที่ (เช่น tech01)" autocomplete="off" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">รหัสผ่าน</label>
-            <input type="password" id="staff-pass" required value="1234" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru">
+            <input type="password" id="staff-pass" required placeholder="กรอกรหัสผ่าน" autocomplete="new-password" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
           </div>
           <button type="submit" class="w-full bg-kru hover:bg-kru-dark text-white font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
             <i data-lucide="key" class="w-4 h-4"></i> ยืนยันเข้าสู่ระบบ
@@ -651,7 +651,7 @@
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-emerald-100 text-kru flex items-center justify-center font-bold">ชท</div>
             <div>
-              <div class="text-sm font-bold text-slate-900" id="staff-name-badge">ผศ.ดร.สมเกียรติ (หัวหน้าทีมช่าง)</div>
+              <div class="text-sm font-bold text-slate-900" id="staff-name-badge">เจ้าหน้าที่ประจำศูนย์</div>
               <div class="text-xs text-emerald-700 font-body flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span> ปฏิบัติการ: ศูนย์ฟื้นฟูฯ คณะเทคโนโลยีอุตสาหกรรม
               </div>
@@ -730,7 +730,13 @@
 
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่ออาจารย์ / ช่างผู้ตรวจเช็ก *</label>
-          <input type="text" id="update-staff-name" required value="ผศ.ดร.สมเกียรติ (หัวหน้าทีมช่าง)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kru">
+          <select id="update-staff-name" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-kru">
+            <option value="ดร.เอกบุตร">ดร.เอกบุตร</option>
+            <option value="อ.ธนากร">อ.ธนากร</option>
+            <option value="อ.ธนาพล">อ.ธนาพล</option>
+            <option value="นายนิทัศน์">นายนิทัศน์</option>
+            <option value="ทีมช่าง TECHNO KRU">ทีมช่าง TECHNO KRU</option>
+          </select>
         </div>
 
         <div class="pt-3 flex gap-3">
@@ -1217,11 +1223,57 @@
       lucide.createIcons();
     }
 
+    // ฟังก์ชันล็อกอินทีมช่าง 4 ท่าน (ไม่ล็อกอินค้าง กรอกใหม่ทุกครั้ง)
+    function handleStaffLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('staff-user').value.trim();
+      const p = document.getElementById('staff-pass').value.trim();
+
+      const staffAccounts = {
+        'tech01': { pass: '1234', name: 'ดร.เอกบุตร' },
+        'tech02': { pass: '1234', name: 'อ.ธนากร' },
+        'tech03': { pass: '1234', name: 'อ.ธนาพล' },
+        'tech04': { pass: '1234', name: 'นายนิทัศน์' }
+      };
+
+      if (staffAccounts[u] && staffAccounts[u].pass === p) {
+        sessionStorage.setItem('TRC_STAFF_AUTH', 'true');
+        sessionStorage.setItem('TRC_STAFF_NAME', staffAccounts[u].name);
+
+        document.getElementById('staff-name-badge').innerText = staffAccounts[u].name;
+        const staffSelect = document.getElementById('update-staff-name');
+        if (staffSelect) staffSelect.value = staffAccounts[u].name;
+
+        document.getElementById('staff-auth-gate').classList.add('hidden');
+        document.getElementById('staff-workspace').classList.remove('hidden');
+        fetchStaffJobsOnline();
+      } else {
+        alert('รหัสช่างหรือรหัสผ่านไม่ถูกต้อง (ลองตรวจสอบ tech01, tech02, tech03, tech04)');
+      }
+    }
+
+    function handleStaffLogout() {
+      sessionStorage.removeItem('TRC_STAFF_AUTH');
+      sessionStorage.removeItem('TRC_STAFF_NAME');
+
+      document.getElementById('staff-user').value = '';
+      document.getElementById('staff-pass').value = '';
+
+      document.getElementById('staff-auth-gate').classList.remove('hidden');
+      document.getElementById('staff-workspace').classList.add('hidden');
+    }
+
     function openUpdateModal(job) {
       currentEditingJob = job;
       document.getElementById('update-modal-jobno').innerText = job.jobNo;
       document.getElementById('update-modal-cust').innerText = `ผู้รับบริการ: ${job.custName || job.fullName} (${job.phone})`;
       document.getElementById('update-overall-status').value = job.status || "ลงทะเบียนแล้ว";
+
+      const loggedInStaff = sessionStorage.getItem('TRC_STAFF_NAME');
+      const staffSelect = document.getElementById('update-staff-name');
+      if (loggedInStaff && staffSelect) {
+        staffSelect.value = loggedInStaff;
+      }
 
       const container = document.getElementById('update-items-container');
       container.innerHTML = '';
@@ -1463,27 +1515,6 @@
         </div>
       `;
       lucide.createIcons();
-    }
-
-    function handleStaffLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('staff-user').value;
-      const p = document.getElementById('staff-pass').value;
-
-      if (u === 'technician01' && p === '1234') {
-        sessionStorage.setItem('TRC_STAFF_AUTH', 'true');
-        document.getElementById('staff-auth-gate').classList.add('hidden');
-        document.getElementById('staff-workspace').classList.remove('hidden');
-        fetchStaffJobsOnline();
-      } else {
-        alert('รหัสผ่านไม่ถูกต้อง');
-      }
-    }
-
-    function handleStaffLogout() {
-      sessionStorage.removeItem('TRC_STAFF_AUTH');
-      document.getElementById('staff-auth-gate').classList.remove('hidden');
-      document.getElementById('staff-workspace').classList.add('hidden');
     }
 
     async function fetchStaffJobsOnline() {
