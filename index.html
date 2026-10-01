@@ -7,6 +7,9 @@
   
   <link rel="icon" type="image/png" href="kru_color.png">
   
+  <!-- LINE LIFF SDK v2 -->
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Sarabun & Prompt -->
@@ -172,7 +175,7 @@
         
         <div class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 mb-8">
           <div class="flex items-center gap-3">
-            <img id="line-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-emerald-500 object-cover shadow-sm">
+            <img id="line-avatar" src="kru_color.png" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-emerald-500 object-cover shadow-sm">
             <div>
               <div class="flex items-center gap-2">
                 <span class="text-xs bg-[#06C755] text-white font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -180,7 +183,7 @@
                 </span>
                 <span id="line-name-display" class="font-bold text-slate-800 text-sm">ผู้ใช้งาน LINE</span>
               </div>
-              <p class="text-xs text-slate-500 font-body mt-0.5">LINE User ID: <span id="line-uid-display" class="font-mono text-emerald-800">U1234...kru</span></p>
+              <p class="text-xs text-slate-500 font-body mt-0.5">LINE User ID: <span id="line-uid-display" class="font-mono text-emerald-800">กำลังเชื่อมต่อ...</span></p>
             </div>
           </div>
           <button onclick="logoutLine()" class="text-xs text-rose-600 hover:text-rose-700 font-medium underline">เปลี่ยนบัญชี</button>
@@ -664,6 +667,7 @@
   <!-- Script Engine -->
   <script>
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwGW0EamACrdmfkgTThS8EhitiyCQtcO0bJg4ZgSZ7U3TE3QOmD6VMe7hnex4nDVz77/exec";
+    const LIFF_ID = "2011810855-x2XKNgbh";
 
     let lineProfile = null;
     let counts = {
@@ -701,6 +705,60 @@
       } else {
         input.value = value;
       }
+    }
+
+    // เริ่มต้นระบบ LINE LIFF จริง
+    async function initLiff() {
+      try {
+        await liff.init({ liffId: LIFF_ID });
+        if (liff.isLoggedIn()) {
+          const profile = await liff.getProfile();
+          lineProfile = {
+            userId: profile.userId,
+            displayName: profile.displayName,
+            pictureUrl: profile.pictureUrl || 'kru_color.png'
+          };
+          displayUserProfile();
+        }
+      } catch (err) {
+        console.warn("LIFF initialization error:", err);
+      }
+    }
+
+    function displayUserProfile() {
+      if (!lineProfile) return;
+      document.getElementById('line-auth-gate').classList.add('hidden');
+      document.getElementById('registration-form-card').classList.remove('hidden');
+      document.getElementById('line-name-display').innerText = lineProfile.displayName;
+      document.getElementById('line-uid-display').innerText = lineProfile.userId;
+      document.getElementById('line-avatar').src = lineProfile.pictureUrl;
+      
+      const custNameInput = document.getElementById('cust-name');
+      if (!custNameInput.value) {
+        custNameInput.value = lineProfile.displayName;
+      }
+      lucide.createIcons();
+    }
+
+    function loginWithLine() {
+      if (window.liff) {
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        } else {
+          initLiff();
+        }
+      }
+    }
+
+    function logoutLine() {
+      if (window.liff && liff.isLoggedIn()) {
+        liff.logout();
+      }
+      lineProfile = null;
+      document.getElementById('line-auth-gate').classList.remove('hidden');
+      document.getElementById('registration-form-card').classList.add('hidden');
+      document.getElementById('serviceForm').reset();
+      resetCounters();
     }
 
     function getDb() {
@@ -750,31 +808,6 @@
       if (tabId === 'staff' && sessionStorage.getItem('TRC_STAFF_AUTH') === 'true') {
         renderStaffJobs();
       }
-    }
-
-    function loginWithLine() {
-      lineProfile = {
-        userId: 'U' + Math.random().toString(36).substring(2, 12) + 'kru',
-        displayName: 'คุณผู้ประสบภัย (LINE)',
-        pictureUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80'
-      };
-
-      document.getElementById('line-auth-gate').classList.add('hidden');
-      document.getElementById('registration-form-card').classList.remove('hidden');
-      document.getElementById('line-name-display').innerText = lineProfile.displayName;
-      document.getElementById('line-uid-display').innerText = lineProfile.userId;
-      document.getElementById('line-avatar').src = lineProfile.pictureUrl;
-      document.getElementById('cust-name').value = lineProfile.displayName;
-
-      lucide.createIcons();
-    }
-
-    function logoutLine() {
-      lineProfile = null;
-      document.getElementById('line-auth-gate').classList.remove('hidden');
-      document.getElementById('registration-form-card').classList.add('hidden');
-      document.getElementById('serviceForm').reset();
-      resetCounters();
     }
 
     function updateCount(key, delta) {
@@ -829,7 +862,7 @@
 
       const submitBtn = document.getElementById('btn-submit-form');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> กำลังบันทึกข้อมูลเข้า Google Sheets...';
+      submitBtn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> กำลังบันทึกข้อมูลและส่งแจ้งเตือน...';
       lucide.createIcons();
 
       const db = getDb();
@@ -895,7 +928,7 @@
           body: JSON.stringify(newRecord)
         });
       } catch (err) {
-        console.warn("GAS Web App save error:", err);
+        console.warn("GAS save error:", err);
       }
 
       showSlipModal(newRecord);
@@ -1089,13 +1122,18 @@
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       getDb();
+      initLiff();
       
       const urlParams = new URLSearchParams(window.location.search);
       const jobParam = urlParams.get('job');
+      const tabParam = urlParams.get('tab');
+
       if (jobParam) {
         switchTab('track');
         document.getElementById('track-search-input').value = jobParam;
         performTrackingSearch();
+      } else if (tabParam) {
+        switchTab(tabParam);
       }
     });
   </script>
