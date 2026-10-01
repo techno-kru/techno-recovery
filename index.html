@@ -110,7 +110,7 @@
           <i data-lucide="message-circle" class="w-9 h-9"></i>
         </div>
         <h2 class="text-xl font-bold text-slate-900">เข้าสู่ระบบเพื่อรับการแจ้งเตือน</h2>
-        <p class="text-sm text-slate-500 font-body mt-2 mb-6">เชื่อมต่อ LINE เพื่อรับการแจ้งเตือนสถานะเมื่ออุปกรณ์ตรวจเช็กเสร็จสิ้น หรือมีรายการประเมินค่าอะไหล่</p>
+        <p class="text-sm text-slate-500 font-body mt-2 mb-6">เชื่อมต่อ LINE เพื่อรับการแจ้งเตือนสถานะเมื่ออุปกรณ์ตรวจเช็กเสร็จสิ้น</p>
         <button onclick="loginWithLine()" class="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-semibold py-3.5 px-6 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
           <i data-lucide="log-in" class="w-5 h-5"></i> เข้าสู่ระบบด้วย LINE (แนะนำ)
         </button>
@@ -149,7 +149,7 @@
                 <input type="tel" id="cust-phone" required maxlength="11" placeholder="088-0000000" oninput="formatPhoneNumber(this)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-kru">
               </div>
               <div class="sm:col-span-2">
-                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ตำบล / อำเภอ) *</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย *</label>
                 <input type="text" id="cust-area" required placeholder="เช่น ต.หนองบัว อ.เมือง จ.กาญจนบุรี" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-kru">
               </div>
             </div>
@@ -216,15 +216,9 @@
             <span class="text-2xl font-extrabold text-kru" id="total-items-badge">0 ชิ้น</span>
           </div>
 
-          <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl text-xs text-amber-900 font-body leading-relaxed">
-            <div class="font-bold mb-1">เงื่อนไขการให้บริการ:</div>
-            <div>1. บริการตรวจเช็กและประเมินสภาพเบื้องต้นฟรี</div>
-            <div>2. กรณีมีอะไหล่ชำรุดที่ต้องเปลี่ยน ศูนย์ฯ จะแจ้งราคาให้ท่านอนุมัติก่อนดำเนินการทุกครั้ง</div>
-          </div>
-
           <label class="flex items-center gap-2 font-semibold text-xs text-slate-700 cursor-pointer">
             <input type="checkbox" id="agree-terms" required class="rounded text-kru focus:ring-kru w-4 h-4">
-            <span>ข้าพเจ้ารับทราบเงื่อนไขการให้บริการ</span>
+            <span>ข้าพเจ้ารับทราบเงื่อนไขการตรวจเช็กและประเมินสภาพเบื้องต้นฟรี</span>
           </label>
 
           <button type="submit" id="btn-submit-form" class="w-full bg-kru hover:bg-kru-dark text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
@@ -247,7 +241,7 @@
       <div id="tracking-result-box" class="max-w-3xl mx-auto space-y-6"></div>
     </section>
 
-    <!-- 3. ส่วนสรุปผลโครงการ (Dashboard สดจาก Sheets) -->
+    <!-- 3. ส่วนสรุปผลโครงการ (Dashboard 3 สถานะ) -->
     <section id="section-dashboard" class="tab-content hidden">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
@@ -369,7 +363,7 @@
 
   </main>
 
-  <!-- Modal อัปเดตงาน (สถานะมาตรฐานพร้อมกรณีมีค่าอะไหล่) -->
+  <!-- Modal อัปเดตงาน (3 สถานะหลัก ชัดเจน ตรงไปตรงมา) -->
   <div id="modal-update-status" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
       <button onclick="closeModal('modal-update-status')" class="absolute top-5 right-5 text-slate-400"><i data-lucide="x" class="w-6 h-6"></i></button>
@@ -381,18 +375,16 @@
       <form id="updateStatusForm" onsubmit="submitStatusUpdate(event)" class="space-y-4 mt-4">
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">เลือกสถานะใบงาน *</label>
-          <select id="update-overall-status" onchange="toggleFeeField()" class="w-full bg-slate-50 border rounded-xl px-4 py-2.5 text-sm font-bold text-kru focus:ring-2 focus:ring-kru">
-            <option value="ลงทะเบียนแล้ว">1. ลงทะเบียนแล้ว (รอส่งมอบเครื่อง)</option>
-            <option value="รับเครื่องเข้าศูนย์ฯ">2. รับเครื่องเข้าศูนย์ฯ (อยู่ระหว่างดำเนินการ)</option>
-            <option value="รออนุมัติซ่อม (มีค่าอะไหล่)">⚠️ รออนุมัติซ่อม (มีค่าใช้จ่ายอะไหล่)</option>
-            <option value="พร้อมรับคืน">3. 🟢 พร้อมรับคืน (ตรวจเช็ก/ซ่อมเสร็จสิ้น)</option>
-            <option value="ส่งมอบแล้ว">4. ✅ ส่งมอบแล้ว (รับเครื่องกลับแล้ว)</option>
+          <select id="update-overall-status" class="w-full bg-slate-50 border rounded-xl px-4 py-2.5 text-sm font-bold text-kru focus:ring-2 focus:ring-kru">
+            <option value="ลงทะเบียนแล้ว">ลงทะเบียนแล้ว</option>
+            <option value="พร้อมรับคืน">🟢 พร้อมรับคืน (ซ่อม/เช็กเสร็จสิ้น)</option>
+            <option value="ส่งมอบแล้ว">✅ ส่งมอบแล้ว (รับของกลับแล้ว)</option>
           </select>
         </div>
 
-        <div id="box-result-detail">
-          <label id="lbl-result-detail" class="block text-xs font-semibold text-slate-700 mb-1">รายละเอียดการตรวจเช็ก / ผลซ่อม</label>
-          <input type="text" id="update-general-result" placeholder="เช่น ตรวจเช็กระบบไฟปลอดภัย หรือ ระบุรายการอะไหล่และราคา" class="w-full bg-slate-50 border rounded-xl px-4 py-2 text-xs">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">รายละเอียดการตรวจเช็ก / ผลซ่อม</label>
+          <input type="text" id="update-general-result" placeholder="เช่น ตรวจเช็กระบบไฟปลอดภัย พร้อมใช้งาน" class="w-full bg-slate-50 border rounded-xl px-4 py-2 text-xs">
         </div>
 
         <div>
@@ -535,11 +527,9 @@
         return;
       }
       list.forEach(j => {
-        let badgeStyle = "bg-slate-100 text-slate-600 border border-slate-200";
-        if (j.status === "รับเครื่องเข้าศูนย์ฯ") badgeStyle = "bg-blue-50 text-blue-700 border border-blue-200 font-semibold";
-        if (j.status === "รออนุมัติซ่อม (มีค่าอะไหล่)") badgeStyle = "bg-amber-100 text-amber-900 border border-amber-300 font-bold";
-        if (j.status === "พร้อมรับคืน") badgeStyle = "bg-emerald-100 text-kru border border-emerald-300 font-bold";
-        if (j.status === "ส่งมอบแล้ว") badgeStyle = "bg-purple-100 text-purple-800 border border-purple-300 font-bold";
+        let badgeStyle = "bg-slate-100 text-slate-600";
+        if (j.status === "พร้อมรับคืน") badgeStyle = "bg-emerald-50 text-kru border border-emerald-300 font-bold";
+        if (j.status === "ส่งมอบแล้ว") badgeStyle = "bg-blue-50 text-blue-700 border border-blue-300 font-bold";
 
         let itemsText = (j.items || []).map(it => it.name).join(', ') || '-';
         tbody.innerHTML += `
@@ -554,17 +544,6 @@
             </td>
           </tr>`;
       });
-    }
-
-    function filterDashboardTable() {
-      const q = document.getElementById('dashboard-filter-input').value.trim().toLowerCase();
-      if (!q) { renderDashboardTable(allLoadedJobs); return; }
-      const filtered = allLoadedJobs.filter(j => 
-        (j.jobNo && j.jobNo.toLowerCase().includes(q)) ||
-        (j.custName && j.custName.toLowerCase().includes(q)) ||
-        (j.phone && j.phone.includes(q))
-      );
-      renderDashboardTable(filtered);
     }
 
     function quickTrackJob(jobNo) {
@@ -689,10 +668,8 @@
         (json.data || []).forEach(j => {
           const jStr = JSON.stringify(j).replace(/'/g, "&apos;");
           let badgeStyle = "bg-slate-100 text-slate-600";
-          if (j.status === "รับเครื่องเข้าศูนย์ฯ") badgeStyle = "bg-blue-50 text-blue-700 font-semibold";
-          if (j.status === "รออนุมัติซ่อม (มีค่าอะไหล่)") badgeStyle = "bg-amber-100 text-amber-900 border border-amber-300 font-bold";
           if (j.status === "พร้อมรับคืน") badgeStyle = "bg-emerald-50 text-kru border border-emerald-300 font-bold";
-          if (j.status === "ส่งมอบแล้ว") badgeStyle = "bg-purple-100 text-purple-800 border border-purple-300 font-bold";
+          if (j.status === "ส่งมอบแล้ว") badgeStyle = "bg-blue-50 text-blue-700 border border-blue-300 font-bold";
 
           tbody.innerHTML += `
             <tr class="hover:bg-slate-50 transition">
@@ -710,29 +687,11 @@
       } catch (e) {}
     }
 
-    function toggleFeeField() {
-      const st = document.getElementById('update-overall-status').value;
-      const lbl = document.getElementById('lbl-result-detail');
-      const input = document.getElementById('update-general-result');
-      if (st === 'รออนุมัติซ่อม (มีค่าอะไหล่)') {
-        lbl.innerText = '⚠️ ระบุรายการอะไหล่และราคาประเมิน (บาท) *';
-        input.placeholder = 'เช่น เปลี่ยนคาปาซิเตอร์พัดลม ค่าอะไหล่ 120 บาท';
-        input.focus();
-      } else {
-        lbl.innerText = 'รายละเอียดการตรวจเช็ก / ผลซ่อม';
-        input.placeholder = 'เช่น ตรวจเช็กระบบไฟปลอดภัย พร้อมใช้งาน';
-      }
-    }
-
     function openUpdateModal(job) {
       currentEditingJob = job;
       document.getElementById('update-modal-jobno').innerText = job.jobNo;
       document.getElementById('update-modal-cust').innerText = `ผู้รับบริการ: ${job.custName} (${job.phone})`;
       document.getElementById('update-overall-status').value = job.status || "ลงทะเบียนแล้ว";
-      
-      const firstItemRes = (job.items && job.items[0]) ? job.items[0].result : '';
-      document.getElementById('update-general-result').value = firstItemRes || '';
-      toggleFeeField();
       document.getElementById('modal-update-status').classList.remove('hidden');
     }
 
@@ -745,7 +704,7 @@
       btn.innerText = 'กำลังบันทึก...';
 
       const st = document.getElementById('update-overall-status').value;
-      const resText = document.getElementById('update-general-result').value.trim() || 'ตรวจเช็กปลอดภัย';
+      const resText = document.getElementById('update-general-result').value || 'ตรวจเช็กปลอดภัย';
       const staff = document.getElementById('update-staff-name').value;
 
       const updatedItems = (currentEditingJob.items || []).map(it => ({
@@ -756,7 +715,6 @@
         action: "updateStatus",
         jobNo: currentEditingJob.jobNo,
         overallStatus: st,
-        result: resText,
         staffName: staff,
         custName: currentEditingJob.custName,
         lineUserId: currentEditingJob.lineUserId || "",
@@ -788,62 +746,18 @@
         const resJson = await res.json();
         if (resJson.status === 'success' && resJson.data) {
           const d = resJson.data;
-
-          let badgeColor = 'bg-slate-100 text-slate-600';
-          if (d.status === 'รับเครื่องเข้าศูนย์ฯ') badgeColor = 'bg-blue-100 text-blue-700 font-bold';
-          if (d.status === 'รออนุมัติซ่อม (มีค่าอะไหล่)') badgeColor = 'bg-amber-100 text-amber-900 border border-amber-300 font-bold';
-          if (d.status === 'พร้อมรับคืน') badgeColor = 'bg-emerald-100 text-kru font-bold';
-          if (d.status === 'ส่งมอบแล้ว') badgeColor = 'bg-purple-100 text-purple-800 font-bold';
-
-          // กล่องแจ้งเตือนพิเศษกรณีมีค่าอะไหล่
-          let feeAlertBox = '';
-          if (d.status === 'รออนุมัติซ่อม (มีค่าอะไหล่)') {
-            let feeDetail = (d.items && d.items[0] && d.items[0].result) ? d.items[0].result : 'มีรายการอะไหล่ชำรุด';
-            feeAlertBox = `
-              <div class="p-4 bg-amber-50 border border-amber-300 rounded-2xl text-amber-950 text-xs font-body leading-relaxed">
-                <div class="font-bold flex items-center gap-1.5 text-sm text-amber-900 mb-1">
-                  <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i> รออนุมัติการเปลี่ยนอะไหล่
-                </div>
-                <p><strong>รายละเอียดค่าใช้จ่าย:</strong> ${feeDetail}</p>
-                <p class="mt-1 text-slate-600">* โปรดติดต่อศูนย์ฯ โทร <strong>034-534078</strong> เพื่อยืนยันการจัดหาอะไหล่ก่อนการซ่อมแซมครับ</p>
-              </div>`;
-          }
-
-          let itemsHtml = (d.items || []).map(it => `
-            <div class="p-3 bg-slate-50 border rounded-xl flex justify-between items-center text-xs">
-              <div>
-                <div class="font-bold text-slate-800">${it.name} <span class="font-mono text-kru">(${it.itemNo})</span></div>
-                <div class="text-slate-500 font-body">ผลตรวจ: ${it.result || 'ตรวจเช็กตามมาตรฐานความปลอดภัย'}</div>
-              </div>
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeColor}">${it.status}</span>
-            </div>
-          `).join('');
-
           container.innerHTML = `
             <div class="bg-white border rounded-3xl p-6 shadow-sm space-y-4">
               <div class="flex justify-between items-center border-b pb-3">
-                <div>
-                  <h3 class="text-xl font-bold font-mono text-kru">${d.jobNo}</h3>
-                  <p class="text-xs text-slate-600">${d.custName} (${d.area})</p>
-                </div>
-                <span class="px-3 py-1 rounded-full text-xs ${badgeColor}">${d.status}</span>
+                <div><h3 class="text-xl font-bold font-mono text-kru">${d.jobNo}</h3><p class="text-xs text-slate-600">${d.custName} (${d.area})</p></div>
+                <span class="px-3 py-1 rounded-full text-xs font-bold ${d.status === 'พร้อมรับคืน' ? 'bg-emerald-100 text-kru' : d.status === 'ส่งมอบแล้ว' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100'}">${d.status}</span>
               </div>
-
-              ${feeAlertBox}
-
-              <div class="grid grid-cols-4 gap-2 text-center text-[11px] font-bold pt-1">
+              <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
                 <div class="${d.status ? 'text-emerald-700' : 'text-slate-400'}">1. ลงทะเบียนแล้ว</div>
-                <div class="${d.status === 'รับเครื่องเข้าศูนย์ฯ' || d.status === 'รออนุมัติซ่อม (มีค่าอะไหล่)' || d.status === 'พร้อมรับคืน' || d.status === 'ส่งมอบแล้ว' ? 'text-emerald-700' : 'text-slate-400'}">2. รับเครื่องเข้าศูนย์ฯ</div>
-                <div class="${d.status === 'พร้อมรับคืน' || d.status === 'ส่งมอบแล้ว' ? 'text-emerald-700' : (d.status === 'รออนุมัติซ่อม (มีค่าอะไหล่)' ? 'text-amber-700 font-extrabold' : 'text-slate-400')}">3. ${d.status === 'รออนุมัติซ่อม (มีค่าอะไหล่)' ? '⚠️ รออนุมัติอะไหล่' : 'พร้อมรับคืน'}</div>
-                <div class="${d.status === 'ส่งมอบแล้ว' ? 'text-purple-700' : 'text-slate-400'}">4. ส่งมอบแล้ว</div>
-              </div>
-
-              <div class="pt-2 border-t">
-                <div class="text-xs font-bold text-slate-700 mb-2">รายการอุปกรณ์ในใบงานนี้:</div>
-                <div class="space-y-2">${itemsHtml}</div>
+                <div class="${d.status === 'พร้อมรับคืน' || d.status === 'ส่งมอบแล้ว' ? 'text-emerald-700' : 'text-slate-400'}">2. พร้อมรับคืน</div>
+                <div class="${d.status === 'ส่งมอบแล้ว' ? 'text-blue-700' : 'text-slate-400'}">3. ส่งมอบแล้ว</div>
               </div>
             </div>`;
-          lucide.createIcons();
           return;
         }
       } catch (e) {}
