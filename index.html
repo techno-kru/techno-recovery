@@ -13,6 +13,7 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Sarabun & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
@@ -80,7 +81,7 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-kru selection:text-white">
 
-  <!-- Header แถบข้อมูลด่วน -->
+  <!-- แถบด้านบนแจ้งข้อมูลด่วน -->
   <div class="bg-gradient-to-r from-kru to-kru-dark text-white text-xs py-2 px-4 shadow-sm">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
       <div class="flex items-center gap-2">
@@ -127,7 +128,7 @@
       </nav>
 
       <div class="hidden sm:flex items-center gap-3">
-        <button onclick="switchTab('register')" class="bg-kru hover:bg-kru-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md shadow-emerald-900/10 hover:shadow-lg transition flex items-center gap-2">
+        <button onclick="switchTab('register')" class="bg-kru hover:bg-kru-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
           <i data-lucide="clipboard-check" class="w-4 h-4"></i> แจ้งตรวจเช็กด่วน
         </button>
       </div>
@@ -199,7 +200,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล (สำหรับออกใบรับเครื่อง) *</label>
-                <input type="text" id="cust-name" required placeholder="เช่น นายสมชาย สดใส" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+                <input type="text" id="cust-name" required placeholder="เช่น นางอรทัย โหรา" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ที่ติดต่อได้ (10 หลัก) *</label>
@@ -207,7 +208,7 @@
               </div>
               <div class="sm:col-span-2">
                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">พื้นที่ประสบภัย (บ้านเลขที่ / ชุมชน / ตำบล / อำเภอ ใน จ.กาญจนบุรี) *</label>
-                <input type="text" id="cust-area" required placeholder="เช่น ชุมชนริมน้ำ ต.หนองบัว อ.เมือง จ.กาญจนบุรี" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
+                <input type="text" id="cust-area" required placeholder="เช่น ต.หนองบัว อ.เมือง จ.กาญจนบุรี" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-kru focus:bg-white transition">
               </div>
             </div>
           </div>
@@ -626,7 +627,7 @@
 
   </main>
 
-  <!-- Modal ปรับสถานะงานสำหรับเจ้าหน้าที่ (เพิ่มใหม่) -->
+  <!-- Modal ปรับสถานะงานสำหรับเจ้าหน้าที่ (เพิ่มสถานะมีค่าใช้จ่าย และ ซ่อมไม่ได้) -->
   <div id="modal-update-status" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
       <button onclick="closeModal('modal-update-status')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700">
@@ -643,19 +644,19 @@
       </div>
 
       <form id="updateStatusForm" onsubmit="submitStatusUpdate(event)" class="space-y-5 mt-5">
-        <!-- สถานะภาพรวม -->
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">สถานะภาพรวมของใบงาน *</label>
           <select id="update-overall-status" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-semibold text-kru focus:outline-none focus:ring-2 focus:ring-kru">
             <option value="ลงทะเบียนแล้ว">ลงทะเบียนแล้ว</option>
             <option value="รับของเข้าศูนย์ฯ แล้ว">รับของเข้าศูนย์ฯ แล้ว</option>
             <option value="กำลังตรวจเช็ก/ซ่อมแซม">กำลังตรวจเช็ก/ซ่อมแซม</option>
-            <option value="พร้อมรับคืน">พร้อมรับคืน (ตรวจเช็กเสร็จสิ้น)</option>
+            <option value="รออนุมัติซ่อม (มีค่าอะไหล่)">⚠️ รออนุมัติซ่อม (มีค่าใช้จ่ายอะไหล่)</option>
+            <option value="พร้อมรับคืน">พร้อมรับคืน (ตรวจเช็ก/ซ่อมเสร็จสิ้น)</option>
+            <option value="ไม่สามารถซ่อมได้ (ส่งคืนสภาพเดิม)">❌ ไม่สามารถซ่อมได้ (ส่งคืนสภาพเดิม)</option>
             <option value="ส่งมอบแล้ว">ส่งมอบคืนเรียบร้อยแล้ว</option>
           </select>
         </div>
 
-        <!-- รายการอุปกรณ์รายชิ้น -->
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-2">ผลตรวจเช็กรายอุปกรณ์</label>
           <div id="update-items-container" class="space-y-3 max-h-72 overflow-y-auto pr-1"></div>
@@ -1062,7 +1063,7 @@
       lucide.createIcons();
     }
 
-    // เปิดหน้าต่างแก้ไขสถานะงานสำหรับช่าง
+    // เปิดหน้าต่างแก้ไขสถานะงานสำหรับช่าง (รองรับสถานะมีค่าใช้จ่าย และ ซ่อมไม่ได้)
     function openUpdateModal(job) {
       currentEditingJob = job;
       document.getElementById('update-modal-jobno').innerText = job.jobNo;
@@ -1074,7 +1075,7 @@
 
       (job.items || []).forEach((it, idx) => {
         container.innerHTML += `
-          <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2.5">
             <div class="flex items-center justify-between">
               <span class="font-mono font-bold text-kru text-xs">${it.itemNo}</span>
               <span class="font-bold text-slate-800 text-xs">${it.name}</span>
@@ -1083,17 +1084,19 @@
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
               <div>
-                <label class="block text-[10px] text-slate-500 mb-0.5">สถานะชิ้นนี้</label>
-                <select id="u-status-${idx}" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
+                <label class="block text-[10px] text-slate-500 mb-0.5 font-semibold">สถานะชิ้นนี้</label>
+                <select id="u-status-${idx}" onchange="handleItemStatusChange(${idx})" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
                   <option value="รอตรวจเช็ก" ${it.status === 'รอตรวจเช็ก' ? 'selected' : ''}>รอตรวจเช็ก</option>
                   <option value="กำลังตรวจเช็ก" ${it.status === 'กำลังตรวจเช็ก' ? 'selected' : ''}>กำลังตรวจเช็ก</option>
-                  <option value="ซ่อมแซมเล็กน้อย" ${it.status === 'ซ่อมแซมเล็กน้อย' ? 'selected' : ''}>ซ่อมแซมเล็กน้อย</option>
-                  <option value="พร้อมรับคืน" ${it.status === 'พร้อมรับคืน' ? 'selected' : ''}>พร้อมรับคืน</option>
-                  <option value="ส่งมอบแล้ว" ${it.status === 'ส่งมอบแล้ว' ? 'selected' : ''}>ส่งมอบแล้ว</option>
+                  <option value="ซ่อมแซมเล็กน้อย" ${it.status === 'ซ่อมแซมเล็กน้อย' ? 'selected' : ''}>ซ่อมแซมเล็กน้อย (ฟรี)</option>
+                  <option value="รออนุมัติซ่อม (มีค่าอะไหล่)" ${it.status.includes('ค่าอะไหล่') ? 'selected' : ''}>⚠️ รออนุมัติซ่อม (มีค่าอะไหล่)</option>
+                  <option value="พร้อมรับคืน" ${it.status.includes('พร้อม') ? 'selected' : ''}>🟢 พร้อมรับคืน (ซ่อมเสร็จแล้ว)</option>
+                  <option value="ไม่สามารถซ่อมได้ (ส่งคืนสภาพเดิม)" ${it.status.includes('ไม่สามารถซ่อมได้') ? 'selected' : ''}>❌ ไม่สามารถซ่อมได้ (ส่งคืน)</option>
+                  <option value="ส่งมอบแล้ว" ${it.status === 'ส่งมอบแล้ว' ? 'selected' : ''}>ส่งมอบคืนแล้ว</option>
                 </select>
               </div>
               <div>
-                <label class="block text-[10px] text-slate-500 mb-0.5">ผลการตรวจ/การซ่อม</label>
+                <label id="u-lbl-${idx}" class="block text-[10px] text-slate-500 mb-0.5 font-semibold">ผลการตรวจ / รายละเอียด</label>
                 <input type="text" id="u-res-${idx}" value="${it.result || ''}" placeholder="เช่น อบไล่ชื้น วัด Megger ผ่าน" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
               </div>
             </div>
@@ -1103,6 +1106,23 @@
 
       document.getElementById('modal-update-status').classList.remove('hidden');
       lucide.createIcons();
+    }
+
+    function handleItemStatusChange(idx) {
+      const select = document.getElementById(`u-status-${idx}`);
+      const input = document.getElementById(`u-res-${idx}`);
+      const lbl = document.getElementById(`u-lbl-${idx}`);
+      
+      if (select.value === 'รออนุมัติซ่อม (มีค่าอะไหล่)') {
+        lbl.innerText = 'รายการอะไหล่ & ค่าใช้จ่ายประเมิน (บาท)';
+        input.placeholder = 'เช่น เปลี่ยนคาปาซิเตอร์ 150 บ., เปลี่ยนถ่ายน้ำมันเครื่อง 120 บ.';
+      } else if (select.value === 'ไม่สามารถซ่อมได้ (ส่งคืนสภาพเดิม)') {
+        lbl.innerText = 'สาเหตุที่ไม่สามารถซ่อมแซมได้';
+        input.placeholder = 'เช่น มอเตอร์ไหม้สนิท คอยล์ขาด ไม่คุ้มค่าซ่อม';
+      } else {
+        lbl.innerText = 'ผลการตรวจ / วิธีแก้ไข';
+        input.placeholder = 'เช่น อบไล่ชื้น วัด Megger ผ่าน';
+      }
     }
 
     async function submitStatusUpdate(e) {
@@ -1120,6 +1140,7 @@
       const updatedItems = (currentEditingJob.items || []).map((it, idx) => {
         return {
           itemNo: it.itemNo,
+          name: it.name,
           status: document.getElementById(`u-status-${idx}`).value,
           result: document.getElementById(`u-res-${idx}`).value,
           tech: staffName
@@ -1144,7 +1165,6 @@
           body: JSON.stringify(payload)
         });
 
-        // อัปเดตข้อมูลในหน้าเว็บช่าง
         currentEditingJob.status = overallStatus;
         currentEditingJob.items.forEach((it, idx) => {
           it.status = updatedItems[idx].status;
@@ -1152,7 +1172,7 @@
           it.tech = staffName;
         });
 
-        alert(`อัปเดตใบงาน ${currentEditingJob.jobNo} เป็นสถานะ "${overallStatus}" เรียบร้อยแล้ว`);
+        alert(`อัปเดตใบงาน ${currentEditingJob.jobNo} เป็นสถานะ "${overallStatus}" และส่งการแจ้งเตือนเรียบร้อยแล้ว`);
         closeModal('modal-update-status');
         fetchStaffJobsOnline();
       } catch (err) {
@@ -1218,21 +1238,35 @@
       let itemsHtml = '';
       (found.items || []).forEach(it => {
         let badgeColor = 'bg-slate-100 text-slate-700';
-        if (it.status.includes('เสร็จ') || it.status.includes('พร้อม') || it.status.includes('คืน')) badgeColor = 'bg-emerald-100 text-emerald-800';
-        else if (it.status.includes('ตรวจ')) badgeColor = 'bg-blue-100 text-blue-800';
+        let customAlert = '';
+
+        if (it.status.includes('ค่าอะไหล่') || it.status.includes('อนุมัติ')) {
+          badgeColor = 'bg-amber-100 text-amber-900 border border-amber-300';
+          customAlert = `<div class="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900"><strong>⚠️ รายการอะไหล่ / ค่าใช้จ่ายประเมิน:</strong> ${it.result || 'รอการยืนยันราคา'} (โปรดติดต่อ 034-534078)</div>`;
+        } else if (it.status.includes('ไม่สามารถซ่อมได้')) {
+          badgeColor = 'bg-rose-100 text-rose-800 border border-rose-300';
+          customAlert = `<div class="mt-2 p-2 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800"><strong>❌ สาเหตุที่ไม่สามารถซ่อมได้:</strong> ${it.result || 'ความเสียหายเกินกำลังการซ่อมแซมเบื้องต้น'} (สามารถรับเครื่องคืนได้ที่ศูนย์ฯ)</div>`;
+        } else if (it.status.includes('เสร็จ') || it.status.includes('พร้อม') || it.status.includes('คืน')) {
+          badgeColor = 'bg-emerald-100 text-emerald-800';
+        } else if (it.status.includes('ตรวจ')) {
+          badgeColor = 'bg-blue-100 text-blue-800';
+        }
 
         itemsHtml += `
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="font-mono font-bold text-kru text-sm">${it.itemNo}</span>
-                <span class="font-bold text-slate-900 text-sm">${it.name}</span>
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col justify-between gap-2">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono font-bold text-kru text-sm">${it.itemNo}</span>
+                  <span class="font-bold text-slate-900 text-sm">${it.name}</span>
+                </div>
+                <div class="text-xs text-slate-500 font-body mt-0.5">อาการที่แจ้ง: ${it.symptom || '-'}</div>
+                <div class="text-xs text-slate-600 font-body mt-0.5">ผลการตรวจเช็ก: <span class="font-medium text-slate-800">${it.result || 'รอการตรวจเช็ก'}</span></div>
+                <div class="text-[11px] text-slate-400 font-body">ช่างผู้ตรวจ: ${it.tech || '-'}</div>
               </div>
-              <div class="text-xs text-amber-800 font-body mt-0.5">อาการ: ${it.symptom || '-'}</div>
-              <div class="text-xs text-slate-600 font-body mt-0.5">ผลการตรวจเช็ก: <span class="font-medium text-emerald-700">${it.result || 'รอการตรวจเช็ก'}</span></div>
-              <div class="text-[11px] text-slate-400 font-body">ช่างผู้ตรวจ: ${it.tech || '-'}</div>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor} self-start sm:self-auto">${it.status}</span>
             </div>
-            <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor} self-start sm:self-auto">${it.status}</span>
+            ${customAlert}
           </div>
         `;
       });
@@ -1260,8 +1294,8 @@
               <div class="font-semibold ${found.status !== 'ลงทะเบียนแล้ว' ? 'text-emerald-800' : 'text-slate-400'}">รับของแล้ว</div>
             </div>
             <div class="space-y-1">
-              <div class="w-8 h-8 rounded-full ${found.status.includes('เสร็จ') || found.status.includes('พร้อม') || found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">3</div>
-              <div class="font-medium ${found.status.includes('เสร็จ') || found.status.includes('พร้อม') ? 'text-emerald-800 font-semibold' : 'text-slate-500'}">ตรวจ/ซ่อมเสร็จ</div>
+              <div class="w-8 h-8 rounded-full ${found.status.includes('เสร็จ') || found.status.includes('พร้อม') || found.status.includes('ค่าอะไหล่') || found.status.includes('ไม่สามารถ') || found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">3</div>
+              <div class="font-medium text-slate-700">ตรวจ/ประเมินแล้ว</div>
             </div>
             <div class="space-y-1">
               <div class="w-8 h-8 rounded-full ${found.status === 'ส่งมอบแล้ว' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center mx-auto font-bold">4</div>
@@ -1323,6 +1357,10 @@
 
       jobs.forEach(j => {
         const jStr = JSON.stringify(j).replace(/'/g, "&apos;");
+        let badgeStyle = "bg-emerald-50 text-kru border-emerald-200";
+        if (j.status.includes("ค่าอะไหล่")) badgeStyle = "bg-amber-50 text-amber-800 border-amber-300";
+        if (j.status.includes("ไม่สามารถ")) badgeStyle = "bg-rose-50 text-rose-800 border-rose-300";
+
         tbody.innerHTML += `
           <tr class="hover:bg-slate-50 transition">
             <td class="px-4 py-3 font-mono font-bold text-kru">${j.jobNo}</td>
@@ -1330,7 +1368,7 @@
             <td class="px-4 py-3 text-slate-500 truncate max-w-xs">${j.area}</td>
             <td class="px-4 py-3 text-center font-bold">${j.items ? j.items.length : 0} ชิ้น</td>
             <td class="px-4 py-3">
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-kru border border-emerald-200">
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold border ${badgeStyle}">
                 ${j.status}
               </span>
             </td>
