@@ -59,10 +59,10 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 6mm;
+        margin: 5mm;
       }
       html, body {
-        height: 100%;
+        height: auto !important;
         background: #fff !important;
       }
       body * {
@@ -85,25 +85,25 @@
       #modal-slip > div {
         max-width: 100% !important;
         box-shadow: none !important;
-        padding: 4mm !important;
+        padding: 2mm !important;
         margin: 0 !important;
         border: none !important;
       }
       #printArea {
-        font-size: 11px !important;
-        line-height: 1.2 !important;
+        font-size: 10.5px !important;
+        line-height: 1.15 !important;
       }
       #slip-items-list > div {
-        padding: 4px 8px !important;
-        margin-bottom: 3px !important;
+        padding: 3px 6px !important;
+        margin-bottom: 2px !important;
       }
       #slip-sticker-tags {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 6px !important;
+        gap: 5px !important;
       }
       #slip-sticker-tags > div {
-        padding: 6px !important;
+        padding: 5px !important;
         border: 1px dashed #64748b !important;
       }
       .no-print {
@@ -745,26 +745,26 @@
     </div>
   </div>
 
-  <!-- Modal Slip & Stickers สำหรับสั่งพิมพ์ (จัดหน้าลง A4 หน้าเดียวพอดี) -->
+  <!-- Modal Slip & Stickers สำหรับสั่งพิมพ์ (1 แผ่น A4 พอดี) -->
   <div id="modal-slip" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
       <button onclick="closeModal('modal-slip')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 no-print">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
 
-      <div id="printArea" class="space-y-4">
+      <div id="printArea" class="space-y-3">
         <!-- ครึ่งบน: ใบรับบริการ -->
-        <div class="text-center pb-3 border-b border-slate-200">
+        <div class="text-center pb-2 border-b border-slate-200">
           <img src="kru_color.png" 
                alt="Logo" 
-               class="h-14 mx-auto mb-1.5 object-contain" 
+               class="h-12 mx-auto mb-1 object-contain" 
                onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/th/thumb/a/a2/Kanchanaburi_Rajabhat_University_Emblem.png/220px-Kanchanaburi_Rajabhat_University_Emblem.png';">
           <h2 class="text-base font-bold text-slate-900 leading-tight">ศูนย์ประสานงานช่วยเหลือผู้ประสบอุทกภัย</h2>
           <p class="text-xs font-semibold text-kru">คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏกาญจนบุรี (TECHNO KRU)</p>
           <p class="text-[10px] text-slate-500 font-body">70 หมู่ 4 ถ.แสงชูโต ต.หนองบัว อ.เมือง จ.กาญจนบุรี 71190 • โทร. 034-534078 Line: Technokru</p>
         </div>
 
-        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between">
+        <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 flex items-center justify-between">
           <div>
             <div class="text-[10px] text-slate-500">เลขที่รับบริการ (Job No.)</div>
             <div id="slip-job-no" class="text-xl font-extrabold text-kru font-mono">TRC69-00001</div>
@@ -775,13 +775,13 @@
         </div>
 
         <div>
-          <h4 class="text-[11px] font-bold text-slate-700 uppercase mb-1.5">รายการอุปกรณ์และอาการที่แจ้ง</h4>
+          <h4 class="text-[11px] font-bold text-slate-700 uppercase mb-1">รายการอุปกรณ์และอาการที่แจ้ง</h4>
           <div id="slip-items-list" class="space-y-1 font-body text-xs"></div>
         </div>
 
         <!-- ครึ่งล่าง: ป้ายสติกเกอร์ติดตัวเครื่อง -->
-        <div class="pt-3 border-t border-dashed border-slate-400">
-          <h4 class="text-[11px] font-bold text-slate-700 uppercase mb-2 flex items-center justify-between">
+        <div class="pt-2 border-t border-dashed border-slate-400">
+          <h4 class="text-[11px] font-bold text-slate-700 uppercase mb-1.5 flex items-center justify-between">
             <span>ป้ายสติกเกอร์สำหรับติดตัวเครื่อง (ITEM TAGS)</span>
             <span class="text-[9px] text-slate-400 no-print">* ตัดติดตัวเครื่องตามรหัส</span>
           </h4>
@@ -1080,13 +1080,7 @@
       submitBtn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> กำลังบันทึกข้อมูล...';
       lucide.createIcons();
 
-      const db = getDb();
-      const newJobIndex = db.length + 1;
-      const jobNo = 'TRC69-' + ('0000' + newJobIndex).slice(-5);
-
       const itemsList = [];
-      let itemSeq = 1;
-
       for (const [key, qty] of Object.entries(counts)) {
         if (qty > 0) {
           let customSymptom = "";
@@ -1112,53 +1106,59 @@
               if (oSym) customSymptom = oSym;
             }
 
-            const itemNo = `${jobNo}-${('0' + itemSeq).slice(-2)}`;
             itemsList.push({
-              itemNo: itemNo,
               category: key.includes('auto') || key === 'moto' || key === 'car' || key === 'agri' ? 'ยานยนต์' : 'เครื่องใช้ไฟฟ้า',
               name: itemName,
               status: 'ลงทะเบียนแล้ว',
-              symptom: customSymptom || 'แช่น้ำ/ตรวจเช็กความปลอดภัย',
-              result: '',
-              tech: '-'
+              symptom: customSymptom || 'แช่น้ำ/ตรวจเช็กความปลอดภัย'
             });
-            itemSeq++;
           }
         }
       }
 
-      const allSymptomsSummary = itemsList.map(it => `${it.name}: ${it.symptom}`).join(" | ");
-
       const newRecord = {
         action: "register",
-        jobNo: jobNo,
         fullName: nameInput,
         custName: nameInput,
         phone: phoneInput,
         area: document.getElementById('cust-area').value.trim(),
         lineUserId: lineProfile ? lineProfile.userId : '',
-        symptoms: allSymptomsSummary,
-        createdAt: new Date().toISOString().replace('T', ' ').substring(0, 16),
-        status: 'ลงทะเบียนแล้ว',
         items: itemsList
       };
 
-      db.unshift(newRecord);
-      saveDb(db);
-
       try {
-        await fetch(GAS_API_URL, {
+        const response = await fetch(GAS_API_URL, {
           method: "POST",
-          mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(newRecord)
         });
-      } catch (err) {
-        console.warn("GAS save error:", err);
-      }
 
-      showSlipModal(newRecord);
-      loadLiveDashboardStats();
+        const resJson = await response.json();
+        if (resJson.status === "success") {
+          newRecord.jobNo = resJson.job_no;
+          newRecord.items = resJson.items;
+
+          const db = getDb();
+          db.unshift(newRecord);
+          saveDb(db);
+
+          showSlipModal(newRecord);
+          loadLiveDashboardStats();
+        } else {
+          alert("เกิดข้อผิดพลาดจากระบบ: " + resJson.message);
+        }
+      } catch (err) {
+        console.warn("GAS save error, fallback locally:", err);
+        const db = getDb();
+        const fallbackJobNo = 'TRC69-' + ('0000' + (db.length + 1)).slice(-5);
+        newRecord.jobNo = fallbackJobNo;
+        newRecord.items.forEach((it, idx) => {
+          it.itemNo = fallbackJobNo + '-' + ('0' + (idx + 1)).slice(-2);
+        });
+        db.unshift(newRecord);
+        saveDb(db);
+        showSlipModal(newRecord);
+      }
 
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i> ยืนยันการลงทะเบียนรับบริการ';
@@ -1176,7 +1176,7 @@
       itemsBox.innerHTML = '';
       (record.items || []).forEach(item => {
         itemsBox.innerHTML += `
-          <div class="p-2 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
+          <div class="p-1.5 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
             <div class="flex items-center justify-between">
               <span class="font-mono font-bold text-kru text-xs">${item.itemNo}</span>
               <span class="font-bold text-slate-800 text-xs">${item.name}</span>
@@ -1191,7 +1191,7 @@
       stickerBox.innerHTML = '';
       (record.items || []).forEach(item => {
         stickerBox.innerHTML += `
-          <div class="p-2 border border-slate-300 rounded-xl bg-white space-y-1">
+          <div class="p-1.5 border border-slate-300 rounded-xl bg-white space-y-0.5">
             <div class="flex justify-between items-start">
               <span class="font-mono font-extrabold text-xs text-kru">${item.itemNo}</span>
               <span class="text-[8px] bg-slate-100 font-bold px-1 py-0.5 rounded">TECHNO KRU</span>
@@ -1207,8 +1207,8 @@
       qrEl.innerHTML = '';
       new QRCode(qrEl, {
         text: `https://techno-kru.github.io/techno-recovery/?job=${record.jobNo}`,
-        width: 72,
-        height: 72,
+        width: 68,
+        height: 68,
         colorDark: "#046A38",
         colorLight: "#ffffff"
       });
@@ -1313,7 +1313,6 @@
       try {
         await fetch(GAS_API_URL, {
           method: "POST",
-          mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload)
         });
@@ -1396,7 +1395,7 @@
 
         if (it.status.includes('ค่าอะไหล่') || it.status.includes('อนุมัติ')) {
           badgeColor = 'bg-amber-100 text-amber-900 border border-amber-300';
-          customAlert = `<div class="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900"><strong>⚠️ รายการอะไหล่ / ค่าใช้จ่ายประเมิน:</strong> ${it.result || 'รอการยืนยันราคา'} (โปรดติดต่อ 034-534078)</div>`;
+          customAlert = `<div class="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900"><strong>⚠ รายการอะไหล่ / ค่าใช้จ่ายประเมิน:</strong> ${it.result || 'รอการยืนยันราคา'} (โปรดติดต่อ 034-534078)</div>`;
         } else if (it.status.includes('ไม่สามารถซ่อมได้')) {
           badgeColor = 'bg-rose-100 text-rose-800 border border-rose-300';
           customAlert = `<div class="mt-2 p-2 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800"><strong>❌ สาเหตุที่ไม่สามารถซ่อมได้:</strong> ${it.result || 'ความเสียหายเกินกำลังการซ่อมแซมเบื้องต้น'} (สามารถรับเครื่องคืนได้ที่ศูนย์ฯ)</div>`;
